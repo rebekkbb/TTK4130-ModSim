@@ -1603,11 +1603,11 @@ double initialValue(759,6)
  -2 2.5519579850000000E+009  0       0                  6  256   # RecyclePump.H
  -1       0                  0       0                  1  280   # ReturnPump.Q_min
  -1   18446                  0       0                  1  280   # ReturnPump.Q_max
- -2 1.7013668100000000E+008  0       0                  6  256   # ReturnPump.H
+ -2   18446                  0       0                  6  256   # ReturnPump.H
  -1       0                  0       0                  1  280   # WastePump.Q_min
  -1     385                  0       0                  1  280   # WastePump.Q_max
- -2 3.5510475000000000E+006  0       0                  6  256   # WastePump.H
- -1   18446                  0       0                  1  280   # Constant2.k
+ -2     385                  0       0                  6  256   # WastePump.H
+ -1       1                  0       0                  1  280   # Constant2.k
  -1      15                  0       0                  1  280   # Temperature.k
  -2       0                  0       0                  6  388   # sensor_NH1.In.Q
  -2       0                  0       0                  6  388   # sensor_NO1.In.Q
