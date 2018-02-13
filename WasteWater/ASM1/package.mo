@@ -62,10 +62,10 @@ model nitri "ASM1 nitrification tank"
   extends Interfaces.ASM1base;
 
   // tank specific parameters
-  parameter Modelica.SIunits.Volume V=1000 "Volume of nitrification tank";
+  parameter Modelica.SIunits.Volume V=1333 "Volume of nitrification tank";
 
   // aeration system dependent parameters
-  parameter Real alpha=0.7 "Oxygen transfer factor";
+  parameter Real alpha=240 "Oxygen transfer factor";
   parameter Modelica.SIunits.Length de=4.5 "depth of aeration";
   parameter Real R_air=23.5 "specific oxygen feed factor [gO2/(m^3*m)]";
   WWU.MassConcentration So_sat "Dissolved oxygen saturation";
@@ -78,8 +78,6 @@ model nitri "ASM1 nitrification tank"
           extent={{50,40},{60,50}})));
   Modelica.Blocks.Interfaces.RealInput T annotation (Placement(transformation(
           extent={{-110,30},{-90,50}})));
-  Interfaces.AirFlow AirIn annotation (Placement(transformation(extent={{-5,
-            -103},{5,-93}})));
 equation
 
   // Temperature dependent oxygen saturation by Simba

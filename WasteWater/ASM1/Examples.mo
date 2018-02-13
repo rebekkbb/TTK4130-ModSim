@@ -185,8 +185,6 @@ Main Author:
               {48,-5},{68,15}})));
     ASM1.divider2 divider annotation (Placement(transformation(extent={{20,-6},
               {40,14}})));
-    ASM1.nitri tank5(V=1333) annotation (Placement(transformation(extent={{-6,
-              -6},{14,14}})));
     ASM1.nitri tank4(V=1333) annotation (Placement(transformation(extent={{-32,
               -6},{-12,14}})));
     ASM1.nitri tank3(V=1333) annotation (Placement(transformation(extent={{-60,
@@ -218,8 +216,6 @@ Main Author:
               {{59,-55},{79,-35}})));
     Modelica.Blocks.Sources.Constant Constant2 annotation (Placement(
           transformation(extent={{22,-68},{42,-48}})));
-    Modelica.Blocks.Sources.Constant Temperature(k=15)
-      annotation (Placement(transformation(extent={{-94,50},{-82,62}})));
     sensor_NH sensor_NH1 annotation (Placement(transformation(extent={{64,15},{
               80,31}})));
     WasteWater.ASM1.sensor_NO sensor_NO1 annotation (Placement(transformation(
@@ -230,12 +226,11 @@ Main Author:
             extent={{97,-5},{113,11}})));
     WasteWater.ASM1.sensor_TSS sensor_TSS1 annotation (Placement(transformation(
             extent={{32,15},{48,30}})));
+    WasteWater.ASM1.nitri5 nitri5_1
+      annotation (Placement(transformation(extent={{-5,-6},{15,14}})));
   equation
     connect(divider.Out1, Settler.Feed) annotation (Line(points={{40,6.6},{44,
             6.6},{44,6.4},{48,6.4}}));
-    connect(tank5.Out, divider.In) annotation (Line(points={{14,4},{17,4},{17,
-            4.3},{20,4.3}}));
-    connect(tank4.Out, tank5.In) annotation (Line(points={{-12,4},{-6,4}}));
     connect(tank3.Out, tank4.In) annotation (Line(points={{-40,4},{-32,4}}));
     connect(tank3.In, tank2.Out) annotation (Line(points={{-60,4},{-70,4},{-70,
             18},{-18,18},{-18,32},{-28,32}}));
@@ -254,19 +249,6 @@ Main Author:
             55,-22.7},{36,-22.7}}));
     connect(ReturnPump.Out, mixer.In2) annotation (Line(points={{16,-28.8},{
             15.5,-28.8},{15.5,-30},{-112,-30},{-112,31.5},{-104,31.5}}));
-    connect(Temperature.y, tank1.T)
-      annotation (Line(points={{-81.4,56},{-78,56},{-78,36},{-76,36}},   color=
-            {0,0,255}));
-    connect(Temperature.y, tank2.T)
-      annotation (Line(points={{-81.4,56},{-52,56},{-52,36},{-48,36}}, color={0,
-            0,255}));
-    connect(Temperature.y, tank3.T) annotation (Line(points={{-81.4,56},{-52,56},
-            {-52,14},{-60,14},{-60,8},{-59.5,8},{-60,8}},               color={
-            0,0,255}));
-    connect(Temperature.y, tank4.T) annotation (Line(points={{-81.4,56},{-52,56},
-            {-52,14},{-32,14},{-32,8}}, color={0,0,255}));
-    connect(Temperature.y, tank5.T) annotation (Line(points={{-81.4,56},{-52,56},
-            {-52,14},{-5.9,14},{-5.9,8},{-6,8}},   color={0,0,255}));
     connect(WastePump.Out, WasteSludge.In) annotation (Line(points={{79,-42.2},
             {81,-42.2},{81,-42},{83,-42},{83,-42.2},{87,-42.2}}));
     connect(WastePump.In, Settler.Waste) annotation (Line(points={{59,-48.3},{
@@ -289,8 +271,6 @@ Main Author:
       annotation (Line(points={{43,-58},{46,-58},{46,-28.5},{34.9,-28.5}},
                                                                        color={0,
             0,255}));
-    connect(tank5.MeasurePort, sensor_O2.In) annotation (Line(points={{9.5,8.5},
-            {9.5,25},{9.5,25}}));
     connect(sensor_TSS1.In, divider.Out1) annotation (Line(points={{40,15},{40,
             6.6}}));
 
@@ -298,11 +278,17 @@ Main Author:
         points={{-76,-53},{-61,-53},{-61,-14.5},{-75.1,-14.5}},
         color={0,0,127},
         smooth=Smooth.None));
+    connect(divider.In, nitri5_1.Out) annotation (Line(points={{20,4.3},{17,4.3},
+            {17,4},{15,4}}, color={0,0,255}));
+    connect(nitri5_1.In, tank4.Out)
+      annotation (Line(points={{-5,4},{-9,4},{-12,4}}, color={0,0,255}));
+    connect(nitri5_1.MeasurePort, sensor_O2.In) annotation (Line(points={{10.5,
+            8.5},{10.5,16.25},{9.5,16.25},{9.5,25}}, color={0,0,0}));
     annotation (
       Diagram(coordinateSystem(
           preserveAspectRatio=false,
           extent={{-120,-100},{120,105}},
-          grid={1,1}), graphics),
+          grid={1,1})),
       Documentation(info="This ASM1 plant consists of 2 denitrification tanks (tank1 and tank2),
 3 nitrification tanks (tank3 - tank5) and a secondary clarifier by Takacs.
 Furthermore there are 2 control loops modelled.
@@ -329,8 +315,7 @@ PS: For those who want to reproduce the exact figures from the COST simulation b
     the parameter set used in COST.
     But it is possible. During the validation phase of this library the steady state and dynamic results
     from the COST simulation benchmark could exactly be reproduced.
-"),
-      experiment(
+"),   experiment(
         StopTime=100,
         Tolerance=1e-007,
         __Dymola_Algorithm=""),
