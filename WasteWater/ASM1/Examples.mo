@@ -304,8 +304,6 @@ Main Author:
 
     connect(Constant1.y, RecyclePump.u) annotation (Line(points={{-45,-79},{-45,
             -46.5},{-75.1,-46.5},{-75.1,-14.5}}, color={0,0,127}));
-    connect(CombiTableTime.y, WWSource.data) annotation (Line(points={{-98,90},
-            {-92,90},{-92,88},{-87,88}}, color={0,0,127}));
     annotation (
       Diagram(coordinateSystem(
           preserveAspectRatio=false,
