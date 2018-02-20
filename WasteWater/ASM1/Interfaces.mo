@@ -123,7 +123,7 @@ air between blower and nitrification tank."));
       "Maximum specific hydrolysis rate at T=15 deg C [g Xs/(g Xbh COD day)]";
     parameter Real K_x_T=0.1
       "Half-saturation (hydrolysis) at T=15 deg C [g Xs/(g Xbh COD)]";
-    parameter Real K_nh=0.5 "Half-saturation (auto. growth) [g NH-N/m3]";
+    parameter Real K_nh=1.0 "Half-saturation (auto. growth) [g NH-N/m3]";
     parameter Real K_s=10.0 "Half-saturation (hetero. growth) [g COD/m3]";
     parameter Real K_oh=0.2 "Half-saturation (hetero. oxygen) [g O/m3]";
     parameter Real K_no=0.5 "Half-saturation (nitrate) [g NO-N/m3]";
@@ -194,17 +194,6 @@ air between blower and nitrification tank."));
 
     // Temperature dependent Kinetic parameters based on 15 deg C //
     // may be adapted to 10 or 20 deg C
-
-    /*
-  mu_h =mu_h_T*exp(0.069*(T - 15));
-  b_h =b_h_T*exp(0.069*(T - 15));
-  mu_a =mu_a_T*exp(0.098*(T - 15));
-  //K_nh=1.0*exp(0.069*(T.signal[1]-15));
-  b_a =b_a_T*exp(0.08*(T - 15));
-  k_a =k_a_T*exp(0.069*(T - 15));
-  k_h =k_h_T*exp(0.11*(T - 15));
-  K_x =K_x_T*exp(0.11*(T - 15));
-  */
 
     mu_h =mu_h_T;
     b_h =b_h_T;
