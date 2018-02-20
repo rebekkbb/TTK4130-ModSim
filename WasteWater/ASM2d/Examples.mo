@@ -54,8 +54,8 @@ package Examples
           origin={26,-26},
           extent={{-10,-10},{10,10}},
           rotation=180)));
-    ASM2d.pump WastePump(Q_max=193) annotation (Placement(transformation(extent
-            ={{59,-55},{79,-35}})));
+    ASM2d.pump WastePump(Q_max=193) annotation (Placement(transformation(extent=
+             {{59,-55},{79,-35}})));
     Modelica.Blocks.Sources.Constant Constant2 annotation (Placement(
           transformation(extent={{22,-68},{42,-48}})));
     Modelica.Blocks.Sources.Constant Temperature(k=15)
@@ -239,8 +239,8 @@ Main Author:
           origin={26,-26},
           extent={{-10,-10},{10,10}},
           rotation=180)));
-    ASM2d.pump WastePump(Q_max=385) annotation (Placement(transformation(extent
-            ={{59,-55},{79,-35}})));
+    ASM2d.pump WastePump(Q_max=385) annotation (Placement(transformation(extent=
+             {{59,-55},{79,-35}})));
     Modelica.Blocks.Sources.Constant Constant2 annotation (Placement(
           transformation(extent={{22,-68},{42,-48}})));
     Modelica.Blocks.Sources.Constant Temperature(k=15)
@@ -618,8 +618,8 @@ References:
     connect(precipitation1.In, divider2_1.Out1) annotation (Line(points={{42,
             -72},{38,-72},{38,-34.5},{56,-34.5}}));
     connect(precipitation1.T, Temperature.y)
-      annotation (Line(points={{42,-68},{42,34},{94,34},{94,54},{80,54}}, color
-          ={0,0,255}));
+      annotation (Line(points={{42,-68},{42,34},{94,34},{94,54},{80,54}}, color=
+           {0,0,255}));
     connect(RecycleController1.out, RecyclePump.u) annotation (Line(points={{
             29.7,-56},{34,-56},{34,-36.5},{18.8,-36.5}}, color={0,0,255}));
     connect(sensor_Q1.Q, ReturnController1.in1) annotation (Line(points={{-184,
@@ -662,8 +662,8 @@ References:
     connect(sensor_TP2.In, Preclaryfier.In) annotation (Line(points={{-143,98},
             {-143,78},{-136,78}}));
     connect(Preclaryfier.MeasurePort, CombiTableTime2.y) annotation (Line(
-          points={{-122,88},{-122,94},{-116,94},{-116,104},{-117.2,104}}, color
-          ={0,0,255}));
+          points={{-122,88},{-122,94},{-116,94},{-116,104},{-117.2,104}}, color=
+           {0,0,255}));
     connect(FixedDelay1.u, sensor_NO1.Sno) annotation (Line(points={{-18,-56},{
             -22,-56},{-22,-8},{10,-8},{10,50},{6,50}}, color={0,0,255}));
     connect(sensor_O2_3.In, nitri2.MeasurePort) annotation (Line(points={{125,

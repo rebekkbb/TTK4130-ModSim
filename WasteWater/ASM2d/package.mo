@@ -3,7 +3,6 @@ package ASM2d "Component models for the Activated Sludge Model No.2d"
 extends Modelica.Icons.Library;
 
 
-
 model deni "ASM2d denitrification tank"
   //denitrification tank based on the ASM2d model
 
@@ -145,7 +144,8 @@ model precipitation "Phosphorus precipitation tank"
   parameter Real MP=30.97 "Molar Mass of Phosphorus [g/mol]";
   parameter Real Mpre=55.85 "Molar Mass of precipitant [g/mol]";
   WWU.VolumeFlowRate Qpreci "Dosage flow of precipitant used";
-  Real Preci "Concentration of effective substance in precipitant flow [g/m³]";
+  Real Preci
+    "Concentration of effective substance in precipitant flow [g/m³]";
   Real H;
   Interfaces.WWFlowAsm2din In annotation (Placement(transformation(extent={{
             -110,-10},{-90,10}})));
@@ -1072,6 +1072,7 @@ of ASM2d wastewater and provides the result as output signal (to be
 further processed with blocks of the Modelica.Blocks library).
 "));
 end sensor_TSS;
+
 
 annotation (
   Documentation(info="This library contains components to build models of biological municipal

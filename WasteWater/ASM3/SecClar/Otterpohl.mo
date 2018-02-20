@@ -179,7 +179,6 @@ package Otterpohl "Secondary settling tank modelling by Otterpohl"
       Real B4;
 
     algorithm
-
       Xc := 480/ISV;
       nv := 1.043 - 0.9834*exp(-0.00581*ISV);
       hc := (Xf/1000)*(hsc - zm*(i + 0.5))/Xc*(1.0 - 1.0/(Xc*nv));
@@ -678,8 +677,8 @@ Sedimentation flux is calculated based on two sedimentation velocities
               -110},{10,-90}})));
     WWSC.UpperLayerPin Up annotation (Placement(transformation(extent={{-10,90},
               {10,110}})));
-    ASM3.Interfaces.WWFlowAsm3in In annotation (Placement(transformation(extent
-            ={{-110,-6},{-90,14}})));
+    ASM3.Interfaces.WWFlowAsm3in In annotation (Placement(transformation(extent=
+             {{-110,-6},{-90,14}})));
   equation
 
     // sink velocity

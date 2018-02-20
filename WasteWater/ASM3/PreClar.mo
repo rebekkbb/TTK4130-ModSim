@@ -38,8 +38,8 @@ package PreClar "Primary clarifier modelling based on ASM3"
     WWU.MassConcentration Xsto "Organics stored by heterotrphs";
     WWU.MassConcentration Xa "Autotrophic nitrifying biomass";
     //WWU.MassConcentration Xss "Total suspend solids";
-    ASM3.Interfaces.WWFlowAsm3in In annotation (Placement(transformation(extent
-            ={{-110,-10},{-90,10}})));
+    ASM3.Interfaces.WWFlowAsm3in In annotation (Placement(transformation(extent=
+             {{-110,-10},{-90,10}})));
     ASM3.Interfaces.WWFlowAsm3out Out annotation (Placement(transformation(
             extent={{90,-10},{110,10}})));
     ASM3.Interfaces.WWFlowAsm3out MeasurePort annotation (Placement(
@@ -165,8 +165,8 @@ Parameter:
     WWU.MassConcentration Xsto "Organics stored by heterotrphs";
     WWU.MassConcentration Xa "Autotrophic nitrifying biomass";
     //WWU.MassConcentration Xss "Total suspend solids";
-    ASM3.Interfaces.WWFlowAsm3in In annotation (Placement(transformation(extent
-            ={{-110,-10},{-90,10}})));
+    ASM3.Interfaces.WWFlowAsm3in In annotation (Placement(transformation(extent=
+             {{-110,-10},{-90,10}})));
     ASM3.Interfaces.WWFlowAsm3out Out annotation (Placement(transformation(
             extent={{90,-10},{110,10}})));
     ASM3.Interfaces.WWFlowAsm3out MeasurePort annotation (Placement(
@@ -308,8 +308,8 @@ Parameter:
     WWU.MassConcentration Xa "Autotrophic nitrifying biomass";
     //WWU.MassConcentration Xss "Total suspend solids";
 
-    ASM3.Interfaces.WWFlowAsm3in In annotation (Placement(transformation(extent
-            ={{-110,-10},{-90,10}})));
+    ASM3.Interfaces.WWFlowAsm3in In annotation (Placement(transformation(extent=
+             {{-110,-10},{-90,10}})));
     ASM3.Interfaces.WWFlowAsm3out Out annotation (Placement(transformation(
             extent={{90,-10},{110,10}})));
     Modelica.Blocks.Interfaces.RealInput MeasurePort[4]

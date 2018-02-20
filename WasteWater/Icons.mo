@@ -1283,7 +1283,6 @@ package Icons "Icon definitions for the WasteWater library"
             lineColor={0,127,255},
             fillColor={0,127,255},
             fillPattern=FillPattern.Solid),
-          Documentation,
           Rectangle(
             extent={{54,-6},{57,40}},
             lineColor={0,0,0},
@@ -4072,7 +4071,6 @@ package Icons "Icon definitions for the WasteWater library"
             thickness=1),
           Polygon(
             points={{-80,-20},{-94,-20},{-94,-80},{-60,-80},{-80,-20},{-80,-20}},
-
             lineColor={0,191,0},
             fillColor={0,191,0},
             fillPattern=FillPattern.Solid),
@@ -4131,7 +4129,6 @@ package Icons "Icon definitions for the WasteWater library"
             thickness=1),
           Polygon(
             points={{-80,-20},{-94,-20},{-94,-80},{-60,-80},{-80,-20},{-80,-20}},
-
             lineColor={0,191,0},
             fillColor={0,191,0},
             fillPattern=FillPattern.Solid),
@@ -4160,6 +4157,7 @@ package Icons "Icon definitions for the WasteWater library"
             thickness=1),
           Text(extent={{-100,100},{98,60}}, textString=
                                                 "%name")}));
+
   end EffluentSink;
 
   partial model SludgeSink "Icon for a wastewater sink"
@@ -4425,8 +4423,7 @@ package Icons "Icon definitions for the WasteWater library"
             fillPattern=FillPattern.VerticalCylinder,
             fillColor={192,192,192}),
           Text(extent={{-100,90},{99,51}}, textString=
-                                               "%name"),
-          Documentation},
+                                               "%name")},
         Documentation(info="Icon for a controlled divider into 2 flows")),
       Diagram(coordinateSystem(
           preserveAspectRatio=false,
@@ -4841,7 +4838,6 @@ package Icons "Icon definitions for the WasteWater library"
             fillPattern=FillPattern.Solid),
           Polygon(
             points={{22,10},{41,10},{40,12},{46,9},{40,6},{41,8},{22,8},{22,10}},
-
             lineColor={0,0,255},
             pattern=LinePattern.None,
             fillColor={191,95,0},
@@ -4940,7 +4936,6 @@ package Icons "Icon definitions for the WasteWater library"
             fillPattern=FillPattern.Solid),
           Polygon(
             points={{22,10},{41,10},{40,12},{46,9},{40,6},{41,8},{22,8},{22,10}},
-
             lineColor={0,0,255},
             pattern=LinePattern.None,
             fillColor={191,95,0},
@@ -4959,6 +4954,7 @@ package Icons "Icon definitions for the WasteWater library"
             pattern=LinePattern.None,
             fillColor={191,95,0},
             fillPattern=FillPattern.Solid)}));
+
   end mixer2;
 
   partial model mixer3 "Icon for a mixer of 3 flows"
