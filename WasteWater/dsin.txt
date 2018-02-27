@@ -102,7 +102,7 @@ int settings(13,1)
 
 
 #    Names of initial variables
-char initialName(886,33)
+char initialName(878,33)
 Effluent.In.Q
 Effluent.In.Xi
 Effluent.In.Xs
@@ -130,7 +130,6 @@ Settler.Asc
 Settler.Xt
 Settler.Xf
 Settler.Feed.Q
-Settler.Feed.So
 Settler.Return.Q
 Settler.Return.Xi
 Settler.Return.Xs
@@ -259,7 +258,6 @@ Settler.S6.der(Snd)
 Settler.S6.Salk
 Settler.S6.der(Salk)
 Settler.S6.Up.SedFlux
-Settler.S6.In.So
 Settler.S7.zm
 Settler.S7.Asc
 Settler.S7.X
@@ -344,10 +342,7 @@ Settler.S10.Salk
 Settler.S10.der(Salk)
 Settler.S10.Xt
 divider.In.Q
-divider.In.So
-divider.Out1.So
 divider.Out2.Q
-divider.Out2.So
 tank5.Y_h
 tank5.Y_a
 tank5.f_p
@@ -426,9 +421,7 @@ tank5.inputSnd
 tank5.inputXnd
 tank5.inputSalk
 tank5.aeration
-tank5.Out.So
 tank5.MeasurePort.Q
-tank5.MeasurePort.So
 tank5.V
 tank5.alpha
 tank5.de
@@ -795,7 +788,6 @@ mixer.In1.Snh
 mixer.In1.Snd
 mixer.In1.Xnd
 mixer.In1.Salk
-mixer.In3.So
 CombiTableTime.nout
 CombiTableTime.y[1]
 CombiTableTime.y[2]
@@ -870,14 +862,10 @@ WWSource.Out.Xnd
 WWSource.Out.Salk
 sensor_NO.In.Q
 sensor_O2.In.Q
-sensor_O2.In.So
-sensor_O2.So
 Constant1.k
 RecyclePump.Q_min
 RecyclePump.Q_max
 RecyclePump.H
-RecyclePump.In.So
-RecyclePump.Out.So
 ReturnPump.Q_min
 ReturnPump.Q_max
 ReturnPump.H
@@ -899,15 +887,7 @@ sensor_TKN1.TKN[2]
 sensor_COD1.In.Q
 sensor_COD1.COD
 sensor_TSS1.In.Q
-sensor_TSS1.In.So
 sensor_TSS1.TSS
-sensor_aeration_energy.AE
-sensor_aeration_energy.der(AE)
-sensor_aeration_energy.T
-sensor_aeration_energy.der(T)
-sensor_aeration_energy.Kla3
-sensor_aeration_energy.Kla4
-sensor_aeration_energy.So_sat
 sensor_effluent_quality.Y_h
 sensor_effluent_quality.Y_a
 sensor_effluent_quality.f_p
@@ -927,8 +907,6 @@ sensor_effluent_quality.S_NKj0
 sensor_effluent_quality.SS_0
 sensor_effluent_quality.BOD_50
 sensor_effluent_quality.COD_0
-sensor_pump_energy.In_a.So
-sensor_pump_energy.Out_a.So
 sensor_pump_energy.PE
 sensor_pump_energy.der(PE)
 sensor_pump_energy.T
@@ -989,8 +967,22 @@ sensor_sludge_production.SP
 sensor_sludge_production.der(SP)
 sensor_sludge_production.T
 sensor_sludge_production.der(T)
+oCI.Y_h
+oCI.Y_a
+oCI.f_p
+oCI.i_xb
+oCI.i_xp
+oCI.OCI
+sensor_aeration_energy.Kla5
+sensor_aeration_energy.AE
+sensor_aeration_energy.der(AE)
+sensor_aeration_energy.T
+sensor_aeration_energy.der(T)
+sensor_aeration_energy.Kla3
+sensor_aeration_energy.Kla4
+sensor_aeration_energy.So_sat
 
-double initialValue(886,6)
+double initialValue(878,6)
  -2   18061                  0       0                  6   388   # Effluent.In.Q
  -2 4.4508762359619141E+000  0 1.0000000000000000E+100  6   260   # Effluent.In.Xi
  -2 4.6960458159446716E-002  0 1.0000000000000000E+100  6   260   # Effluent.In.Xs
@@ -1018,7 +1010,6 @@ double initialValue(886,6)
  -2    3000                  0 1.0000000000000000E+100  1   280   # Settler.Xt
  -2 3.2193017578125000E+003  0 1.0000000000000000E+100  6   256   # Settler.Xf
  -2   36892                  0       0                  6   388   # Settler.Feed.Q
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # Settler.Feed.So
  -2  -18446                  0       0                  6   388   # Settler.Return.Q
  -2 2.2416923828125000E+003  0 1.0000000000000000E+100  6   260   # Settler.Return.Xi
  -2 2.3651723861694336E+001  0 1.0000000000000000E+100  6   260   # Settler.Return.Xs
@@ -1147,7 +1138,6 @@ double initialValue(886,6)
  -2 3.7636680603027344E+000  0 1.0000000000000000E+100  2   280   # Settler.S6.Salk
  -2 -1.7516504526138306E+000  0       0                  3   256   # Settler.S6.der(Salk)
  -2 4.7381381835937500E+003  0       0                  6   388   # Settler.S6.Up.SedFlux
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # Settler.S6.In.So
  -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S7.zm
  -2    1500                  0       0                  6   256   # Settler.S7.Asc
  -2 7.3773200988769531E+001  0 1.0000000000000000E+100  2   280   # Settler.S7.X
@@ -1232,10 +1222,7 @@ double initialValue(886,6)
  -2 8.2512021064758301E-001  0       0                  3   256   # Settler.S10.der(Salk)
  -2    3000                  0 1.0000000000000000E+100  6   256   # Settler.S10.Xt
  -2   92230                  0       0                  6   388   # divider.In.Q
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # divider.In.So
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # divider.Out1.So
  -2  -55338                  0       0                  6   388   # divider.Out2.Q
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # divider.Out2.So
  -2 6.7000001668930054E-001  0       0                  1   280   # tank5.Y_h
  -2 2.3999999463558197E-001  0       0                  1   280   # tank5.Y_a
  -2 7.9999998211860657E-002  0       0                  1   280   # tank5.f_p
@@ -1269,8 +1256,8 @@ double initialValue(886,6)
  -2 -4.7623710632324219E+001  0       0                  3   256   # tank5.der(Xba)
  -2 4.4399328613281250E+002  0 1.0000000000000000E+100  2   280   # tank5.Xp
  -2 -1.7978150939941406E+002  0       0                  3   256   # tank5.der(Xp)
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   256   # tank5.So
- -2 -5.2350250244140625E+002  0       0                  6   256   # tank5.der(So)
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  2   280   # tank5.So
+ -2 -5.2350250244140625E+002  0       0                  3   256   # tank5.der(So)
  -2 1.6742458343505859E+001  0 1.0000000000000000E+100  2   280   # tank5.Sno
  -2 -1.8566853332519531E+002  0       0                  3   256   # tank5.der(Sno)
  -2 3.1172926425933838E+000  0 1.0000000000000000E+100  2   280   # tank5.Snh
@@ -1314,9 +1301,7 @@ double initialValue(886,6)
  -2 3.6540237426757813E+001  0       0                  6   256   # tank5.inputXnd
  -2 4.1633346557617188E+001  0       0                  6   256   # tank5.inputSalk
  -2 5.0400018310546875E+002  0       0                  6   256   # tank5.aeration
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # tank5.Out.So
  -2       0                  0       0                  6   388   # tank5.MeasurePort.Q
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # tank5.MeasurePort.So
  -2    1333                  0       0                  1   280   # tank5.V
  -2 6.9999998807907104E-001  0       0                  1   280   # tank5.alpha
  -2 4.5000000000000000E+000  0       0                  1   280   # tank5.de
@@ -1683,7 +1668,6 @@ double initialValue(886,6)
  -2 6.9499998092651367E+000  0 1.0000000000000000E+100  6   260   # mixer.In1.Snd
  -2 1.0590000152587891E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Xnd
  -2       7                  0 1.0000000000000000E+100  6   260   # mixer.In1.Salk
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # mixer.In3.So
  -2      14                  1 1.0000000000000000E+100  6   258   # CombiTableTime.nout
  -2   21477                  0       0                  6   256   # CombiTableTime.y[1]
  -2      30                  0       0                  6   256   # CombiTableTime.y[2]
@@ -1758,14 +1742,10 @@ double initialValue(886,6)
  -2       7                  0 1.0000000000000000E+100  6   260   # WWSource.Out.Salk
  -2       0                  0       0                  6   388   # sensor_NO.In.Q
  -2       0                  0       0                  6   388   # sensor_O2.In.Q
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # sensor_O2.In.So
- -2 1.9999977350234985E+000  0       0                  6   256   # sensor_O2.So
  -2   55338                  0       0                  1   280   # Constant1.k
  -2       0                  0       0                  1   280   # RecyclePump.Q_min
  -2   55338                  0       0                  1   280   # RecyclePump.Q_max
  -2 1.5311747840000000E+009  0       0                  6   256   # RecyclePump.H
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # RecyclePump.In.So
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # RecyclePump.Out.So
  -2       0                  0       0                  1   280   # ReturnPump.Q_min
  -2   18446                  0       0                  1   280   # ReturnPump.Q_max
  -2   18446                  0       0                  6   256   # ReturnPump.H
@@ -1787,15 +1767,7 @@ double initialValue(886,6)
  -2       0                  0       0                  6   388   # sensor_COD1.In.Q
  -2 4.8323074340820312E+001  0       0                  6   256   # sensor_COD1.COD
  -2       0                  0       0                  6   388   # sensor_TSS1.In.Q
- -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # sensor_TSS1.In.So
  -2 3.2193017578125000E+003  0       0                  6   256   # sensor_TSS1.TSS
-  0       0                  0       0                  2   280   # sensor_aeration_energy.AE
-  0       0                  0       0                  3   256   # sensor_aeration_energy.der(AE)
-  0 1.0000000000000000E-003  0       0                  2   280   # sensor_aeration_energy.T
-  0       0                  0       0                  3   256   # sensor_aeration_energy.der(T)
-  0     240                  0       0                  6   256   # sensor_aeration_energy.Kla3
-  0     240                  0       0                  6   256   # sensor_aeration_energy.Kla4
-  0       8                  0       0                  6   256   # sensor_aeration_energy.So_sat
   0 6.7000000000000004E-001  0       0                  1   280   # sensor_effluent_quality.Y_h
   0 2.3999999999999999E-001  0       0                  1   280   # sensor_effluent_quality.Y_a
   0 8.0000000000000002E-002  0       0                  1   280   # sensor_effluent_quality.f_p
@@ -1815,8 +1787,6 @@ double initialValue(886,6)
   0       0                  0       0                  6   256   # sensor_effluent_quality.SS_0
   0       0                  0       0                  6   256   # sensor_effluent_quality.BOD_50
   0       0                  0       0                  6   256   # sensor_effluent_quality.COD_0
-  0       2                  0 1.0000000000000000E+100  6   260   # sensor_pump_energy.In_a.So
-  0       2                  0 1.0000000000000000E+100  6   260   # sensor_pump_energy.Out_a.So
   0       0                  0       0                  2   280   # sensor_pump_energy.PE
   0       0                  0       0                  3   256   # sensor_pump_energy.der(PE)
   0 1.0000000000000000E-003  0       0                  2   280   # sensor_pump_energy.T
@@ -1877,6 +1847,20 @@ double initialValue(886,6)
   0       0                  0       0                  3   256   # sensor_sludge_production.der(SP)
   0 1.0000000000000000E-003  0       0                  2   280   # sensor_sludge_production.T
   0       0                  0       0                  3   256   # sensor_sludge_production.der(T)
+  0 6.7000000000000004E-001  0       0                  1   280   # oCI.Y_h
+  0 2.3999999999999999E-001  0       0                  1   280   # oCI.Y_a
+  0 8.0000000000000002E-002  0       0                  1   280   # oCI.f_p
+  0 8.0000000000000002E-002  0       0                  1   280   # oCI.i_xb
+  0 5.9999999999999998E-002  0       0                  1   280   # oCI.i_xp
+  0       0                  0       0                  6   256   # oCI.OCI
+  0      84                  0       0                  6   256   # sensor_aeration_energy.Kla5
+  0       0                  0       0                  2   280   # sensor_aeration_energy.AE
+  0       0                  0       0                  3   256   # sensor_aeration_energy.der(AE)
+  0 1.0000000000000000E-003  0       0                  2   280   # sensor_aeration_energy.T
+  0       0                  0       0                  3   256   # sensor_aeration_energy.der(T)
+  0     240                  0       0                  6   256   # sensor_aeration_energy.Kla3
+  0     240                  0       0                  6   256   # sensor_aeration_energy.Kla4
+  0       8                  0       0                  6   256   # sensor_aeration_energy.So_sat
 
 
 # Matrix with 6 columns defining the initial value calculation
@@ -1903,10 +1887,10 @@ double initialValue(886,6)
 #           = 4: output.
 #           = 5: input.
 #           = 6: auxiliary variable.
-# column 6: Data type of variable and flags according to dsBaseType
-#  <value>&3= 0: real.
-#  <value>&3= 1: boolean.
-#  <value>&3= 2: integer.
+# column 6: Data type of variable.
+#           = 0: real.
+#           = 1: boolean.
+#           = 2: integer.
 #
 # Initial values are calculated according to the following procedure:
 #
@@ -1927,7 +1911,7 @@ double initialValue(886,6)
 #   nominal value (and maybe minimum and maximum values given in 
 #   column 3 and 4). If these values are zero, scale(i)=1 is used).
 #
-char initialDescription(886,97)
+char initialDescription(878,97)
 [m3/d]
 [mg/l]
 [mg/l]
@@ -1955,7 +1939,6 @@ area of secondary clarifier [m2]
 threshold for X [mg/l]
 [mg/l]
 [m3/d]
-[mg/l]
 [m3/d]
 [mg/l]
 [mg/l]
@@ -2084,7 +2067,6 @@ der(Soluble biodegradable organic nitrogen) [mg/(l.s)]
 Alkalinity [mmol/l]
 der(Alkalinity) [m-3.s-1.mol]
 [g/(m2*d)]
-[mg/l]
 [m]
 [m2]
 total sludge concentration in m-th layer [mg/l]
@@ -2169,10 +2151,7 @@ Alkalinity [mmol/l]
 der(Alkalinity) [m-3.s-1.mol]
 [mg/l]
 [m3/d]
-[mg/l]
-[mg/l]
 [m3/d]
-[mg/l]
 Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
 Autotrophic Yield [g Xba COD formed/(g N utilised)] []
 Fraction of biomass to particulate products [-] []
@@ -2251,9 +2230,7 @@ der(Alkalinity) [m-3.s-1.mol]
 
 
 
-[mg/l]
 [m3/d]
-[mg/l]
 Volume of nitrification tank [m3]
 Oxygen transfer factor
 depth of aeration [m]
@@ -2620,7 +2597,6 @@ Volume of denitrification tank [m3]
 [mg/l]
 [mg/l]
 [mmol/l]
-[mg/l]
 Number of outputs [:#(type=Integer)]
 Connector of Real output signals
 Connector of Real output signals
@@ -2695,14 +2671,10 @@ Next time event instant [s]
 [mmol/l]
 [m3/d]
 [m3/d]
-[mg/l]
-
 Constant output value
 minimum pump capacity [m3/d]
 maximum pump capacity [m3/d]
 
-[mg/l]
-[mg/l]
 minimum pump capacity [m3/d]
 maximum pump capacity [m3/d]
 
@@ -2724,14 +2696,6 @@ Fraction nitrogen in particulate products [g N/(g COD)] []
 [m3/d]
 
 [m3/d]
-[mg/l]
-
-
-
-
-
-
-
 
 Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
 Autotrophic Yield [g Xba COD formed/(g N utilised)] []
@@ -2752,8 +2716,6 @@ Fraction nitrogen in particulate products [g N/(g COD)] []
 
 
 
-[mg/l]
-[mg/l]
 
 
 
@@ -2810,6 +2772,20 @@ Autotrophic Yield [g Xba COD formed/(g N utilised)] []
 Fraction of biomass to particulate products [-] []
 Fraction nitrogen in biomass [g N/(g COD)] []
 Fraction nitrogen in particulate products [g N/(g COD)] []
+
+
+
+
+Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
+Autotrophic Yield [g Xba COD formed/(g N utilised)] []
+Fraction of biomass to particulate products [-] []
+Fraction nitrogen in biomass [g N/(g COD)] []
+Fraction nitrogen in particulate products [g N/(g COD)] []
+
+
+
+
+
 
 
 
