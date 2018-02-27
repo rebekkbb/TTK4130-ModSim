@@ -12,11 +12,11 @@ double experiment(7,1)
       28                   # StopTime     Time at which integration stops
        0                   # Increment    Communication step size, if > 0
    10000                   # nInterval    Number of communication intervals, if > 0
- 9.9999999999999995E-008   # Tolerance    Relative precision of signals for
+ 1.0000000000000000E-004   # Tolerance    Relative precision of signals for
                            #              simulation, linearization and trimming
        0                   # MaxFixedStep Maximum step size of fixed step size
                            #              integrators, if > 0.0
-       8                   # Algorithm    Integration algorithm as integer (1...28)
+       4                   # Algorithm    Integration algorithm as integer (1...28)
                            #
                            #             | model|       |        | dense | state |
                            # Algorithm   | typ  | stiff | order  | output| event |
@@ -102,7 +102,7 @@ int settings(13,1)
 
 
 #    Names of initial variables
-char initialName(785,30)
+char initialName(886,33)
 Effluent.In.Q
 Effluent.In.Xi
 Effluent.In.Xs
@@ -130,6 +130,7 @@ Settler.Asc
 Settler.Xt
 Settler.Xf
 Settler.Feed.Q
+Settler.Feed.So
 Settler.Return.Q
 Settler.Return.Xi
 Settler.Return.Xs
@@ -258,6 +259,7 @@ Settler.S6.der(Snd)
 Settler.S6.Salk
 Settler.S6.der(Salk)
 Settler.S6.Up.SedFlux
+Settler.S6.In.So
 Settler.S7.zm
 Settler.S7.Asc
 Settler.S7.X
@@ -342,7 +344,10 @@ Settler.S10.Salk
 Settler.S10.der(Salk)
 Settler.S10.Xt
 divider.In.Q
+divider.In.So
+divider.Out1.So
 divider.Out2.Q
+divider.Out2.So
 tank5.Y_h
 tank5.Y_a
 tank5.f_p
@@ -421,13 +426,15 @@ tank5.inputSnd
 tank5.inputXnd
 tank5.inputSalk
 tank5.aeration
+tank5.Out.So
 tank5.MeasurePort.Q
+tank5.MeasurePort.So
 tank5.V
 tank5.alpha
 tank5.de
 tank5.R_air
-tank5.Kla
 tank5.So_sat
+tank5.Kla
 tank5.AirIn.Q_air
 tank4.Y_h
 tank4.Y_a
@@ -512,9 +519,9 @@ tank4.V
 tank4.alpha
 tank4.de
 tank4.R_air
-tank4.Kla
 tank4.So_sat
 tank4.AirIn.Q_air
+tank4.Kla
 tank3.Y_h
 tank3.Y_a
 tank3.f_p
@@ -598,9 +605,9 @@ tank3.V
 tank3.alpha
 tank3.de
 tank3.R_air
-tank3.Kla
 tank3.So_sat
 tank3.AirIn.Q_air
+tank3.Kla
 tank2.Y_h
 tank2.Y_a
 tank2.f_p
@@ -788,6 +795,7 @@ mixer.In1.Snh
 mixer.In1.Snd
 mixer.In1.Xnd
 mixer.In1.Salk
+mixer.In3.So
 CombiTableTime.nout
 CombiTableTime.y[1]
 CombiTableTime.y[2]
@@ -862,10 +870,14 @@ WWSource.Out.Xnd
 WWSource.Out.Salk
 sensor_NO.In.Q
 sensor_O2.In.Q
+sensor_O2.In.So
+sensor_O2.So
 Constant1.k
 RecyclePump.Q_min
 RecyclePump.Q_max
 RecyclePump.H
+RecyclePump.In.So
+RecyclePump.Out.So
 ReturnPump.Q_min
 ReturnPump.Q_max
 ReturnPump.H
@@ -887,709 +899,806 @@ sensor_TKN1.TKN[2]
 sensor_COD1.In.Q
 sensor_COD1.COD
 sensor_TSS1.In.Q
+sensor_TSS1.In.So
 sensor_TSS1.TSS
+sensor_aeration_energy.AE
+sensor_aeration_energy.der(AE)
+sensor_aeration_energy.T
+sensor_aeration_energy.der(T)
+sensor_aeration_energy.Kla3
+sensor_aeration_energy.Kla4
+sensor_aeration_energy.So_sat
+sensor_effluent_quality.Y_h
+sensor_effluent_quality.Y_a
+sensor_effluent_quality.f_p
+sensor_effluent_quality.i_xb
+sensor_effluent_quality.i_xp
+sensor_effluent_quality.EQ
+sensor_effluent_quality.der(EQ)
+sensor_effluent_quality.T
+sensor_effluent_quality.der(T)
+sensor_effluent_quality.B_SS
+sensor_effluent_quality.B_COD
+sensor_effluent_quality.B_NKj
+sensor_effluent_quality.B_NO
+sensor_effluent_quality.B_BOD5
+sensor_effluent_quality.So_sat
+sensor_effluent_quality.S_NKj0
+sensor_effluent_quality.SS_0
+sensor_effluent_quality.BOD_50
+sensor_effluent_quality.COD_0
+sensor_pump_energy.In_a.So
+sensor_pump_energy.Out_a.So
+sensor_pump_energy.PE
+sensor_pump_energy.der(PE)
+sensor_pump_energy.T
+sensor_pump_energy.der(T)
+sensor_influent_quality1.Y_h
+sensor_influent_quality1.Y_a
+sensor_influent_quality1.f_p
+sensor_influent_quality1.i_xb
+sensor_influent_quality1.i_xp
+sensor_influent_quality1.In.Q
+sensor_influent_quality1.In.Si
+sensor_influent_quality1.In.Ss
+sensor_influent_quality1.In.Xi
+sensor_influent_quality1.In.Xs
+sensor_influent_quality1.In.Xbh
+sensor_influent_quality1.In.Xba
+sensor_influent_quality1.In.Xp
+sensor_influent_quality1.In.So
+sensor_influent_quality1.In.Sno
+sensor_influent_quality1.In.Snh
+sensor_influent_quality1.In.Snd
+sensor_influent_quality1.In.Xnd
+sensor_influent_quality1.In.Salk
+sensor_influent_quality1.Out.Q
+sensor_influent_quality1.Out.Si
+sensor_influent_quality1.Out.Ss
+sensor_influent_quality1.Out.Xi
+sensor_influent_quality1.Out.Xs
+sensor_influent_quality1.Out.Xbh
+sensor_influent_quality1.Out.Xba
+sensor_influent_quality1.Out.Xp
+sensor_influent_quality1.Out.So
+sensor_influent_quality1.Out.Sno
+sensor_influent_quality1.Out.Snh
+sensor_influent_quality1.Out.Snd
+sensor_influent_quality1.Out.Xnd
+sensor_influent_quality1.Out.Salk
+sensor_influent_quality1.IQ
+sensor_influent_quality1.der(IQ)
+sensor_influent_quality1.T
+sensor_influent_quality1.der(T)
+sensor_influent_quality1.B_SS
+sensor_influent_quality1.B_COD
+sensor_influent_quality1.B_NKj
+sensor_influent_quality1.B_NO
+sensor_influent_quality1.B_BOD5
+sensor_influent_quality1.So_sat
+sensor_influent_quality1.S_NKj0
+sensor_influent_quality1.SS_0
+sensor_influent_quality1.BOD_50
+sensor_influent_quality1.COD_0
+sensor_sludge_production.Y_h
+sensor_sludge_production.Y_a
+sensor_sludge_production.f_p
+sensor_sludge_production.i_xb
+sensor_sludge_production.i_xp
+sensor_sludge_production.SP
+sensor_sludge_production.der(SP)
+sensor_sludge_production.T
+sensor_sludge_production.der(T)
 
-double initialValue(785,6)
+double initialValue(886,6)
  -2   18061                  0       0                  6   388   # Effluent.In.Q
- -2 4.3829873366039500E+000  0 1.0000000000000000E+100  6   260   # Effluent.In.Xi
- -2 1.8940540800840028E-001  0 1.0000000000000000E+100  6   260   # Effluent.In.Xs
- -2 9.7938591998994529E+000  0 1.0000000000000000E+100  6   260   # Effluent.In.Xbh
- -2 5.4505257795054707E-001  0 1.0000000000000000E+100  6   260   # Effluent.In.Xba
- -2 1.7246891078903628E+000  0 1.0000000000000000E+100  6   260   # Effluent.In.Xp
- -2 1.3544922220397814E-002  0 1.0000000000000000E+100  6   260   # Effluent.In.Xnd
+ -2 4.3795218912848899E+000  0 1.0000000000000000E+100  6   260   # Effluent.In.Xi
+ -2 1.8092661411124436E-001  0 1.0000000000000000E+100  6   260   # Effluent.In.Xs
+ -2 9.7931135258223918E+000  0 1.0000000000000000E+100  6   260   # Effluent.In.Xbh
+ -2 5.6797848927038919E-001  0 1.0000000000000000E+100  6   260   # Effluent.In.Xba
+ -2 1.7250184559004083E+000  0 1.0000000000000000E+100  6   260   # Effluent.In.Xp
+ -2 1.2964624553097352E-002  0 1.0000000000000000E+100  6   260   # Effluent.In.Xnd
  -2     385                  0       0                  6   388   # WasteSludge.In.Q
- -2 2.2381347706464639E+003  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xi
- -2 9.6718241887630214E+001  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xs
- -2 5.0011499305619445E+003  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xbh
- -2 2.7832640910316252E+002  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xba
- -2 8.8069765310240325E+002  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xp
- -2 6.9165979864918725E+000  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xnd
- -2 3.5128548647731300E-001  0       0                  6   256   # Settler.rXi
- -2 1.5180370323683880E-002  0       0                  6   256   # Settler.rXs
- -2 7.8495335014878864E-001  0       0                  6   256   # Settler.rXbh
- -2 4.3684602600158683E-002  0       0                  6   256   # Settler.rXba
- -2 1.3822952378338912E-001  0       0                  6   256   # Settler.rXp
- -2 1.0855916812154279E-003  0       0                  6   256   # Settler.rXnd
+ -2 2.2381066444060616E+003  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xi
+ -2 9.2460562418484869E+001  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xs
+ -2 5.0046632933111159E+003  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xbh
+ -2 2.9025917948838560E+002  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xba
+ -2 8.8155176836919316E+002  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xp
+ -2 6.6254292305875886E+000  0 1.0000000000000000E+100  6   260   # WasteSludge.In.Xnd
+ -2 3.5078495982235469E-001  0       0                  6   256   # Settler.rXi
+ -2 1.4491612700487586E-002  0       0                  6   256   # Settler.rXs
+ -2 7.8439542488129999E-001  0       0                  6   256   # Settler.rXbh
+ -2 4.5493164889791535E-002  0       0                  6   256   # Settler.rXba
+ -2 1.3816817103939949E-001  0       0                  6   256   # Settler.rXp
+ -2 1.0384227812675481E-003  0       0                  6   256   # Settler.rXnd
  -1       4                  0       0                  1   280   # Settler.hsc
  -1      10                  0       0                  1   282   # Settler.n
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.zm
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.zm
  -1    1500                  0       0                  1   280   # Settler.Asc
  -1    3000                  0 1.0000000000000000E+100  1   280   # Settler.Xt
- -2 3.2582786148111554E+003  0 1.0000000000000000E+100  6   256   # Settler.Xf
+ -2 3.2628777847077936E+003  0 1.0000000000000000E+100  6   256   # Settler.Xf
  -2   36892                  0       0                  6   388   # Settler.Feed.Q
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # Settler.Feed.So
  -2  -18446                  0       0                  6   388   # Settler.Return.Q
- -2 2.2381347706464639E+003  0 1.0000000000000000E+100  6   260   # Settler.Return.Xi
- -2 9.6718241887630214E+001  0 1.0000000000000000E+100  6   260   # Settler.Return.Xs
- -2 5.0011499305619445E+003  0 1.0000000000000000E+100  6   260   # Settler.Return.Xbh
- -2 2.7832640910316252E+002  0 1.0000000000000000E+100  6   260   # Settler.Return.Xba
- -2 8.8069765310240325E+002  0 1.0000000000000000E+100  6   260   # Settler.Return.Xp
- -2 6.9165979864918725E+000  0 1.0000000000000000E+100  6   260   # Settler.Return.Xnd
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S1.zm
+ -2 2.2381066444060616E+003  0 1.0000000000000000E+100  6   260   # Settler.Return.Xi
+ -2 9.2460562418484869E+001  0 1.0000000000000000E+100  6   260   # Settler.Return.Xs
+ -2 5.0046632933111159E+003  0 1.0000000000000000E+100  6   260   # Settler.Return.Xbh
+ -2 2.9025917948838560E+002  0 1.0000000000000000E+100  6   260   # Settler.Return.Xba
+ -2 8.8155176836919316E+002  0 1.0000000000000000E+100  6   260   # Settler.Return.Xp
+ -2 6.6254292305875886E+000  0 1.0000000000000000E+100  6   260   # Settler.Return.Xnd
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S1.zm
  -2    1500                  0       0                  6   256   # Settler.S1.Asc
- -2 6.3712702539762031E+003  0 1.0000000000000000E+100  2   280   # Settler.S1.X
- -2 2.3249981898698024E+000  0       0                  3   256   # Settler.S1.der(X)
- -2 1.2129423566909729E+001  0       0                  6   256   # Settler.S1.vS
+ -2 6.3802810859949313E+003  0 1.0000000000000000E+100  2   280   # Settler.S1.X
+ -2 2.1125925792760274E+000  0       0                  3   256   # Settler.S1.der(X)
+ -2 1.2066705051398323E+001  0       0                  6   256   # Settler.S1.vS
  -2       0                  0       0                  6   256   # Settler.S1.Jsm
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S1.Si
  -2       0                  0       0                  3   256   # Settler.S1.der(Si)
- -2 8.9271216082083071E-001  0 1.0000000000000000E+100  2   280   # Settler.S1.Ss
- -2 -4.4055312595792762E-004  0       0                  3   256   # Settler.S1.der(Ss)
- -2 4.7139586171873854E-001  0 1.0000000000000000E+100  2   280   # Settler.S1.So
- -2 1.9889168982021627E-003  0       0                  3   256   # Settler.S1.der(So)
- -2 9.9830026816126303E+000  0 1.0000000000000000E+100  2   280   # Settler.S1.Sno
- -2 6.5255363920735165E-002  0       0                  3   256   # Settler.S1.der(Sno)
- -2 2.2566918269982303E+000  0 1.0000000000000000E+100  2   280   # Settler.S1.Snh
- -2 -8.3767577164230167E-002  0       0                  3   256   # Settler.S1.der(Snh)
- -2 6.8904352811124958E-001  0 1.0000000000000000E+100  2   280   # Settler.S1.Snd
- -2 -1.2431840150432750E-004  0       0                  3   256   # Settler.S1.der(Snd)
- -2 4.1938349389620955E+000  0 1.0000000000000000E+100  2   280   # Settler.S1.Salk
- -2 -1.0644495803211189E-002  0       0                  3   256   # Settler.S1.der(Salk)
- -2 7.5526809784850091E+004  0       0                  6   388   # Settler.S1.Up.SedFlux
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S2.zm
+ -2 8.5621094623471039E-001  0 1.0000000000000000E+100  2   280   # Settler.S1.Ss
+ -2 6.7815997943031597E-005  0       0                  3   256   # Settler.S1.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S1.So
+ -2       0                  0       0                  3   256   # Settler.S1.der(So)
+ -2 1.3734732163212003E+001  0 1.0000000000000000E+100  2   280   # Settler.S1.Sno
+ -2 1.0627875406603654E-002  0       0                  3   256   # Settler.S1.der(Sno)
+ -2 9.6648237707584750E-001  0 1.0000000000000000E+100  2   280   # Settler.S1.Snh
+ -2 -2.2383192716655963E-002  0       0                  3   256   # Settler.S1.der(Snh)
+ -2 6.9038820897756437E-001  0 1.0000000000000000E+100  2   280   # Settler.S1.Snd
+ -2 4.0839321111513681E-005  0       0                  3   256   # Settler.S1.der(Snd)
+ -2 3.8336964438337913E+000  0 1.0000000000000000E+100  2   280   # Settler.S1.Salk
+ -2 -2.3579334150026282E-003  0       0                  3   256   # Settler.S1.der(Salk)
+ -2 7.5635425979514170E+004  0       0                  6   388   # Settler.S1.Up.SedFlux
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S2.zm
  -2    1500                  0       0                  6   256   # Settler.S2.Asc
- -2 3.5518934067572928E+002  0 1.0000000000000000E+100  2   280   # Settler.S2.X
- -2 9.0692996236612089E-002  0       0                  3   256   # Settler.S2.der(X)
- -2 2.1263816543921126E+002  0       0                  6   256   # Settler.S2.vS
+ -2 3.5554148567074299E+002  0 1.0000000000000000E+100  2   280   # Settler.S2.X
+ -2 8.2346697791610232E-002  0       0                  3   256   # Settler.S2.der(X)
+ -2 2.1273305374427676E+002  0       0                  6   256   # Settler.S2.vS
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S2.Si
  -2       0                  0       0                  3   256   # Settler.S2.der(Si)
- -2 8.9269812376089896E-001  0 1.0000000000000000E+100  2   280   # Settler.S2.Ss
- -2 -4.3859881199355579E-004  0       0                  3   256   # Settler.S2.der(Ss)
- -2 4.7145923329427469E-001  0 1.0000000000000000E+100  2   280   # Settler.S2.So
- -2 1.9871907726027767E-003  0       0                  3   256   # Settler.S2.der(So)
- -2 9.9850818711592524E+000  0 1.0000000000000000E+100  2   280   # Settler.S2.Sno
- -2 6.4932753881154423E-002  0       0                  3   256   # Settler.S2.der(Sno)
- -2 2.2540227947482947E+000  0 1.0000000000000000E+100  2   280   # Settler.S2.Snh
- -2 -8.3306989702905149E-002  0       0                  3   256   # Settler.S2.der(Snh)
- -2 6.8903956703425406E-001  0 1.0000000000000000E+100  2   280   # Settler.S2.Snd
- -2 -1.2350640541877679E-004  0       0                  3   256   # Settler.S2.der(Snd)
- -2 4.1934957802619772E+000  0 1.0000000000000000E+100  2   280   # Settler.S2.Salk
- -2 -1.0588553123839351E-002  0       0                  3   256   # Settler.S2.der(Salk)
- -2 7.5526809784850091E+004  0       0                  6   388   # Settler.S2.Up.SedFlux
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S3.zm
+ -2 8.5621310701211850E-001  0 1.0000000000000000E+100  2   280   # Settler.S2.Ss
+ -2 6.7260452390390790E-005  0       0                  3   256   # Settler.S2.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S2.So
+ -2       0                  0       0                  3   256   # Settler.S2.der(So)
+ -2 1.3735070792352197E+001  0 1.0000000000000000E+100  2   280   # Settler.S2.Sno
+ -2 1.0541932499967644E-002  0       0                  3   256   # Settler.S2.der(Sno)
+ -2 9.6576919584117515E-001  0 1.0000000000000000E+100  2   280   # Settler.S2.Snh
+ -2 -2.2234143123398740E-002  0       0                  3   256   # Settler.S2.der(Snh)
+ -2 6.9038951021451578E-001  0 1.0000000000000000E+100  2   280   # Settler.S2.Snd
+ -2 4.0478711823953494E-005  0       0                  3   256   # Settler.S2.der(Snd)
+ -2 3.8336213145220137E+000  0 1.0000000000000000E+100  2   280   # Settler.S2.Salk
+ -2 -2.3411482378691865E-003  0       0                  3   256   # Settler.S2.der(Salk)
+ -2 7.5635425979514170E+004  0       0                  6   388   # Settler.S2.Up.SedFlux
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S3.zm
  -2    1500                  0       0                  6   256   # Settler.S3.Asc
- -2 3.5519223036813713E+002  0 1.0000000000000000E+100  2   280   # Settler.S3.X
- -2 9.0451666656008456E-002  0       0                  3   256   # Settler.S3.der(X)
- -2 2.1263896862695194E+002  0       0                  6   256   # Settler.S3.vS
+ -2 3.5554410943046958E+002  0 1.0000000000000000E+100  2   280   # Settler.S3.X
+ -2 8.2076658195779625E-002  0       0                  3   256   # Settler.S3.der(X)
+ -2 2.1273378184717424E+002  0       0                  6   256   # Settler.S3.vS
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S3.Si
  -2       0                  0       0                  3   256   # Settler.S3.der(Si)
- -2 8.9268414897001180E-001  0 1.0000000000000000E+100  2   280   # Settler.S3.Ss
- -2 -4.3665372785836154E-004  0       0                  3   256   # Settler.S3.der(Ss)
- -2 4.7152254987138487E-001  0 1.0000000000000000E+100  2   280   # Settler.S3.So
- -2 1.9854088341395150E-003  0       0                  3   256   # Settler.S3.der(So)
- -2 9.9871507815903868E+000  0 1.0000000000000000E+100  2   280   # Settler.S3.Sno
- -2 6.4611781453083938E-002  0       0                  3   256   # Settler.S3.der(Sno)
- -2 2.2513684378993890E+000  0 1.0000000000000000E+100  2   280   # Settler.S3.Snh
- -2 -8.2849198992974507E-002  0       0                  3   256   # Settler.S3.der(Snh)
- -2 6.8903563182936578E-001  0 1.0000000000000000E+100  2   280   # Settler.S3.Snd
- -2 -1.2270107563572608E-004  0       0                  3   256   # Settler.S3.der(Snd)
- -2 4.1931584040273480E+000  0 1.0000000000000000E+100  2   280   # Settler.S3.Salk
- -2 -1.0532927184762593E-002  0       0                  3   256   # Settler.S3.der(Salk)
- -2 7.5526879434481059E+004  0       0                  6   388   # Settler.S3.Up.SedFlux
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S4.zm
+ -2 8.5621525008853694E-001  0 1.0000000000000000E+100  2   280   # Settler.S3.Ss
+ -2 6.6708687268437662E-005  0       0                  3   256   # Settler.S3.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S3.So
+ -2       0                  0       0                  3   256   # Settler.S3.der(So)
+ -2 1.3735406683148980E+001  0 1.0000000000000000E+100  2   280   # Settler.S3.Sno
+ -2 1.0456724305610921E-002  0       0                  3   256   # Settler.S3.der(Sno)
+ -2 9.6506076367757110E-001  0 1.0000000000000000E+100  2   280   # Settler.S3.Snh
+ -2 -2.2086156604942762E-002  0       0                  3   256   # Settler.S3.der(Snh)
+ -2 6.9039079996160602E-001  0 1.0000000000000000E+100  2   280   # Settler.S3.Snd
+ -2 4.0120797307758053E-005  0       0                  3   256   # Settler.S3.der(Snd)
+ -2 3.8335467200255104E+000  0 1.0000000000000000E+100  2   280   # Settler.S3.Salk
+ -2 -2.3244914739256623E-003  0       0                  3   256   # Settler.S3.der(Salk)
+ -2 7.5635489200118769E+004  0       0                  6   388   # Settler.S3.Up.SedFlux
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S4.zm
  -2    1500                  0       0                  6   256   # Settler.S4.Asc
- -2 3.5518956436811249E+002  0 1.0000000000000000E+100  2   280   # Settler.S4.X
- -2 9.0674289640446659E-002  0       0                  3   256   # Settler.S4.der(X)
- -2 2.1263822761472315E+002  0       0                  6   256   # Settler.S4.vS
+ -2 3.5554168869278953E+002  0 1.0000000000000000E+100  2   280   # Settler.S4.X
+ -2 8.2325788836146122E-002  0       0                  3   256   # Settler.S4.der(X)
+ -2 2.1273311008395589E+002  0       0                  6   256   # Settler.S4.vS
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S4.Si
  -2       0                  0       0                  3   256   # Settler.S4.der(Si)
- -2 8.9267023615408514E-001  0 1.0000000000000000E+100  2   280   # Settler.S4.Ss
- -2 -4.3471765846165910E-004  0       0                  3   256   # Settler.S4.der(Ss)
- -2 4.7158580967173980E-001  0 1.0000000000000000E+100  2   280   # Settler.S4.So
- -2 1.9835730559782075E-003  0       0                  3   256   # Settler.S4.der(So)
- -2 9.9892094650841923E+000  0 1.0000000000000000E+100  2   280   # Settler.S4.Sno
- -2 6.4292448277274442E-002  0       0                  3   256   # Settler.S4.der(Sno)
- -2 2.2487286673404285E+000  0 1.0000000000000000E+100  2   280   # Settler.S4.Snh
- -2 -8.2394180443958340E-002  0       0                  3   256   # Settler.S4.der(Snh)
- -2 6.8903172228418064E-001  0 1.0000000000000000E+100  2   280   # Settler.S4.Snd
- -2 -1.2190216476377746E-004  0       0                  3   256   # Settler.S4.der(Snd)
- -2 4.1928228001661161E+000  0 1.0000000000000000E+100  2   280   # Settler.S4.Salk
- -2 -1.0477616346568203E-002  0       0                  3   256   # Settler.S4.der(Salk)
- -2 7.5526879434481059E+004  0       0                  6   388   # Settler.S4.Up.SedFlux
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S5.zm
+ -2 8.5621737558441913E-001  0 1.0000000000000000E+100  2   280   # Settler.S4.Ss
+ -2 6.6160709971143077E-005  0       0                  3   256   # Settler.S4.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S4.So
+ -2       0                  0       0                  3   256   # Settler.S4.der(So)
+ -2 1.3735739859012018E+001  0 1.0000000000000000E+100  2   280   # Settler.S4.Sno
+ -2 1.0372215020156384E-002  0       0                  3   256   # Settler.S4.der(Sno)
+ -2 9.6435704671296851E-001  0 1.0000000000000000E+100  2   280   # Settler.S4.Snh
+ -2 -2.1939191170338525E-002  0       0                  3   256   # Settler.S4.der(Snh)
+ -2 6.9039207830469684E-001  0 1.0000000000000000E+100  2   280   # Settler.S4.Snd
+ -2 3.9765522083754717E-005  0       0                  3   256   # Settler.S4.der(Snd)
+ -2 3.8334726562527348E+000  0 1.0000000000000000E+100  2   280   # Settler.S4.Salk
+ -2 -2.3079575666273299E-003  0       0                  3   256   # Settler.S4.der(Salk)
+ -2 7.5635489200118769E+004  0       0                  6   388   # Settler.S4.Up.SedFlux
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S5.zm
  -2    1500                  0       0                  6   256   # Settler.S5.Asc
- -2 3.5519245346448457E+002  0 1.0000000000000000E+100  2   280   # Settler.S5.X
- -2 9.0432973192946520E-002  0       0                  3   256   # Settler.S5.der(X)
- -2 2.1263903063595367E+002  0       0                  6   256   # Settler.S5.vS
+ -2 3.5554431178630756E+002  0 1.0000000000000000E+100  2   280   # Settler.S5.X
+ -2 8.2055804792251080E-002  0       0                  3   256   # Settler.S5.der(X)
+ -2 2.1273383800128477E+002  0       0                  6   256   # Settler.S5.vS
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S5.Si
  -2       0                  0       0                  3   256   # Settler.S5.der(Si)
- -2 8.9265638502588818E-001  0 1.0000000000000000E+100  2   280   # Settler.S5.Ss
- -2 -4.3279045129669902E-004  0       0                  3   256   # Settler.S5.der(Ss)
- -2 4.7164901097987993E-001  0 1.0000000000000000E+100  2   280   # Settler.S5.So
- -2 1.9816854777938379E-003  0       0                  3   256   # Settler.S5.der(So)
- -2 9.9912579738711056E+000  0 1.0000000000000000E+100  2   280   # Settler.S5.Sno
- -2 6.3974752302425136E-002  0       0                  3   256   # Settler.S5.der(Sno)
- -2 2.2461033947438391E+000  0 1.0000000000000000E+100  2   280   # Settler.S5.Snh
- -2 -8.1941906287321273E-002  0       0                  3   256   # Settler.S5.der(Snh)
- -2 6.8902783819417701E-001  0 1.0000000000000000E+100  2   280   # Settler.S5.Snd
- -2 -1.2110942054377738E-004  0       0                  3   256   # Settler.S5.der(Snd)
- -2 4.1924889586384255E+000  0 1.0000000000000000E+100  2   280   # Settler.S5.Salk
- -2 -1.0422618479569535E-002  0       0                  3   256   # Settler.S5.der(Salk)
- -2 7.5526949069732000E+004  0       0                  6   388   # Settler.S5.Up.SedFlux
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S6.zm
+ -2 8.5621948362045408E-001  0 1.0000000000000000E+100  2   280   # Settler.S5.Ss
+ -2 6.5616697953808182E-005  0       0                  3   256   # Settler.S5.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S5.So
+ -2       0                  0       0                  3   256   # Settler.S5.der(So)
+ -2 1.3736070342210192E+001  0 1.0000000000000000E+100  2   280   # Settler.S5.Sno
+ -2 1.0288558473321460E-002  0       0                  3   256   # Settler.S5.der(Sno)
+ -2 9.6365801241323112E-001  0 1.0000000000000000E+100  2   280   # Settler.S5.Snh
+ -2 -2.1793399172056367E-002  0       0                  3   256   # Settler.S5.der(Snh)
+ -2 6.9039334532788232E-001  0 1.0000000000000000E+100  2   280   # Settler.S5.Snd
+ -2 3.9412927620203362E-005  0       0                  3   256   # Settler.S5.der(Snd)
+ -2 3.8333991192891848E+000  0 1.0000000000000000E+100  2   280   # Settler.S5.Salk
+ -2 -2.2915683859462809E-003  0       0                  3   256   # Settler.S5.der(Salk)
+ -2 7.5635552404665941E+004  0       0                  6   388   # Settler.S5.Up.SedFlux
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S6.zm
  -2    1500                  0       0                  6   256   # Settler.S6.Asc
- -2 3.5518978801429682E+002  0 1.0000000000000000E+100  2   280   # Settler.S6.X
- -2 9.0655585117929149E-002  0       0                  3   256   # Settler.S6.der(X)
- -2 2.1263828977732868E+002  0       0                  6   256   # Settler.S6.vS
+ -2 3.5554189166325841E+002  0 1.0000000000000000E+100  2   280   # Settler.S6.X
+ -2 8.2297885721010461E-002  0       0                  3   256   # Settler.S6.der(X)
+ -2 2.1273316640926816E+002  0       0                  6   256   # Settler.S6.vS
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S6.Si
  -2       0                  0       0                  3   256   # Settler.S6.der(Si)
- -2 8.9264259530304935E-001  0 1.0000000000000000E+100  2   280   # Settler.S6.Ss
- -2 -4.3087216219646508E-004  0       0                  3   256   # Settler.S6.der(Ss)
- -2 4.7171215214533457E-001  0 1.0000000000000000E+100  2   280   # Settler.S6.So
- -2 1.9797480663964963E-003  0       0                  3   256   # Settler.S6.der(So)
- -2 9.9932963601162044E+000  0 1.0000000000000000E+100  2   280   # Settler.S6.Sno
- -2 6.3658684182688982E-002  0       0                  3   256   # Settler.S6.der(Sno)
- -2 2.2434925326668176E+000  0 1.0000000000000000E+100  2   280   # Settler.S6.Snh
- -2 -8.1492348724520228E-002  0       0                  3   256   # Settler.S6.der(Snh)
- -2 6.8902397936287085E-001  0 1.0000000000000000E+100  2   280   # Settler.S6.Snd
- -2 -1.2032272699192010E-004  0       0                  3   256   # Settler.S6.der(Snd)
- -2 4.1921568694722771E+000  0 1.0000000000000000E+100  2   280   # Settler.S6.Salk
- -2 -1.0367930930272754E-002  0       0                  3   256   # Settler.S6.der(Salk)
- -2 4.1264833331728987E+003  0       0                  6   388   # Settler.S6.Up.SedFlux
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S7.zm
+ -2 8.5622157432298496E-001  0 1.0000000000000000E+100  2   280   # Settler.S6.Ss
+ -2 6.5076879703865781E-005  0       0                  3   256   # Settler.S6.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S6.So
+ -2       0                  0       0                  3   256   # Settler.S6.der(So)
+ -2 1.3736398159913765E+001  0 1.0000000000000000E+100  2   280   # Settler.S6.Sno
+ -2 1.0206218745814092E-002  0       0                  3   256   # Settler.S6.der(Sno)
+ -2 9.6296362338991415E-001  0 1.0000000000000000E+100  2   280   # Settler.S6.Snh
+ -2 -2.1649253422085134E-002  0       0                  3   256   # Settler.S6.der(Snh)
+ -2 6.9039460111657780E-001  0 1.0000000000000000E+100  2   280   # Settler.S6.Snd
+ -2 3.9063097334889682E-005  0       0                  3   256   # Settler.S6.der(Snd)
+ -2 3.8333261045235294E+000  0 1.0000000000000000E+100  2   280   # Settler.S6.Salk
+ -2 -2.2753908529314954E-003  0       0                  3   256   # Settler.S6.der(Salk)
+ -2 4.1306281463547230E+003  0       0                  6   388   # Settler.S6.Up.SedFlux
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # Settler.S6.In.So
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S7.zm
  -2    1500                  0       0                  6   256   # Settler.S7.Asc
- -2 6.8878105060482028E+001  0 1.0000000000000000E+100  2   280   # Settler.S7.X
- -2 1.0242797566206718E-002  0       0                  3   256   # Settler.S7.der(X)
- -2 5.9909942782970354E+001  0       0                  6   256   # Settler.S7.vS
+ -2 6.8917867993470253E+001  0 1.0000000000000000E+100  2   280   # Settler.S7.X
+ -2 9.2955996207828278E-003  0       0                  3   256   # Settler.S7.der(X)
+ -2 5.9935518416589538E+001  0       0                  6   256   # Settler.S7.vS
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S7.Si
  -2       0                  0       0                  3   256   # Settler.S7.der(Si)
- -2 8.9265697565731383E-001  0 1.0000000000000000E+100  2   280   # Settler.S7.Ss
- -2 -4.3287263061817037E-004  0       0                  3   256   # Settler.S7.der(Ss)
- -2 4.7164631639347693E-001  0 1.0000000000000000E+100  2   280   # Settler.S7.So
- -2 1.9817658571682343E-003  0       0                  3   256   # Settler.S7.der(So)
- -2 9.9911706206874129E+000  0 1.0000000000000000E+100  2   280   # Settler.S7.Sno
- -2 6.3988299705670992E-002  0       0                  3   256   # Settler.S7.der(Sno)
- -2 2.2462153451317977E+000  0 1.0000000000000000E+100  2   280   # Settler.S7.Snh
- -2 -8.1961193216675166E-002  0       0                  3   256   # Settler.S7.der(Snh)
- -2 6.8902800383202778E-001  0 1.0000000000000000E+100  2   280   # Settler.S7.Snd
- -2 -1.2114322907209429E-004  0       0                  3   256   # Settler.S7.der(Snd)
- -2 4.1925031946078404E+000  0 1.0000000000000000E+100  2   280   # Settler.S7.Salk
- -2 -1.0424963789015175E-002  0       0                  3   256   # Settler.S7.der(Salk)
+ -2 8.5621939371618083E-001  0 1.0000000000000000E+100  2   280   # Settler.S7.Ss
+ -2 6.5639898170732571E-005  0       0                  3   256   # Settler.S7.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S7.So
+ -2       0                  0       0                  3   256   # Settler.S7.der(So)
+ -2 1.3736056247725520E+001  0 1.0000000000000000E+100  2   280   # Settler.S7.Sno
+ -2 1.0292126566472893E-002  0       0                  3   256   # Settler.S7.der(Sno)
+ -2 9.6368782306475953E-001  0 1.0000000000000000E+100  2   280   # Settler.S7.Snh
+ -2 -2.1799616887464488E-002  0       0                  3   256   # Settler.S7.der(Snh)
+ -2 6.9039329128992344E-001  0 1.0000000000000000E+100  2   280   # Settler.S7.Snd
+ -2 3.9427964753166624E-005  0       0                  3   256   # Settler.S7.der(Snd)
+ -2 3.8334022553703173E+000  0 1.0000000000000000E+100  2   280   # Settler.S7.Salk
+ -2 -2.2922673722367642E-003  0       0                  3   256   # Settler.S7.der(Salk)
  -2    3000                  0 1.0000000000000000E+100  6   256   # Settler.S7.Xt
- -2 6.7910389307269304E+002  0       0                  6   388   # Settler.S7.Up.SedFlux
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S8.zm
+ -2 6.7948753692793071E+002  0       0                  6   388   # Settler.S7.Up.SedFlux
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S8.zm
  -2    1500                  0       0                  6   256   # Settler.S8.Asc
- -2 2.9507041924211524E+001  0 1.0000000000000000E+100  2   280   # Settler.S8.X
- -2 3.4000616039975284E-003  0       0                  3   256   # Settler.S8.der(X)
- -2 2.3014977062660602E+001  0       0                  6   256   # Settler.S8.vS
+ -2 2.9520232089387317E+001  0 1.0000000000000000E+100  2   280   # Settler.S8.X
+ -2 3.0867628351429429E-003  0       0                  3   256   # Settler.S8.der(X)
+ -2 2.3017689524609466E+001  0       0                  6   256   # Settler.S8.vS
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S8.Si
  -2       0                  0       0                  3   256   # Settler.S8.der(Si)
- -2 8.9267142279057532E-001  0 1.0000000000000000E+100  2   280   # Settler.S8.Ss
- -2 -4.3488278972616276E-004  0       0                  3   256   # Settler.S8.der(Ss)
- -2 4.7158041541482637E-001  0 1.0000000000000000E+100  2   280   # Settler.S8.So
- -2 1.9837292923461864E-003  0       0                  3   256   # Settler.S8.der(So)
- -2 9.9890338723677772E+000  0 1.0000000000000000E+100  2   280   # Settler.S8.Sno
- -2 6.4319685668234816E-002  0       0                  3   256   # Settler.S8.der(Sno)
- -2 2.2489538311552906E+000  0 1.0000000000000000E+100  2   280   # Settler.S8.Snh
- -2 -8.2432993450509209E-002  0       0                  3   256   # Settler.S8.der(Snh)
- -2 6.8903205577777538E-001  0 1.0000000000000000E+100  2   280   # Settler.S8.Snd
- -2 -1.2197032024556020E-004  0       0                  3   256   # Settler.S8.der(Snd)
- -2 4.1928514256326643E+000  0 1.0000000000000000E+100  2   280   # Settler.S8.Salk
- -2 -1.0482334232242353E-002  0       0                  3   256   # Settler.S8.der(Salk)
+ -2 8.5621719425471876E-001  0 1.0000000000000000E+100  2   280   # Settler.S8.Ss
+ -2 6.6207454790881141E-005  0       0                  3   256   # Settler.S8.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S8.So
+ -2       0                  0       0                  3   256   # Settler.S8.der(So)
+ -2 1.3735711435428840E+001  0 1.0000000000000000E+100  2   280   # Settler.S8.Sno
+ -2 1.0379424662558220E-002  0       0                  3   256   # Settler.S8.der(Sno)
+ -2 9.6441707598503412E-001  0 1.0000000000000000E+100  2   280   # Settler.S8.Snh
+ -2 -2.1951727994692780E-002  0       0                  3   256   # Settler.S8.der(Snh)
+ -2 6.9039196924252189E-001  0 1.0000000000000000E+100  2   280   # Settler.S8.Snd
+ -2 3.9795829606075657E-005  0       0                  3   256   # Settler.S8.der(Snd)
+ -2 3.8334789743137696E+000  0 1.0000000000000000E+100  2   280   # Settler.S8.Salk
+ -2 -2.3093680284074752E-003  0       0                  3   256   # Settler.S8.der(Salk)
  -2    3000                  0 1.0000000000000000E+100  6   256   # Settler.S8.Xt
- -2 2.0505140556121353E+002  0       0                  6   388   # Settler.S8.Up.SedFlux
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S9.zm
+ -2 2.0511497025732197E+002  0       0                  6   388   # Settler.S8.Up.SedFlux
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S9.zm
  -2    1500                  0       0                  6   256   # Settler.S9.Asc
- -2 1.8091413274947936E+001  0 1.0000000000000000E+100  2   280   # Settler.S9.X
- -2 2.2324067995782571E-003  0       0                  3   256   # Settler.S9.der(X)
- -2 1.1334183927198117E+001  0       0                  6   256   # Settler.S9.vS
+ -2 1.8100070085354869E+001  0 1.0000000000000000E+100  2   280   # Settler.S9.X
+ -2 2.0276419657088711E-003  0       0                  3   256   # Settler.S9.der(X)
+ -2 1.1332274918829437E+001  0       0                  6   256   # Settler.S9.vS
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S9.Si
  -2       0                  0       0                  3   256   # Settler.S9.der(Si)
- -2 8.9268593702360288E-001  0 1.0000000000000000E+100  2   280   # Settler.S9.Ss
- -2 -4.3690260451801705E-004  0       0                  3   256   # Settler.S9.der(Ss)
- -2 4.7151445108946999E-001  0 1.0000000000000000E+100  2   280   # Settler.S9.So
- -2 1.9856361337693713E-003  0       0                  3   256   # Settler.S9.der(So)
- -2 9.9868860560235984E+000  0 1.0000000000000000E+100  2   280   # Settler.S9.Sno
- -2 6.4652851653689475E-002  0       0                  3   256   # Settler.S9.der(Sno)
- -2 2.2517080899745290E+000  0 1.0000000000000000E+100  2   280   # Settler.S9.Snh
- -2 -8.2907780890441499E-002  0       0                  3   256   # Settler.S9.der(Snh)
- -2 6.8903613542397213E-001  0 1.0000000000000000E+100  2   280   # Settler.S9.Snd
- -2 -1.2280414993259139E-004  0       0                  3   256   # Settler.S9.der(Snd)
- -2 4.1932015738589570E+000  0 1.0000000000000000E+100  2   280   # Settler.S9.Salk
- -2 -1.0540045191785795E-002  0       0                  3   256   # Settler.S9.der(Salk)
+ -2 8.5621497579614969E-001  0 1.0000000000000000E+100  2   280   # Settler.S9.Ss
+ -2 6.6779299364862766E-005  0       0                  3   256   # Settler.S9.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S9.So
+ -2       0                  0       0                  3   256   # Settler.S9.der(So)
+ -2 1.3735363692867141E+001  0 1.0000000000000000E+100  2   280   # Settler.S9.Sno
+ -2 1.0467630522093020E-002  0       0                  3   256   # Settler.S9.der(Sno)
+ -2 9.6515142389748465E-001  0 1.0000000000000000E+100  2   280   # Settler.S9.Snh
+ -2 -2.2105095748556718E-002  0       0                  3   256   # Settler.S9.der(Snh)
+ -2 6.9039063487771390E-001  0 1.0000000000000000E+100  2   280   # Settler.S9.Snd
+ -2 4.0166604063048803E-005  0       0                  3   256   # Settler.S9.der(Snd)
+ -2 3.8335562664898357E+000  0 1.0000000000000000E+100  2   280   # Settler.S9.Salk
+ -2 -2.3266232852140476E-003  0       0                  3   256   # Settler.S9.der(Salk)
  -2    3000                  0 1.0000000000000000E+100  6   256   # Settler.S9.Xt
- -2 6.7600519167700227E+001  0       0                  6   388   # Settler.S9.Up.SedFlux
- -2 4.0000000000000002E-001  0       0                  6   256   # Settler.S10.zm
+ -2 6.7609417344233620E+001  0       0                  6   388   # Settler.S9.Up.SedFlux
+ -2 4.0000000596046448E-001  0       0                  6   256   # Settler.S10.zm
  -2    1500                  0       0                  6   256   # Settler.S10.Asc
- -2 1.2476995222764534E+001  0 1.0000000000000000E+100  2   280   # Settler.S10.X
- -2 2.0428148901174836E-003  0       0                  3   256   # Settler.S10.der(X)
- -2 5.4180127475212689E+000  0       0                  6   256   # Settler.S10.vS
+ -2 1.2484919232291993E+001  0 1.0000000000000000E+100  2   280   # Settler.S10.X
+ -2 1.8559013359570485E-003  0       0                  3   256   # Settler.S10.der(X)
+ -2 5.4152867220288634E+000  0       0                  6   256   # Settler.S10.vS
  -2      30                  0 1.0000000000000000E+100  2   280   # Settler.S10.Si
  -2       0                  0       0                  3   256   # Settler.S10.der(Si)
- -2 8.9270051868310241E-001  0 1.0000000000000000E+100  2   280   # Settler.S10.Ss
- -2 -4.3893225370150669E-004  0       0                  3   256   # Settler.S10.der(Ss)
- -2 4.7144842537383624E-001  0 1.0000000000000000E+100  2   280   # Settler.S10.So
- -2 1.9874840834350851E-003  0       0                  3   256   # Settler.S10.der(So)
- -2 9.9847271124631138E+000  0 1.0000000000000000E+100  2   280   # Settler.S10.Sno
- -2 6.4987799409851429E-002  0       0                  3   256   # Settler.S10.der(Sno)
- -2 2.2544782218496935E+000  0 1.0000000000000000E+100  2   280   # Settler.S10.Snh
- -2 -8.3385586328910216E-002  0       0                  3   256   # Settler.S10.der(Snh)
- -2 6.8904024300380007E-001  0 1.0000000000000000E+100  2   280   # Settler.S10.Snd
- -2 -1.2364499878733947E-004  0       0                  3   256   # Settler.S10.der(Snd)
- -2 4.1935536506761490E+000  0 1.0000000000000000E+100  2   280   # Settler.S10.Salk
- -2 -1.0598098992176648E-002  0       0                  3   256   # Settler.S10.der(Salk)
+ -2 8.5621273820358568E-001  0 1.0000000000000000E+100  2   280   # Settler.S10.Ss
+ -2 6.7355264494086810E-005  0       0                  3   256   # Settler.S10.der(Ss)
+ -2       2                  0 1.0000000000000000E+100  2   280   # Settler.S10.So
+ -2       0                  0       0                  3   256   # Settler.S10.der(So)
+ -2 1.3735012994535326E+001  0 1.0000000000000000E+100  2   280   # Settler.S10.Sno
+ -2 1.0556604127535582E-002  0       0                  3   256   # Settler.S10.der(Sno)
+ -2 9.6589090398041044E-001  0 1.0000000000000000E+100  2   280   # Settler.S10.Snh
+ -2 -2.2259582631177586E-002  0       0                  3   256   # Settler.S10.der(Snh)
+ -2 6.9038928809976985E-001  0 1.0000000000000000E+100  2   280   # Settler.S10.Snd
+ -2 4.0540260141886021E-005  0       0                  3   256   # Settler.S10.der(Snd)
+ -2 3.8336341363758990E+000  0 1.0000000000000000E+100  2   280   # Settler.S10.Salk
+ -2 -2.3440133187198416E-003  0       0                  3   256   # Settler.S10.der(Salk)
  -2    3000                  0 1.0000000000000000E+100  6   256   # Settler.S10.Xt
  -2   92230                  0       0                  6   388   # divider.In.Q
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # divider.In.So
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # divider.Out1.So
  -2  -55338                  0       0                  6   388   # divider.Out2.Q
- -1 6.7000000000000004E-001  0       0                  1   280   # tank5.Y_h
- -1 2.3999999999999999E-001  0       0                  1   280   # tank5.Y_a
- -1 8.0000000000000002E-002  0       0                  1   280   # tank5.f_p
- -1 8.0000000000000002E-002  0       0                  1   280   # tank5.i_xb
- -1 5.9999999999999998E-002  0       0                  1   280   # tank5.i_xp
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # divider.Out2.So
+ -1 6.7000001668930054E-001  0       0                  1   280   # tank5.Y_h
+ -1 2.3999999463558197E-001  0       0                  1   280   # tank5.Y_a
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank5.f_p
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank5.i_xb
+ -1 5.9999998658895493E-002  0       0                  1   280   # tank5.i_xp
  -1       4                  0       0                  1   280   # tank5.mu_h_T
- -1 2.9999999999999999E-001  0       0                  1   280   # tank5.b_h_T
+ -1 3.0000001192092896E-001  0       0                  1   280   # tank5.b_h_T
  -1 5.0000000000000000E-001  0       0                  1   280   # tank5.mu_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank5.b_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank5.k_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank5.b_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank5.k_a_T
  -1       3                  0       0                  1   280   # tank5.k_h_T
- -1 1.0000000000000001E-001  0       0                  1   280   # tank5.K_x_T
+ -1 1.0000000149011612E-001  0       0                  1   280   # tank5.K_x_T
  -1       1                  0       0                  1   280   # tank5.K_nh
  -1      10                  0       0                  1   280   # tank5.K_s
- -1 2.0000000000000001E-001  0       0                  1   280   # tank5.K_oh
+ -1 2.0000000298023224E-001  0       0                  1   280   # tank5.K_oh
  -1 5.0000000000000000E-001  0       0                  1   280   # tank5.K_no
- -1 4.0000000000000002E-001  0       0                  1   280   # tank5.K_oa
- -1 8.0000000000000004E-001  0       0                  1   280   # tank5.ny_g
- -1 8.0000000000000004E-001  0       0                  1   280   # tank5.ny_h
+ -1 4.0000000596046448E-001  0       0                  1   280   # tank5.K_oa
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank5.ny_g
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank5.ny_h
  -2      30                  0 1.0000000000000000E+100  2   280   # tank5.Si
  -2       0                  0       0                  3   256   # tank5.der(Si)
- -2 8.9263558773237495E-001  0 1.0000000000000000E+100  2   280   # tank5.Ss
- -2 -4.2989765196210783E-004  0       0                  3   256   # tank5.der(Ss)
- -2 1.1445859882825623E+003  0 1.0000000000000000E+100  2   280   # tank5.Xi
- -2 5.0207652341054276E-001  0       0                  3   256   # tank5.der(Xi)
- -2 4.9461875990573084E+001  0 1.0000000000000000E+100  2   280   # tank5.Xs
- -2 -2.7205192622943741E-002  0       0                  3   256   # tank5.der(Xs)
- -2 2.5575967144141709E+003  0 1.0000000000000000E+100  2   280   # tank5.Xbh
- -2 -6.2100086381374098E-002  0       0                  3   256   # tank5.der(Xbh)
- -2 1.4233660644862084E+002  0 1.0000000000000000E+100  2   280   # tank5.Xba
- -2 1.0363841524920439E+000  0       0                  3   256   # tank5.der(Xba)
- -2 4.5039030127894682E+002  0 1.0000000000000000E+100  2   280   # tank5.Xp
- -2 1.2947371898441418E-001  0       0                  3   256   # tank5.der(Xp)
- -2 4.7174435015140198E-001  0 1.0000000000000000E+100  2   280   # tank5.So
- -2 1.9787343994721596E-003  0       0                  3   256   # tank5.der(So)
- -2 9.9943316851327282E+000  0 1.0000000000000000E+100  2   280   # tank5.Sno
- -2 6.3498174626104742E-002  0       0                  3   256   # tank5.der(Sno)
- -2 2.2421671664835068E+000  0 1.0000000000000000E+100  2   280   # tank5.Snh
- -2 -8.1264252050175401E-002  0       0                  3   256   # tank5.der(Snh)
- -2 6.8902202247150701E-001  0 1.0000000000000000E+100  2   280   # tank5.Snd
- -2 -1.1992428252316500E-004  0       0                  3   256   # tank5.der(Snd)
- -2 3.5371601593211177E+000  0 1.0000000000000000E+100  2   280   # tank5.Xnd
- -2 -1.8026652874745253E-003  0       0                  3   256   # tank5.der(Xnd)
- -2 4.1919882486721534E+000  0 1.0000000000000000E+100  2   280   # tank5.Salk
- -2 -1.0340173342088477E-002  0       0                  3   256   # tank5.der(Salk)
- -2 5.8875683855766056E+002  0       0                  6   256   # tank5.p1
- -2 1.9017271717087777E+002  0       0                  6   256   # tank5.p2
- -2 2.6634022546980230E+001  0       0                  6   256   # tank5.p3
- -2 7.6727901432425131E+002  0       0                  6   256   # tank5.p4
- -2 7.1168303224310421E+000  0       0                  6   256   # tank5.p5
- -2 8.8112023041606662E+001  0       0                  6   256   # tank5.p6
- -2 1.1552437246261541E+003  0       0                  6   256   # tank5.p7
- -2 8.2614781490135371E+001  0       0                  6   256   # tank5.p8
+ -2 8.5622263271310761E-001  0 1.0000000000000000E+100  2   280   # tank5.Ss
+ -2 6.5225575851535211E-005  0       0                  3   256   # tank5.der(Ss)
+ -2 1.1445684526139771E+003  0 1.0000000000000000E+100  2   280   # tank5.Xi
+ -2 5.2348915665550855E-001  0       0                  3   256   # tank5.der(Xi)
+ -2 4.7284361145010259E+001  0 1.0000000000000000E+100  2   280   # tank5.Xs
+ -2 2.9821257056141803E-003  0       0                  3   256   # tank5.der(Xs)
+ -2 2.5593864062716248E+003  0 1.0000000000000000E+100  2   280   # tank5.Xbh
+ -2 -4.9323828707894535E-002  0       0                  3   256   # tank5.der(Xbh)
+ -2 1.4843863707494938E+002  0 1.0000000000000000E+100  2   280   # tank5.Xba
+ -2 8.0729582910546327E-001  0       0                  3   256   # tank5.der(Xba)
+ -2 4.5082585583816336E+002  0 1.0000000000000000E+100  2   280   # tank5.Xp
+ -2 1.4879664993489428E-001  0       0                  3   256   # tank5.der(Xp)
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   256   # tank5.So
+ -2 -5.2350250244140625E+002  0       0                  6   256   # tank5.der(So)
+ -2 1.3736564150679751E+001  0 1.0000000000000000E+100  2   280   # tank5.Sno
+ -2 9.7781573360578022E-003  0       0                  3   256   # tank5.der(Sno)
+ -2 9.6261152666848915E-001  0 1.0000000000000000E+100  2   280   # tank5.Snh
+ -2 -2.1182380737698736E-002  0       0                  3   256   # tank5.der(Snh)
+ -2 6.9039523642663825E-001  0 1.0000000000000000E+100  2   280   # tank5.Snd
+ -2 3.8906843573549565E-005  0       0                  3   256   # tank5.der(Snd)
+ -2 3.3882466241323628E+000  0 1.0000000000000000E+100  2   280   # tank5.Xnd
+ -2 2.1883960184254647E-004  0       0                  3   256   # tank5.der(Xnd)
+ -2 3.8332890982746921E+000  0 1.0000000000000000E+100  2   280   # tank5.Salk
+ -2 -2.2114669796202691E-003  0       0                  3   256   # tank5.der(Salk)
+ -2 7.3402546525330467E+002  0       0                  6   256   # tank5.p1
+ -2 5.6659672013346565E+001  0       0                  6   256   # tank5.p2
+ -2 3.0335588737002634E+001  0       0                  6   256   # tank5.p3
+ -2 7.6781595239175090E+002  0       0                  6   256   # tank5.p4
+ -2 7.4219319643428721E+000  0       0                  6   256   # tank5.p5
+ -2 8.8349410469759917E+001  0       0                  6   256   # tank5.p6
+ -2 1.1724983864590768E+003  0       0                  6   256   # tank5.p7
+ -2 8.4017497614850086E+001  0       0                  6   256   # tank5.p8
  -2       0                  0       0                  6   256   # tank5.r1
- -2 -7.3377018343510372E+000  0       0                  6   256   # tank5.r2
+ -2 -7.6286546919029661E+000  0       0                  6   256   # tank5.r2
  -2       0                  0       0                  6   256   # tank5.r3
- -2 -4.4279954755120627E+002  0       0                  6   256   # tank5.r4
- -2 1.1650541404287083E+001  0       0                  6   256   # tank5.r5
- -2 1.9517192224549188E+001  0       0                  6   256   # tank5.r6
- -2 6.1951667571734589E+001  0       0                  6   256   # tank5.r7
- -2 -7.7050686831350163E+002  0       0                  6   256   # tank5.r8
- -2 7.8224338979468911E+001  0       0                  6   256   # tank5.r9
- -2 -8.7308157166185808E+001  0       0                  6   256   # tank5.r10
- -2 -5.4972415514712907E+000  0       0                  6   256   # tank5.r11
- -2 -2.4380213972704858E+001  0       0                  6   256   # tank5.r12
- -2 -1.1823749724689620E+001  0       0                  6   256   # tank5.r13
- -2 7.3372719366990751E+000  0       0                  6   256   # tank5.inputSs
- -2 4.4277234235858333E+002  0       0                  6   256   # tank5.inputXs
- -2 -1.1712641490668457E+001  0       0                  6   256   # tank5.inputXbh
- -2 -1.8480808072057144E+001  0       0                  6   256   # tank5.inputXba
- -2 -6.1822193852750175E+001  0       0                  6   256   # tank5.inputXp
- -2 1.3813537246061890E+002  0       0                  6   256   # tank5.inputSo
- -2 -7.8160840804842806E+001  0       0                  6   256   # tank5.inputSno
- -2 8.7226892914135632E+001  0       0                  6   256   # tank5.inputSnh
- -2 5.4971216271887675E+000  0       0                  6   256   # tank5.inputSnd
- -2 2.4378411307417384E+001  0       0                  6   256   # tank5.inputXnd
- -2 1.1813409551347531E+001  0       0                  6   256   # tank5.inputSalk
- -2 6.3237347458728220E+002  0       0                  6   256   # tank5.aeration
+ -2 -4.5927953146523714E+002  0       0                  6   256   # tank5.r4
+ -2 2.2869184874900384E+001  0       0                  6   256   # tank5.r5
+ -2 2.2913656772659763E+001  0       0                  6   256   # tank5.r6
+ -2 6.2019029362254145E+001  0       0                  6   256   # tank5.r7
+ -2 -9.0883949639874777E+002  0       0                  6   256   # tank5.r8
+ -2 1.1664059673746462E+002  0       0                  6   256   # tank5.r9
+ -2 -1.0373053537183249E+002  0       0                  6   256   # tank5.r10
+ -2 -4.3319128549098309E+000  0       0                  6   256   # tank5.r11
+ -2 -2.5719609931157194E+001  0       0                  6   256   # tank5.r12
+ -2 -1.5740795150664081E+001  0       0                  6   256   # tank5.r13
+ -2 7.6287199174788176E+000  0       0                  6   256   # tank5.inputSs
+ -2 4.5928251359094276E+002  0       0                  6   256   # tank5.inputXs
+ -2 -2.2918508703608278E+001  0       0                  6   256   # tank5.inputXbh
+ -2 -2.2106360943554300E+001  0       0                  6   256   # tank5.inputXba
+ -2 -6.1870232712319250E+001  0       0                  6   256   # tank5.inputXp
+ -2 4.2537950399830692E+001  0       0                  6   256   # tank5.inputSo
+ -2 -1.1663081858012856E+002  0       0                  6   256   # tank5.inputSno
+ -2 1.0370935299109479E+002  0       0                  6   256   # tank5.inputSnh
+ -2 4.3319517617534045E+000  0       0                  6   256   # tank5.inputSnd
+ -2 2.5719828770759037E+001  0       0                  6   256   # tank5.inputXnd
+ -2 1.5738583683684460E+001  0       0                  6   256   # tank5.inputSalk
+ -2 8.6630154599891705E+002  0       0                  6   256   # tank5.aeration
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # tank5.Out.So
  -2       0                  0       0                  6   388   # tank5.MeasurePort.Q
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # tank5.MeasurePort.So
  -1    1333                  0       0                  1   280   # tank5.V
- -1 6.9999999999999996E-001  0       0                  1   280   # tank5.alpha
+ -1 6.9999998807907104E-001  0       0                  1   280   # tank5.alpha
  -1 4.5000000000000000E+000  0       0                  1   280   # tank5.de
  -1 2.3500000000000000E+001  0       0                  1   280   # tank5.R_air
- -1      84                  0       0                  1   280   # tank5.Kla
  -2       8                  0 1.0000000000000000E+100  6   256   # tank5.So_sat
+ -2 1.4438359099981949E+002  0       0                  6   256   # tank5.Kla
  -2       0                  0       0                  6   388   # tank5.AirIn.Q_air
- -1 6.7000000000000004E-001  0       0                  1   280   # tank4.Y_h
- -1 2.3999999999999999E-001  0       0                  1   280   # tank4.Y_a
- -1 8.0000000000000002E-002  0       0                  1   280   # tank4.f_p
- -1 8.0000000000000002E-002  0       0                  1   280   # tank4.i_xb
- -1 5.9999999999999998E-002  0       0                  1   280   # tank4.i_xp
+ -1 6.7000001668930054E-001  0       0                  1   280   # tank4.Y_h
+ -1 2.3999999463558197E-001  0       0                  1   280   # tank4.Y_a
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank4.f_p
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank4.i_xb
+ -1 5.9999998658895493E-002  0       0                  1   280   # tank4.i_xp
  -1       4                  0       0                  1   280   # tank4.mu_h_T
- -1 2.9999999999999999E-001  0       0                  1   280   # tank4.b_h_T
+ -1 3.0000001192092896E-001  0       0                  1   280   # tank4.b_h_T
  -1 5.0000000000000000E-001  0       0                  1   280   # tank4.mu_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank4.b_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank4.k_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank4.b_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank4.k_a_T
  -1       3                  0       0                  1   280   # tank4.k_h_T
- -1 1.0000000000000001E-001  0       0                  1   280   # tank4.K_x_T
+ -1 1.0000000149011612E-001  0       0                  1   280   # tank4.K_x_T
  -1       1                  0       0                  1   280   # tank4.K_nh
  -1      10                  0       0                  1   280   # tank4.K_s
- -1 2.0000000000000001E-001  0       0                  1   280   # tank4.K_oh
+ -1 2.0000000298023224E-001  0       0                  1   280   # tank4.K_oh
  -1 5.0000000000000000E-001  0       0                  1   280   # tank4.K_no
- -1 4.0000000000000002E-001  0       0                  1   280   # tank4.K_oa
- -1 8.0000000000000004E-001  0       0                  1   280   # tank4.ny_g
- -1 8.0000000000000004E-001  0       0                  1   280   # tank4.ny_h
+ -1 4.0000000596046448E-001  0       0                  1   280   # tank4.K_oa
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank4.ny_g
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank4.ny_h
  -2      30                  0 1.0000000000000000E+100  2   280   # tank4.Si
  -2       0                  0       0                  3   256   # tank4.der(Si)
- -2 9.9868116391821327E-001  0 1.0000000000000000E+100  2   280   # tank4.Ss
- -2 -4.7342204607048188E-004  0       0                  3   256   # tank4.der(Ss)
- -2 1.1445932447935209E+003  0 1.0000000000000000E+100  2   280   # tank4.Xi
- -2 5.0123248546270027E-001  0       0                  3   256   # tank4.der(Xi)
- -2 5.5861263742540899E+001  0 1.0000000000000000E+100  2   280   # tank4.Xs
- -2 -3.0348602900176047E-002  0       0                  3   256   # tank4.der(Xs)
- -2 2.5574274316308351E+003  0 1.0000000000000000E+100  2   280   # tank4.Xbh
- -2 -5.9454647642184000E-002  0       0                  3   256   # tank4.der(Xbh)
- -2 1.4206950336762711E+002  0 1.0000000000000000E+100  2   280   # tank4.Xba
- -2 1.0358885742159956E+000  0       0                  3   256   # tank4.der(Xba)
- -2 4.4949678523855090E+002  0 1.0000000000000000E+100  2   280   # tank4.Xp
- -2 1.2927950292852586E-001  0       0                  3   256   # tank4.der(Xp)
- -2 2.4682146037565738E+000  0 1.0000000000000000E+100  2   280   # tank4.So
- -2 -6.0429641025621095E-003  0       0                  3   256   # tank4.der(So)
- -2 8.8646732139969213E+000  0 1.0000000000000000E+100  2   280   # tank4.Sno
- -2 6.5048598302809069E-002  0       0                  3   256   # tank4.der(Sno)
- -2 3.5028572700782461E+000  0 1.0000000000000000E+100  2   280   # tank4.Snh
- -2 -8.4185940746380084E-002  0       0                  3   256   # tank4.der(Snh)
- -2 7.6847191002482618E-001  0 1.0000000000000000E+100  2   280   # tank4.Snd
- -2 -2.2197276443769454E-004  0       0                  3   256   # tank4.der(Snd)
- -2 3.8895012877260551E+000  0 1.0000000000000000E+100  2   280   # tank4.Xnd
- -2 -1.9839838140569555E-003  0       0                  3   256   # tank4.der(Xnd)
- -2 4.3627274325813614E+000  0 1.0000000000000000E+100  2   280   # tank4.Salk
- -2 -1.0659609939896342E-002  0       0                  3   256   # tank4.der(Salk)
- -2 8.5923452154604900E+002  0       0                  6   256   # tank4.p1
- -2 5.2725278927572283E+001  0       0                  6   256   # tank4.p2
- -2 4.7552833715219599E+001  0       0                  6   256   # tank4.p3
- -2 7.6722822948925057E+002  0       0                  6   256   # tank4.p4
- -2 7.1034751683813555E+000  0       0                  6   256   # tank4.p5
- -2 9.8265557156761673E+001  0       0                  6   256   # tank4.p6
- -2 1.3503875803182746E+003  0       0                  6   256   # tank4.p7
- -2 9.4024622442927452E+001  0       0                  6   256   # tank4.p8
+ -2 9.6648050596475310E-001  0 1.0000000000000000E+100  2   280   # tank4.Ss
+ -2 7.4529949392498906E-005  0       0                  3   256   # tank4.der(Ss)
+ -2 1.1445760186016798E+003  0 1.0000000000000000E+100  2   280   # tank4.Xi
+ -2 5.2261304126923225E-001  0       0                  3   256   # tank4.der(Xi)
+ -2 5.3922370367787302E+001  0 1.0000000000000000E+100  2   280   # tank4.Xs
+ -2 3.5293800345925774E-003  0       0                  3   256   # tank4.der(Xs)
+ -2 2.5590551651125452E+003  0 1.0000000000000000E+100  2   280   # tank4.Xbh
+ -2 -4.9231890459310534E-002  0       0                  3   256   # tank4.der(Xbh)
+ -2 1.4811913388577278E+002  0 1.0000000000000000E+100  2   280   # tank4.Xba
+ -2 8.0858828652542059E-001  0       0                  3   256   # tank4.der(Xba)
+ -2 4.4993164549222905E+002  0 1.0000000000000000E+100  2   280   # tank4.Xp
+ -2 1.4856597288289208E-001  0       0                  3   256   # tank4.der(Xp)
+ -2 2.6148009094977156E+000  0 1.0000000000000000E+100  2   280   # tank4.So
+ -2 -4.7623145665056654E-003  0       0                  3   256   # tank4.der(So)
+ -2 1.2050899170008480E+001  0 1.0000000000000000E+100  2   280   # tank4.Sno
+ -2 2.0882070489534499E-002  0       0                  3   256   # tank4.der(Sno)
+ -2 2.4615225918005432E+000  0 1.0000000000000000E+100  2   280   # tank4.Snh
+ -2 -3.2461698203150036E-002  0       0                  3   256   # tank4.der(Snh)
+ -2 7.5300492631514837E-001  0 1.0000000000000000E+100  2   280   # tank4.Snd
+ -2 2.0802962058752428E-005  0       0                  3   256   # tank4.der(Snd)
+ -2 3.7599752563715669E+000  0 1.0000000000000000E+100  2   280   # tank4.Xnd
+ -2 2.5654621949655620E-004  0       0                  3   256   # tank4.der(Xnd)
+ -2 4.0607588158324432E+000  0 1.0000000000000000E+100  2   280   # tank4.Salk
+ -2 -3.8102691791834786E-003  0       0                  3   256   # tank4.der(Salk)
+ -2 8.3802391274029856E+002  0       0                  6   256   # tank4.p1
+ -2 4.9235957895056757E+001  0       0                  6   256   # tank4.p2
+ -2 4.5677025287771812E+001  0       0                  6   256   # tank4.p3
+ -2 7.6771658004007838E+002  0       0                  6   256   # tank4.p4
+ -2 7.4059568046459940E+000  0       0                  6   256   # tank4.p5
+ -2 9.6349058737811418E+001  0       0                  6   256   # tank4.p6
+ -2 1.3141191372375088E+003  0       0                  6   256   # tank4.p7
+ -2 9.1632756613554264E+001  0       0                  6   256   # tank4.p8
  -2       0                  0       0                  6   256   # tank4.r1
- -2 -1.0746450239369096E+001  0       0                  6   256   # tank4.r2
+ -2 -1.0149293410612927E+001  0       0                  6   256   # tank4.r2
  -2       0                  0       0                  6   256   # tank4.r3
- -2 -6.3800241203325311E+002  0       0                  6   256   # tank4.r4
- -2 1.4473157098437071E+002  0       0                  6   256   # tank4.r5
- -2 4.0449358546838241E+001  0       0                  6   256   # tank4.r6
- -2 6.1946536372610552E+001  0       0                  6   256   # tank4.r7
- -2 -1.2811374377964594E+003  0       0                  6   256   # tank4.r8
- -2 1.8905667874360731E+002  0       0                  6   256   # tank4.r9
- -2 -1.7663226072509397E+002  0       0                  6   256   # tank4.r10
- -2 -4.2409347138342213E+000  0       0                  6   256   # tank4.r11
- -2 -3.5794878252673527E+001  0       0                  6   256   # tank4.r12
- -2 -2.6120638533478662E+001  0       0                  6   256   # tank4.r13
- -2 1.0745976817323026E+001  0       0                  6   256   # tank4.inputSs
- -2 6.3797206343035293E+002  0       0                  6   256   # tank4.inputXs
- -2 -1.4479102563201289E+002  0       0                  6   256   # tank4.inputXbh
- -2 -3.9413469972622245E+001  0       0                  6   256   # tank4.inputXba
- -2 -6.1817256869682026E+001  0       0                  6   256   # tank4.inputXp
- -2 -4.6497100266065637E+001  0       0                  6   256   # tank4.inputSo
- -2 -1.8899163014530450E+002  0       0                  6   256   # tank4.inputSno
- -2 1.7654807478434759E+002  0       0                  6   256   # tank4.inputSnh
- -2 4.2407127410697836E+000  0       0                  6   256   # tank4.inputSnd
- -2 3.5792894268859470E+001  0       0                  6   256   # tank4.inputXnd
- -2 2.6109978923538765E+001  0       0                  6   256   # tank4.inputSalk
- -2 1.3276284950984225E+003  0       0                  6   256   # tank4.aeration
+ -2 -6.0100640195433527E+002  0       0                  6   256   # tank4.r4
+ -2 1.1954329059527697E+002  0       0                  6   256   # tank4.r5
+ -2 3.8271068483125816E+001  0       0                  6   256   # tank4.r6
+ -2 6.2009801561550844E+001  0       0                  6   256   # tank4.r7
+ -2 -1.2368476994250318E+003  0       0                  6   256   # tank4.r8
+ -2 1.8184173155605430E+002  0       0                  6   256   # tank4.r9
+ -2 -1.6860683422087138E+002  0       0                  6   256   # tank4.r10
+ -2 -4.7163021242571546E+000  0       0                  6   256   # tank4.r11
+ -2 -3.3343543062534849E+001  0       0                  6   256   # tank4.r12
+ -2 -2.5032040412637549E+001  0       0                  6   256   # tank4.r13
+ -2 1.0149367940562319E+001  0       0                  6   256   # tank4.inputSs
+ -2 6.0100993133436987E+002  0       0                  6   256   # tank4.inputXs
+ -2 -1.1959252248573628E+002  0       0                  6   256   # tank4.inputXbh
+ -2 -3.7462480196600396E+001  0       0                  6   256   # tank4.inputXba
+ -2 -6.1861235588667952E+001  0       0                  6   256   # tank4.inputXp
+ -2 -5.5604844610083042E+001  0       0                  6   256   # tank4.inputSo
+ -2 -1.8182084948556476E+002  0       0                  6   256   # tank4.inputSno
+ -2 1.6857437252266823E+002  0       0                  6   256   # tank4.inputSnh
+ -2 4.7163229272192133E+000  0       0                  6   256   # tank4.inputSnd
+ -2 3.3343799608754345E+001  0       0                  6   256   # tank4.inputXnd
+ -2 2.5028230143458366E+001  0       0                  6   256   # tank4.inputSalk
+ -2 1.2924477817205484E+003  0       0                  6   256   # tank4.aeration
  -2       0                  0       0                  6   388   # tank4.MeasurePort.Q
  -1    1333                  0       0                  1   280   # tank4.V
- -1 6.9999999999999996E-001  0       0                  1   280   # tank4.alpha
+ -1 6.9999998807907104E-001  0       0                  1   280   # tank4.alpha
  -1 4.5000000000000000E+000  0       0                  1   280   # tank4.de
  -1 2.3500000000000000E+001  0       0                  1   280   # tank4.R_air
- -1     240                  0       0                  1   280   # tank4.Kla
  -2       8                  0 1.0000000000000000E+100  6   256   # tank4.So_sat
  -2       0                  0       0                  6   388   # tank4.AirIn.Q_air
- -1 6.7000000000000004E-001  0       0                  1   280   # tank3.Y_h
- -1 2.3999999999999999E-001  0       0                  1   280   # tank3.Y_a
- -1 8.0000000000000002E-002  0       0                  1   280   # tank3.f_p
- -1 8.0000000000000002E-002  0       0                  1   280   # tank3.i_xb
- -1 5.9999999999999998E-002  0       0                  1   280   # tank3.i_xp
+ -1     240                  0       0                  1   280   # tank4.Kla
+ -1 6.7000001668930054E-001  0       0                  1   280   # tank3.Y_h
+ -1 2.3999999463558197E-001  0       0                  1   280   # tank3.Y_a
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank3.f_p
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank3.i_xb
+ -1 5.9999998658895493E-002  0       0                  1   280   # tank3.i_xp
  -1       4                  0       0                  1   280   # tank3.mu_h_T
- -1 2.9999999999999999E-001  0       0                  1   280   # tank3.b_h_T
+ -1 3.0000001192092896E-001  0       0                  1   280   # tank3.b_h_T
  -1 5.0000000000000000E-001  0       0                  1   280   # tank3.mu_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank3.b_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank3.k_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank3.b_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank3.k_a_T
  -1       3                  0       0                  1   280   # tank3.k_h_T
- -1 1.0000000000000001E-001  0       0                  1   280   # tank3.K_x_T
+ -1 1.0000000149011612E-001  0       0                  1   280   # tank3.K_x_T
  -1       1                  0       0                  1   280   # tank3.K_nh
  -1      10                  0       0                  1   280   # tank3.K_s
- -1 2.0000000000000001E-001  0       0                  1   280   # tank3.K_oh
+ -1 2.0000000298023224E-001  0       0                  1   280   # tank3.K_oh
  -1 5.0000000000000000E-001  0       0                  1   280   # tank3.K_no
- -1 4.0000000000000002E-001  0       0                  1   280   # tank3.K_oa
- -1 8.0000000000000004E-001  0       0                  1   280   # tank3.ny_g
- -1 8.0000000000000004E-001  0       0                  1   280   # tank3.ny_h
+ -1 4.0000000596046448E-001  0       0                  1   280   # tank3.K_oa
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank3.ny_g
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank3.ny_h
  -2      30                  0 1.0000000000000000E+100  2   280   # tank3.Si
  -2       0                  0       0                  3   256   # tank3.der(Si)
- -2 1.1539927447215483E+000  0 1.0000000000000000E+100  2   280   # tank3.Ss
- -2 -6.2779025628501017E-004  0       0                  3   256   # tank3.der(Ss)
- -2 1.1446004891056007E+003  0 1.0000000000000000E+100  2   280   # tank3.Xi
- -2 5.0039004380319851E-001  0       0                  3   256   # tank3.der(Xi)
- -2 6.5081872661034453E+001  0 1.0000000000000000E+100  2   280   # tank3.Xs
- -2 -3.9875545979157323E-002  0       0                  3   256   # tank3.der(Xs)
- -2 2.5553347672356549E+003  0 1.0000000000000000E+100  2   280   # tank3.Xbh
- -2 -5.2455678038256792E-002  0       0                  3   256   # tank3.der(Xbh)
- -2 1.4149986056730719E+002  0 1.0000000000000000E+100  2   280   # tank3.Xba
- -2 1.0335261479893276E+000  0       0                  3   256   # tank3.der(Xba)
- -2 4.4860334055236109E+002  0 1.0000000000000000E+100  2   280   # tank3.Xp
- -2 1.2908466877835423E-001  0       0                  3   256   # tank3.der(Xp)
- -2 1.7961921093982793E+000  0 1.0000000000000000E+100  2   280   # tank3.So
- -2 -1.0895324804778284E-002  0       0                  3   256   # tank3.der(So)
- -2 6.1331775728422979E+000  0 1.0000000000000000E+100  2   280   # tank3.Sno
- -2 6.0575576365437200E-002  0       0                  3   256   # tank3.der(Sno)
- -2 6.0545062312355196E+000  0 1.0000000000000000E+100  2   280   # tank3.Snh
- -2 -7.9330928037762760E-002  0       0                  3   256   # tank3.der(Snh)
- -2 8.2976292253535444E-001  0 1.0000000000000000E+100  2   280   # tank3.Snd
- -2 -7.2058570248945131E-005  0       0                  3   256   # tank3.der(Snd)
- -2 4.4068159148581127E+000  0 1.0000000000000000E+100  2   280   # tank3.Xnd
- -2 -2.6078591925795536E-003  0       0                  3   256   # tank3.der(Xnd)
- -2 4.7400949041749554E+000  0 1.0000000000000000E+100  2   280   # tank3.Salk
- -2 -9.9933217507803818E-003  0       0                  3   256   # tank3.der(Salk)
- -2 9.5154858020830034E+002  0       0                  6   256   # tank3.p1
- -2 7.8372207427842653E+001  0       0                  6   256   # tank3.p2
- -2 4.9661585721589297E+001  0       0                  6   256   # tank3.p3
- -2 7.6660043017069643E+002  0       0                  6   256   # tank3.p4
- -2 7.0749930283653599E+000  0       0                  6   256   # tank3.p5
- -2 1.0601610222588285E+002  0       0                  6   256   # tank3.p6
- -2 1.5155424212880218E+003  0       0                  6   256   # tank3.p7
- -2 1.0262022570492668E+002  0       0                  6   256   # tank3.p8
+ -2 1.1131692999013201E+000  0 1.0000000000000000E+100  2   280   # tank3.Ss
+ -2 7.6222763063071852E-005  0       0                  3   256   # tank3.der(Ss)
+ -2 1.1445835719268887E+003  0 1.0000000000000000E+100  2   280   # tank3.Xi
+ -2 5.2173848148850366E-001  0       0                  3   256   # tank3.der(Xi)
+ -2 6.2608765667242089E+001  0 1.0000000000000000E+100  2   280   # tank3.Xs
+ -2 3.6088818155803892E-003  0       0                  3   256   # tank3.der(Xs)
+ -2 2.5573266946314275E+003  0 1.0000000000000000E+100  2   280   # tank3.Xbh
+ -2 -4.8824080541663761E-002  0       0                  3   256   # tank3.der(Xbh)
+ -2 1.4757768873666654E+002  0 1.0000000000000000E+100  2   280   # tank3.Xba
+ -2 8.0634673506530419E-001  0       0                  3   256   # tank3.der(Xba)
+ -2 4.4903756518170434E+002  0 1.0000000000000000E+100  2   280   # tank3.Xp
+ -2 1.4833551704236925E-001  0       0                  3   256   # tank3.der(Xp)
+ -2 1.8111442048979032E+000  0 1.0000000000000000E+100  2   280   # tank3.So
+ -2 -9.1908002602849592E-003  0       0                  3   256   # tank3.der(So)
+ -2 9.4230428069567846E+000  0 1.0000000000000000E+100  2   280   # tank3.Sno
+ -2 1.7485953534134069E-002  0       0                  3   256   # tank3.der(Sno)
+ -2 4.8979276505961273E+000  0 1.0000000000000000E+100  2   280   # tank3.Snh
+ -2 -2.8705706276355158E-002  0       0                  3   256   # tank3.der(Snh)
+ -2 8.2116993186630538E-001  0 1.0000000000000000E+100  2   280   # tank3.Snd
+ -2 -2.6636635475085768E-007  0       0                  3   256   # tank3.der(Snd)
+ -2 4.2418931234264248E+000  0 1.0000000000000000E+100  2   280   # tank3.Xnd
+ -2 2.6172334015228671E-004  0       0                  3   256   # tank3.der(Xnd)
+ -2 4.4224917745360104E+000  0 1.0000000000000000E+100  2   280   # tank3.Salk
+ -2 -3.2994042582821237E-003  0       0                  3   256   # tank3.der(Salk)
+ -2 9.2273992354181723E+002  0       0                  6   256   # tank3.p1
+ -2 7.7409199344740927E+001  0       0                  6   256   # tank3.p2
+ -2 5.0192588806084018E+001  0       0                  6   256   # tank3.p3
+ -2 7.6719803887513808E+002  0       0                  6   256   # tank3.p4
+ -2 7.3788845467872735E+000  0       0                  6   256   # tank3.p5
+ -2 1.0499999094414044E+002  0       0                  6   256   # tank3.p6
+ -2 1.4728031306272571E+003  0       0                  6   256   # tank3.p7
+ -2 9.9785923031500531E+001  0       0                  6   256   # tank3.p8
  -2       0                  0       0                  6   256   # tank3.r1
- -2 -2.1652784139057076E+001  0       0                  6   256   # tank3.r2
+ -2 -1.9956717094295755E+001  0       0                  6   256   # tank3.r2
  -2       0                  0       0                  6   256   # tank3.r3
- -2 -8.0376103194488496E+002  0       0                  6   256   # tank3.r4
- -2 2.6332035746544648E+002  0       0                  6   256   # tank3.r5
- -2 4.2586592693223935E+001  0       0                  6   256   # tank3.r6
- -2 6.1894033855924945E+001  0       0                  6   256   # tank3.r7
- -2 -1.3646509570236324E+003  0       0                  6   256   # tank3.r8
- -2 1.9342633800278389E+002  0       0                  6   256   # tank3.r9
- -2 -1.8727376148269116E+002  0       0                  6   256   # tank3.r10
- -2 -3.3958765209561648E+000  0       0                  6   256   # tank3.r11
- -2 -4.4439833880357234E+001  0       0                  6   256   # tank3.r12
- -2 -2.7192864248962493E+001  0       0                  6   256   # tank3.r13
- -2 2.1652156348800791E+001  0       0                  6   256   # tank3.inputSs
- -2 8.0372115639890580E+002  0       0                  6   256   # tank3.inputXs
- -2 -2.6337281314348473E+002  0       0                  6   256   # tank3.inputXbh
- -2 -4.1553066545234607E+001  0       0                  6   256   # tank3.inputXba
- -2 -6.1764949187146591E+001  0       0                  6   256   # tank3.inputXp
- -2 -1.2427383204558525E+002  0       0                  6   256   # tank3.inputSo
- -2 -1.9336576242641846E+002  0       0                  6   256   # tank3.inputSno
- -2 1.8719443055465339E+002  0       0                  6   256   # tank3.inputSnh
- -2 3.3958044623859158E+000  0       0                  6   256   # tank3.inputSnd
- -2 4.4437226021164655E+001  0       0                  6   256   # tank3.inputXnd
- -2 2.7182870927211713E+001  0       0                  6   256   # tank3.inputSalk
- -2 1.4889138937444129E+003  0       0                  6   256   # tank3.aeration
+ -2 -7.6019235969403428E+002  0       0                  6   256   # tank3.r4
+ -2 2.3295108401142011E+002  0       0                  6   256   # tank3.r5
+ -2 4.2813704259296742E+001  0       0                  6   256   # tank3.r6
+ -2 6.1966152488702555E+001  0       0                  6   256   # tank3.r7
+ -2 -1.3600417863718073E+003  0       0                  6   256   # tank3.r8
+ -2 1.9580470178533875E+002  0       0                  6   256   # tank3.r9
+ -2 -1.8816313547967957E+002  0       0                  6   256   # tank3.r10
+ -2 -5.2140679126399050E+000  0       0                  6   256   # tank3.r11
+ -2 -4.1537739609017038E+001  0       0                  6   256   # tank3.r12
+ -2 -2.7426274090358454E+001  0       0                  6   256   # tank3.r13
+ -2 1.9956793317058818E+001  0       0                  6   256   # tank3.inputSs
+ -2 7.6019596857584986E+002  0       0                  6   256   # tank3.inputXs
+ -2 -2.3299990809196177E+002  0       0                  6   256   # tank3.inputXbh
+ -2 -4.2007357524231438E+001  0       0                  6   256   # tank3.inputXba
+ -2 -6.1817816971660186E+001  0       0                  6   256   # tank3.inputXp
+ -2 -1.2529279525295594E+002  0       0                  6   256   # tank3.inputSo
+ -2 -1.9578721583180462E+002  0       0                  6   256   # tank3.inputSno
+ -2 1.8813442977340321E+002  0       0                  6   256   # tank3.inputSnh
+ -2 5.2140676462735502E+000  0       0                  6   256   # tank3.inputSnd
+ -2 4.1538001332357190E+001  0       0                  6   256   # tank3.inputXnd
+ -2 2.7422974686100172E+001  0       0                  6   256   # tank3.inputSalk
+ -2 1.4853253908245031E+003  0       0                  6   256   # tank3.aeration
  -2       0                  0       0                  6   388   # tank3.MeasurePort.Q
  -1    1333                  0       0                  1   280   # tank3.V
- -1 6.9999999999999996E-001  0       0                  1   280   # tank3.alpha
+ -1 6.9999998807907104E-001  0       0                  1   280   # tank3.alpha
  -1 4.5000000000000000E+000  0       0                  1   280   # tank3.de
  -1 2.3500000000000000E+001  0       0                  1   280   # tank3.R_air
- -1     240                  0       0                  1   280   # tank3.Kla
  -2       8                  0 1.0000000000000000E+100  6   256   # tank3.So_sat
  -2       0                  0       0                  6   388   # tank3.AirIn.Q_air
- -1 6.7000000000000004E-001  0       0                  1   280   # tank2.Y_h
- -1 2.3999999999999999E-001  0       0                  1   280   # tank2.Y_a
- -1 8.0000000000000002E-002  0       0                  1   280   # tank2.f_p
- -1 8.0000000000000002E-002  0       0                  1   280   # tank2.i_xb
- -1 5.9999999999999998E-002  0       0                  1   280   # tank2.i_xp
+ -1     240                  0       0                  1   280   # tank3.Kla
+ -1 6.7000001668930054E-001  0       0                  1   280   # tank2.Y_h
+ -1 2.3999999463558197E-001  0       0                  1   280   # tank2.Y_a
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank2.f_p
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank2.i_xb
+ -1 5.9999998658895493E-002  0       0                  1   280   # tank2.i_xp
  -1       4                  0       0                  1   280   # tank2.mu_h_T
- -1 2.9999999999999999E-001  0       0                  1   280   # tank2.b_h_T
+ -1 3.0000001192092896E-001  0       0                  1   280   # tank2.b_h_T
  -1 5.0000000000000000E-001  0       0                  1   280   # tank2.mu_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank2.b_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank2.k_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank2.b_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank2.k_a_T
  -1       3                  0       0                  1   280   # tank2.k_h_T
- -1 1.0000000000000001E-001  0       0                  1   280   # tank2.K_x_T
+ -1 1.0000000149011612E-001  0       0                  1   280   # tank2.K_x_T
  -1       1                  0       0                  1   280   # tank2.K_nh
  -1      10                  0       0                  1   280   # tank2.K_s
- -1 2.0000000000000001E-001  0       0                  1   280   # tank2.K_oh
+ -1 2.0000000298023224E-001  0       0                  1   280   # tank2.K_oh
  -1 5.0000000000000000E-001  0       0                  1   280   # tank2.K_no
- -1 4.0000000000000002E-001  0       0                  1   280   # tank2.K_oa
- -1 8.0000000000000004E-001  0       0                  1   280   # tank2.ny_g
- -1 8.0000000000000004E-001  0       0                  1   280   # tank2.ny_h
+ -1 4.0000000596046448E-001  0       0                  1   280   # tank2.K_oa
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank2.ny_g
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank2.ny_h
  -2      30                  0 1.0000000000000000E+100  2   280   # tank2.Si
  -2       0                  0       0                  3   256   # tank2.der(Si)
- -2 1.4669313158258686E+000  0 1.0000000000000000E+100  2   280   # tank2.Ss
- -2 -1.1588493343737127E-003  0       0                  3   256   # tank2.der(Ss)
- -2 1.1446077212418729E+003  0 1.0000000000000000E+100  2   280   # tank2.Xi
- -2 4.9954919480997889E-001  0       0                  3   256   # tank2.der(Xi)
- -2 7.6698052878748229E+001  0 1.0000000000000000E+100  2   280   # tank2.Xs
- -2 -5.2992411384821025E-002  0       0                  3   256   # tank2.der(Xs)
- -2 2.5515282405098578E+003  0 1.0000000000000000E+100  2   280   # tank2.Xbh
- -2 -4.2788717323105629E-002  0       0                  3   256   # tank2.der(Xbh)
- -2 1.4089929418213103E+002  0 1.0000000000000000E+100  2   280   # tank2.Xba
- -2 1.0291589109997057E+000  0       0                  3   256   # tank2.der(Xba)
- -2 4.4771065186899921E+002  0 1.0000000000000000E+100  2   280   # tank2.Xp
- -2 1.2888781693483509E-001  0       0                  3   256   # tank2.der(Xp)
- -2 6.2670855883734783E-005  0 1.0000000000000000E+100  2   280   # tank2.So
- -2 -1.5484612037042211E-008  0       0                  3   256   # tank2.der(So)
- -2 3.3384626068397414E+000  0 1.0000000000000000E+100  2   280   # tank2.Sno
- -2 4.8569149512189824E-002  0       0                  3   256   # tank2.der(Sno)
- -2 8.7600269504088146E+000  0 1.0000000000000000E+100  2   280   # tank2.Snh
- -2 -6.6452317939344141E-002  0       0                  3   256   # tank2.der(Snh)
- -2 8.7884247743463262E-001  0 1.0000000000000000E+100  2   280   # tank2.Snd
- -2 5.9558631885181512E-004  0       0                  3   256   # tank2.der(Snd)
- -2 5.0490670509983326E+000  0 1.0000000000000000E+100  2   280   # tank2.Xnd
- -2 -3.4717696512629459E-003  0       0                  3   256   # tank2.der(Xnd)
- -2 5.1329688816874048E+000  0 1.0000000000000000E+100  2   280   # tank2.Salk
- -2 -8.2158191110437429E-003  0       0                  3   256   # tank2.der(Salk)
- -2 4.0899924187262349E-001  0       0                  6   256   # tank2.p1
- -2 9.0816772123643068E+002  0       0                  6   256   # tank2.p2
- -2 9.9053732049468341E-003  0       0                  6   256   # tank2.p3
- -2 7.6545847215295737E+002  0       0                  6   256   # tank2.p4
- -2 7.0449647091065515E+000  0       0                  6   256   # tank2.p5
- -2 1.1211957000670563E+002  0       0                  6   256   # tank2.p6
- -2 1.2311236349175351E+003  0       0                  6   256   # tank2.p7
- -2 8.1045418331470913E+001  0       0                  6   256   # tank2.p8
+ -2 1.4016047926004354E+000  0 1.0000000000000000E+100  2   280   # tank2.Ss
+ -2 4.7418206747806835E-005  0       0                  3   256   # tank2.der(Ss)
+ -2 1.1445911126120868E+003  0 1.0000000000000000E+100  2   280   # tank2.Xi
+ -2 5.2086547248342863E-001  0       0                  3   256   # tank2.der(Xi)
+ -2 7.3595876435014048E+001  0 1.0000000000000000E+100  2   280   # tank2.Xs
+ -2 1.8308072470745174E-003  0       0                  3   256   # tank2.der(Xs)
+ -2 2.5539591474397698E+003  0 1.0000000000000000E+100  2   280   # tank2.Xbh
+ -2 -4.7151775249858474E-002  0       0                  3   256   # tank2.der(Xbh)
+ -2 1.4697055648490681E+002  0 1.0000000000000000E+100  2   280   # tank2.Xba
+ -2 8.0244284896504858E-001  0       0                  3   256   # tank2.der(Xba)
+ -2 4.4814411240036179E+002  0 1.0000000000000000E+100  2   280   # tank2.Xp
+ -2 1.4810537200843044E-001  0       0                  3   256   # tank2.der(Xp)
+ -2 2.8769321851164075E-004  0 1.0000000000000000E+100  2   280   # tank2.So
+ -2 -7.6333707110798343E-007  0       0                  3   256   # tank2.der(So)
+ -2 6.5933305798745385E+000  0 1.0000000000000000E+100  2   280   # tank2.Sno
+ -2 7.8545093771253960E-003  0       0                  3   256   # tank2.der(Sno)
+ -2 7.6170341765415515E+000  0 1.0000000000000000E+100  2   280   # tank2.Snh
+ -2 -1.7945538505735215E-002  0       0                  3   256   # tank2.der(Snh)
+ -2 8.9652884081656714E-001  0 1.0000000000000000E+100  2   280   # tank2.Snd
+ -2 6.3929691293651558E-005  0       0                  3   256   # tank2.der(Snd)
+ -2 4.8422417711119081E+000  0 1.0000000000000000E+100  2   280   # tank2.Xnd
+ -2 1.4242504928319022E-004  0       0                  3   256   # tank2.der(Xnd)
+ -2 4.8188359711810449E+000  0 1.0000000000000000E+100  2   280   # tank2.Salk
+ -2 -1.8428605471250137E-003  0       0                  3   256   # tank2.der(Salk)
+ -2 1.8038851433589345E+000  0       0                  6   256   # tank2.p1
+ -2 9.3251087091085640E+002  0       0                  6   256   # tank2.p2
+ -2 4.6685908237607932E-002  0       0                  6   256   # tank2.p3
+ -2 7.6618777467749646E+002  0       0                  6   256   # tank2.p4
+ -2 7.3485279337469382E+000  0       0                  6   256   # tank2.p5
+ -2 1.1448490340331021E+002  0       0                  6   256   # tank2.p6
+ -2 1.2751559315803136E+003  0       0                  6   256   # tank2.p7
+ -2 8.3898903249444459E+001  0       0                  6   256   # tank2.p8
  -2       0                  0       0                  6   256   # tank2.r1
- -2 -1.2496102251276830E+002  0       0                  6   256   # tank2.r2
+ -2 -1.1934366958534679E+002  0       0                  6   256   # tank2.r2
  -2       0                  0       0                  6   256   # tank2.r3
- -2 -5.2042047300443630E+002  0       0                  6   256   # tank2.r4
- -2 1.4311824832534592E+002  0       0                  6   256   # tank2.r5
- -2 -7.0350593359016047E+000  0       0                  6   256   # tank2.r6
- -2 6.1800274948965118E+001  0       0                  6   256   # tank2.r7
- -2 -3.8015682936059103E-001  0       0                  6   256   # tank2.r8
- -2 -1.5635959808864328E+002  0       0                  6   256   # tank2.r9
- -2 3.9391367550231024E+001  0       0                  6   256   # tank2.r10
- -2 -3.1074151675234717E+001  0       0                  6   256   # tank2.r11
- -2 -2.2953159879443703E+001  0       0                  6   256   # tank2.r12
- -2 1.3982211831348165E+001  0       0                  6   256   # tank2.r13
- -2 1.2495986366343392E+002  0       0                  6   256   # tank2.inputSs
- -2 5.2036748059305148E+002  0       0                  6   256   # tank2.inputXs
- -2 -1.4316103704266902E+002  0       0                  6   256   # tank2.inputXbh
- -2 8.0642182469013104E+000  0       0                  6   256   # tank2.inputXba
- -2 -6.1671387132030283E+001  0       0                  6   256   # tank2.inputXp
- -2 3.8015681387597899E-001  0       0                  6   256   # tank2.inputSo
- -2 1.5640816723815547E+002  0       0                  6   256   # tank2.inputSno
- -2 -3.9457819868170368E+001  0       0                  6   256   # tank2.inputSnh
- -2 3.1074747261553568E+001  0       0                  6   256   # tank2.inputSnd
- -2 2.2949688109792440E+001  0       0                  6   256   # tank2.inputXnd
- -2 -1.3990427650459209E+001  0       0                  6   256   # tank2.inputSalk
+ -2 -5.6350253179477897E+002  0       0                  6   256   # tank2.r4
+ -2 1.6812698137671885E+002  0       0                  6   256   # tank2.r5
+ -2 -7.3018420255093304E+000  0       0                  6   256   # tank2.r6
+ -2 6.1882902825708776E+001  0       0                  6   256   # tank2.r7
+ -2 -1.7307722895098940E+000  0       0                  6   256   # tank2.r8
+ -2 -1.6039860979626764E+002  0       0                  6   256   # tank2.r9
+ -2 3.9541465095077783E+001  0       0                  6   256   # tank2.r10
+ -2 -3.0586000153865754E+001  0       0                  6   256   # tank2.r11
+ -2 -2.5728974510286768E+001  0       0                  6   256   # tank2.r12
+ -2 1.4281433920810386E+001  0       0                  6   256   # tank2.r13
+ -2 1.1934371700355354E+002  0       0                  6   256   # tank2.inputSs
+ -2 5.6350436260202605E+002  0       0                  6   256   # tank2.inputXs
+ -2 -1.6817413315196870E+002  0       0                  6   256   # tank2.inputXbh
+ -2 8.1042848744743790E+000  0       0                  6   256   # tank2.inputXba
+ -2 -6.1734797453700345E+001  0       0                  6   256   # tank2.inputXp
+ -2 1.7307715261728229E+000  0       0                  6   256   # tank2.inputSo
+ -2 1.6040646430564476E+002  0       0                  6   256   # tank2.inputSno
+ -2 -3.9559410633583518E+001  0       0                  6   256   # tank2.inputSnh
+ -2 3.0586064083557048E+001  0       0                  6   256   # tank2.inputSnd
+ -2 2.5729116935336052E+001  0       0                  6   256   # tank2.inputXnd
+ -2 -1.4283276781357511E+001  0       0                  6   256   # tank2.inputSalk
  -2       0                  0       0                  6   256   # tank2.aeration
  -2       0                  0       0                  6   388   # tank2.MeasurePort.Q
  -1    1000                  0       0                  1   280   # tank2.V
- -1 6.7000000000000004E-001  0       0                  1   280   # tank1.Y_h
- -1 2.3999999999999999E-001  0       0                  1   280   # tank1.Y_a
- -1 8.0000000000000002E-002  0       0                  1   280   # tank1.f_p
- -1 8.0000000000000002E-002  0       0                  1   280   # tank1.i_xb
- -1 5.9999999999999998E-002  0       0                  1   280   # tank1.i_xp
+ -1 6.7000001668930054E-001  0       0                  1   280   # tank1.Y_h
+ -1 2.3999999463558197E-001  0       0                  1   280   # tank1.Y_a
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank1.f_p
+ -1 7.9999998211860657E-002  0       0                  1   280   # tank1.i_xb
+ -1 5.9999998658895493E-002  0       0                  1   280   # tank1.i_xp
  -1       4                  0       0                  1   280   # tank1.mu_h_T
- -1 2.9999999999999999E-001  0       0                  1   280   # tank1.b_h_T
+ -1 3.0000001192092896E-001  0       0                  1   280   # tank1.b_h_T
  -1 5.0000000000000000E-001  0       0                  1   280   # tank1.mu_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank1.b_a_T
- -1 5.0000000000000003E-002  0       0                  1   280   # tank1.k_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank1.b_a_T
+ -1 5.0000000745058060E-002  0       0                  1   280   # tank1.k_a_T
  -1       3                  0       0                  1   280   # tank1.k_h_T
- -1 1.0000000000000001E-001  0       0                  1   280   # tank1.K_x_T
+ -1 1.0000000149011612E-001  0       0                  1   280   # tank1.K_x_T
  -1       1                  0       0                  1   280   # tank1.K_nh
  -1      10                  0       0                  1   280   # tank1.K_s
- -1 2.0000000000000001E-001  0       0                  1   280   # tank1.K_oh
+ -1 2.0000000298023224E-001  0       0                  1   280   # tank1.K_oh
  -1 5.0000000000000000E-001  0       0                  1   280   # tank1.K_no
- -1 4.0000000000000002E-001  0       0                  1   280   # tank1.K_oa
- -1 8.0000000000000004E-001  0       0                  1   280   # tank1.ny_g
- -1 8.0000000000000004E-001  0       0                  1   280   # tank1.ny_h
+ -1 4.0000000596046448E-001  0       0                  1   280   # tank1.K_oa
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank1.ny_g
+ -1 8.0000001192092896E-001  0       0                  1   280   # tank1.ny_h
  -2      30                  0 1.0000000000000000E+100  2   280   # tank1.Si
  -2       0                  0       0                  3   256   # tank1.der(Si)
- -2 2.8218035229540690E+000  0 1.0000000000000000E+100  2   280   # tank1.Ss
- -2 -1.8236811106362438E-003  0       0                  3   256   # tank1.der(Ss)
- -2 1.1446131375835710E+003  0 1.0000000000000000E+100  2   280   # tank1.Xi
- -2 4.9891959234577371E-001  0       0                  3   256   # tank1.der(Xi)
- -2 8.2340115988290151E+001  0 1.0000000000000000E+100  2   280   # tank1.Xs
- -2 -3.5131241923750167E-002  0       0                  3   256   # tank1.der(Xs)
- -2 2.5499760228253444E+003  0 1.0000000000000000E+100  2   280   # tank1.Xbh
- -2 -5.3906274041082725E-002  0       0                  3   256   # tank1.der(Xbh)
- -2 1.4098673013840232E+002  0 1.0000000000000000E+100  2   280   # tank1.Xba
- -2 1.0282238155361370E+000  0       0                  3   256   # tank1.der(Xba)
- -2 4.4704198237824750E+002  0 1.0000000000000000E+100  2   280   # tank1.Xp
- -2 1.2873802389012923E-001  0       0                  3   256   # tank1.der(Xp)
- -2 4.1845055504080644E-003  0 1.0000000000000000E+100  2   280   # tank1.So
- -2 1.0072248905146353E-005  0       0                  3   256   # tank1.der(So)
- -2 5.0343117582888954E+000  0 1.0000000000000000E+100  2   280   # tank1.Sno
- -2 5.0502744846255609E-002  0       0                  3   256   # tank1.der(Sno)
- -2 8.3322071535079107E+000  0 1.0000000000000000E+100  2   280   # tank1.Snh
- -2 -6.6192164458009017E-002  0       0                  3   256   # tank1.der(Snh)
- -2 1.2157691527198280E+000  0 1.0000000000000000E+100  2   280   # tank1.Snd
- -2 2.0059232350888578E-004  0       0                  3   256   # tank1.der(Snd)
- -2 5.2978981049915284E+000  0 1.0000000000000000E+100  2   280   # tank1.Xnd
- -2 -2.2990726845861786E-003  0       0                  3   256   # tank1.der(Xnd)
- -2 4.9812782425194637E+000  0 1.0000000000000000E+100  2   280   # tank1.Salk
- -2 -8.3353506718744086E-003  0       0                  3   256   # tank1.der(Salk)
- -2 4.6003948369501011E+001  0       0                  6   256   # tank1.p1
- -2 1.6001011159885406E+003  0       0                  6   256   # tank1.p2
- -2 6.5161101658543241E-001  0       0                  6   256   # tank1.p3
- -2 7.6499280684760333E+002  0       0                  6   256   # tank1.p4
- -2 7.0493365069201168E+000  0       0                  6   256   # tank1.p5
- -2 1.5500910943631229E+002  0       0                  6   256   # tank1.p6
- -2 1.3692657089536442E+003  0       0                  6   256   # tank1.p7
- -2 8.8100801384917176E+001  0       0                  6   256   # tank1.p8
+ -2 2.6955841594393548E+000  0 1.0000000000000000E+100  2   280   # tank1.Ss
+ -2 1.0751865534075478E-004  0       0                  3   256   # tank1.der(Ss)
+ -2 1.1445967600746530E+003  0 1.0000000000000000E+100  2   280   # tank1.Xi
+ -2 5.2021178123657819E-001  0       0                  3   256   # tank1.der(Xi)
+ -2 7.9705649422133490E+001  0 1.0000000000000000E+100  2   280   # tank1.Xs
+ -2 2.9121482845084756E-003  0       0                  3   256   # tank1.der(Xs)
+ -2 2.5521357262844845E+003  0 1.0000000000000000E+100  2   280   # tank1.Xbh
+ -2 -4.7569016831175759E-002  0       0                  3   256   # tank1.der(Xbh)
+ -2 1.4705842686194762E+002  0 1.0000000000000000E+100  2   280   # tank1.Xba
+ -2 8.0141426468325960E-001  0       0                  3   256   # tank1.der(Xba)
+ -2 4.4747475538579278E+002  0 1.0000000000000000E+100  2   280   # tank1.Xp
+ -2 1.4793267747803895E-001  0       0                  3   256   # tank1.der(Xp)
+ -2 1.9053512650072119E-002  0 1.0000000000000000E+100  2   280   # tank1.So
+ -2 -2.1520380329320687E-005  0       0                  3   256   # tank1.der(So)
+ -2 8.3325311036265148E+000  0 1.0000000000000000E+100  2   280   # tank1.Sno
+ -2 8.0035145715839917E-003  0       0                  3   256   # tank1.der(Sno)
+ -2 7.1881128859247942E+000  0 1.0000000000000000E+100  2   280   # tank1.Snh
+ -2 -1.7891242423955234E-002  0       0                  3   256   # tank1.der(Snh)
+ -2 1.2281569887462760E+000  0 1.0000000000000000E+100  2   280   # tank1.Snd
+ -2 3.7560987763640696E-005  0       0                  3   256   # tank1.der(Snd)
+ -2 5.1212086683832521E+000  0 1.0000000000000000E+100  2   280   # tank1.Xnd
+ -2 2.1364293048975469E-004  0       0                  3   256   # tank1.der(Xnd)
+ -2 4.6639701272977367E+000  0 1.0000000000000000E+100  2   280   # tank1.Salk
+ -2 -1.8496254603270756E-003  0       0                  3   256   # tank1.der(Salk)
+ -2 1.8853361296991193E+002  0       0                  6   256   # tank1.p1
+ -2 1.4935697228644160E+003  0       0                  6   256   # tank1.p2
+ -2 2.9349218984688523E+000  0       0                  6   256   # tank1.p3
+ -2 7.6564074830917400E+002  0       0                  6   256   # tank1.p4
+ -2 7.3529214526644475E+000  0       0                  6   256   # tank1.p5
+ -2 1.5672116875859450E+002  0       0                  6   256   # tank1.p6
+ -2 1.4140434506254053E+003  0       0                  6   256   # tank1.p7
+ -2 9.0854432895473835E+001  0       0                  6   256   # tank1.p8
  -2       0                  0       0                  6   256   # tank1.r1
- -2 -1.0876075214314924E+003  0       0                  6   256   # tank1.r2
+ -2 -1.0965584806195764E+003  0       0                  6   256   # tank1.r2
  -2       0                  0       0                  6   256   # tank1.r3
- -2 -6.5898693706748259E+002  0       0                  6   256   # tank1.r4
- -2 8.8111225751043821E+002  0       0                  6   256   # tank1.r5
- -2 -6.3977254903346843E+000  0       0                  6   256   # tank1.r6
- -2 6.1763371468361875E+001  0       0                  6   256   # tank1.r7
- -2 -3.4414809894779090E+001  0       0                  6   256   # tank1.r8
- -2 -2.7284771804507045E+002  0       0                  6   256   # tank1.r9
- -2 2.0553529503902837E+001  0       0                  6   256   # tank1.r10
- -2 -6.6908308051395110E+001  0       0                  6   256   # tank1.r11
- -2 -3.0043232204657009E+001  0       0                  6   256   # tank1.r12
- -2 2.0957231967783812E+001  0       0                  6   256   # tank1.r13
- -2 1.0876056977503818E+003  0       0                  6   256   # tank1.inputSs
- -2 6.5895180582555884E+002  0       0                  6   256   # tank1.inputXs
- -2 -8.8116616378447929E+002  0       0                  6   256   # tank1.inputXbh
- -2 7.4259493058708212E+000  0       0                  6   256   # tank1.inputXba
- -2 -6.1634633444471746E+001  0       0                  6   256   # tank1.inputXp
- -2 3.4414819967027995E+001  0       0                  6   256   # tank1.inputSo
- -2 2.7289822078991671E+002  0       0                  6   256   # tank1.inputSno
- -2 -2.0619721668360846E+001  0       0                  6   256   # tank1.inputSnh
- -2 6.6908508643718619E+001  0       0                  6   256   # tank1.inputSnd
- -2 3.0040933131972423E+001  0       0                  6   256   # tank1.inputXnd
- -2 -2.0965567318455687E+001  0       0                  6   256   # tank1.inputSalk
+ -2 -7.0288927306229357E+002  0       0                  6   256   # tank1.r4
+ -2 9.1646258752515394E+002  0       0                  6   256   # tank1.r5
+ -2 -4.4179995541955952E+000  0       0                  6   256   # tank1.r6
+ -2 6.1839492198726681E+001  0       0                  6   256   # tank1.r7
+ -2 -1.4581071604866418E+002  0       0                  6   256   # tank1.r8
+ -2 -2.4498750925087970E+002  0       0                  6   256   # tank1.r9
+ -2 9.6892696360978334E+000  0       0                  6   256   # tank1.r10
+ -2 -6.5866735863120667E+001  0       0                  6   256   # tank1.r11
+ -2 -3.2725310145737531E+001  0       0                  6   256   # tank1.r12
+ -2 1.8191198491926965E+001  0       0                  6   256   # tank1.r13
+ -2 1.0965585881382317E+003  0       0                  6   256   # tank1.inputSs
+ -2 7.0289218521057808E+002  0       0                  6   256   # tank1.inputXs
+ -2 -9.1651015654198511E+002  0       0                  6   256   # tank1.inputXbh
+ -2 5.2194138188788548E+000  0       0                  6   256   # tank1.inputXba
+ -2 -6.1691559521248642E+001  0       0                  6   256   # tank1.inputXp
+ -2 1.4581069452828385E+002  0       0                  6   256   # tank1.inputSo
+ -2 2.4499551276545128E+002  0       0                  6   256   # tank1.inputSno
+ -2 -9.7071608785217887E+000  0       0                  6   256   # tank1.inputSnh
+ -2 6.5866773424108430E+001  0       0                  6   256   # tank1.inputSnd
+ -2 3.2725523788668021E+001  0       0                  6   256   # tank1.inputXnd
+ -2 -1.8193048117387292E+001  0       0                  6   256   # tank1.inputSalk
  -2       0                  0       0                  6   256   # tank1.aeration
  -2      30                  0 1.0000000000000000E+100  6   260   # tank1.In.Si
- -2 1.4614123784803592E+001  0 1.0000000000000000E+100  6   260   # tank1.In.Ss
- -2 1.1446185470988300E+003  0 1.0000000000000000E+100  6   260   # tank1.In.Xi
- -2 8.9484773971869885E+001  0 1.0000000000000000E+100  6   260   # tank1.In.Xs
- -2 2.5404220147608917E+003  0 1.0000000000000000E+100  6   260   # tank1.In.Xbh
- -2 1.4106724568980502E+002  0 1.0000000000000000E+100  6   260   # tank1.In.Xba
- -2 4.4637371138784880E+002  0 1.0000000000000000E+100  6   260   # tank1.In.Xp
- -2 3.7732578243458886E-001  0 1.0000000000000000E+100  6   260   # tank1.In.So
- -2 7.9931995474021633E+000  0 1.0000000000000000E+100  6   260   # tank1.In.Sno
- -2 8.1086386652897513E+000  0 1.0000000000000000E+100  6   260   # tank1.In.Snh
- -2 1.9412219191051541E+000  0 1.0000000000000000E+100  6   260   # tank1.In.Snd
- -2 5.6236156928910450E+000  0 1.0000000000000000E+100  6   260   # tank1.In.Xnd
- -2 4.7539599369957113E+000  0 1.0000000000000000E+100  6   260   # tank1.In.Salk
+ -2 1.4584975768874807E+001  0 1.0000000000000000E+100  6   260   # tank1.In.Ss
+ -2 1.1446024004495987E+003  0 1.0000000000000000E+100  6   260   # tank1.In.Xi
+ -2 8.7326729170703132E+001  0 1.0000000000000000E+100  6   260   # tank1.In.Xs
+ -2 2.5421985024251981E+003  0 1.0000000000000000E+100  6   260   # tank1.In.Xbh
+ -2 1.4711501814264673E+002  0 1.0000000000000000E+100  6   260   # tank1.In.Xba
+ -2 4.4680586717673663E+002  0 1.0000000000000000E+100  6   260   # tank1.In.Xp
+ -2 1.6000000000000001E+000  0 1.0000000000000000E+100  6   260   # tank1.In.So
+ -2 1.0988884923050252E+001  0 1.0000000000000000E+100  6   260   # tank1.In.Sno
+ -2 7.0828633914162635E+000  0 1.0000000000000000E+100  6   260   # tank1.In.Snh
+ -2 1.9423147836514958E+000  0 1.0000000000000000E+100  6   260   # tank1.In.Snd
+ -2 5.4760338205969354E+000  0 1.0000000000000000E+100  6   260   # tank1.In.Xnd
+ -2 4.4667127477315729E+000  0 1.0000000000000000E+100  6   260   # tank1.In.Salk
  -2       0                  0       0                  6   388   # tank1.MeasurePort.Q
  -1    1000                  0       0                  1   280   # tank1.V
  -2   18446                  0       0                  6   388   # mixer.In1.Q
  -2      30                  0 1.0000000000000000E+100  6   260   # mixer.In1.Si
  -2 6.9500000000000000E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Ss
- -2 5.1200000000000003E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Xi
- -2 2.0231999999999999E+002  0 1.0000000000000000E+100  6   260   # mixer.In1.Xs
- -2 2.8170000000000002E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Xbh
+ -2 5.1200000762939453E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Xi
+ -2 2.0232000732421875E+002  0 1.0000000000000000E+100  6   260   # mixer.In1.Xs
+ -2 2.8170000076293945E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Xbh
  -2       0                  0 1.0000000000000000E+100  6   260   # mixer.In1.Xba
  -2       0                  0 1.0000000000000000E+100  6   260   # mixer.In1.Xp
  -2       0                  0 1.0000000000000000E+100  6   260   # mixer.In1.So
  -2       0                  0 1.0000000000000000E+100  6   260   # mixer.In1.Sno
- -2 3.1559999999999999E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Snh
- -2 6.9500000000000002E+000  0 1.0000000000000000E+100  6   260   # mixer.In1.Snd
- -2 1.0590000000000000E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Xnd
+ -2 3.1559999465942383E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Snh
+ -2 6.9499998092651367E+000  0 1.0000000000000000E+100  6   260   # mixer.In1.Snd
+ -2 1.0590000152587891E+001  0 1.0000000000000000E+100  6   260   # mixer.In1.Xnd
  -2       7                  0 1.0000000000000000E+100  6   260   # mixer.In1.Salk
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # mixer.In3.So
  -2      14                  1 1.0000000000000000E+100  6   258   # CombiTableTime.nout
- -2   21477                  0       0                  6   256   # CombiTableTime.y[1]
- -2      30                  0       0                  6   256   # CombiTableTime.y[2]
- -2 6.3634549999999997E+001  0       0                  6   256   # CombiTableTime.y[3]
- -2 5.8475999999999999E+001  0       0                  6   256   # CombiTableTime.y[4]
- -2 2.2435200000000000E+002  0       0                  6   256   # CombiTableTime.y[5]
- -2 3.1425000000000001E+001  0       0                  6   256   # CombiTableTime.y[6]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[1]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[2]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[3]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[4]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[5]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[6]
  -2       0                  0       0                  6   256   # CombiTableTime.y[7]
  -2       0                  0       0                  6   256   # CombiTableTime.y[8]
  -2       0                  0       0                  6   256   # CombiTableTime.y[9]
  -2       0                  0       0                  6   256   # CombiTableTime.y[10]
- -2 3.0247620000000001E+001  0       0                  6   256   # CombiTableTime.y[11]
- -2 6.3634599999999999E+000  0       0                  6   256   # CombiTableTime.y[12]
- -2 1.1814019999999999E+001  0       0                  6   256   # CombiTableTime.y[13]
- -2       7                  0       0                  6   256   # CombiTableTime.y[14]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[11]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[12]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[13]
+ -2       0                  0       0                  6   256   # CombiTableTime.y[14]
  -2       1                  0       0                  6   257   # CombiTableTime.tableOnFile
  -1       0                  0       0                  1   280   # CombiTableTime.table[1, 1]
  -1       0                  0       0                  1   280   # CombiTableTime.table[1, 2]
@@ -1631,28 +1740,32 @@ double initialValue(785,6)
  -2       0                  0       0                  6  1280   # CombiTableTime.p_offset[13]
  -2       0                  0       0                  6  1280   # CombiTableTime.p_offset[14]
  -2       0                  0       0                  6  1282   # CombiTableTime.tableID.id
- -2 1.7976931348623157E+308  0       0                  6  1352   # CombiTableTime.nextTimeEvent
+ -2       0                  0       0                  6  1352   # CombiTableTime.nextTimeEvent
  -2       1                  0       0                  6  1280   # CombiTableTime.tableOnFileRead
  -2  -18446                  0       0                  6   388   # WWSource.Out.Q
  -2      30                  0 1.0000000000000000E+100  6   260   # WWSource.Out.Si
  -2 6.9500000000000000E+001  0 1.0000000000000000E+100  6   260   # WWSource.Out.Ss
- -2 5.1200000000000003E+001  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xi
- -2 2.0231999999999999E+002  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xs
- -2 2.8170000000000002E+001  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xbh
+ -2 5.1200000762939453E+001  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xi
+ -2 2.0232000732421875E+002  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xs
+ -2 2.8170000076293945E+001  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xbh
  -2       0                  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xba
  -2       0                  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xp
  -2       0                  0 1.0000000000000000E+100  6   260   # WWSource.Out.So
  -2       0                  0 1.0000000000000000E+100  6   260   # WWSource.Out.Sno
- -2 3.1559999999999999E+001  0 1.0000000000000000E+100  6   260   # WWSource.Out.Snh
- -2 6.9500000000000002E+000  0 1.0000000000000000E+100  6   260   # WWSource.Out.Snd
- -2 1.0590000000000000E+001  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xnd
+ -2 3.1559999465942383E+001  0 1.0000000000000000E+100  6   260   # WWSource.Out.Snh
+ -2 6.9499998092651367E+000  0 1.0000000000000000E+100  6   260   # WWSource.Out.Snd
+ -2 1.0590000152587891E+001  0 1.0000000000000000E+100  6   260   # WWSource.Out.Xnd
  -2       7                  0 1.0000000000000000E+100  6   260   # WWSource.Out.Salk
  -2       0                  0       0                  6   388   # sensor_NO.In.Q
  -2       0                  0       0                  6   388   # sensor_O2.In.Q
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # sensor_O2.In.So
+ -2 1.9999977350234985E+000  0       0                  6   256   # sensor_O2.So
  -1   55338                  0       0                  1   280   # Constant1.k
  -1       0                  0       0                  1   280   # RecyclePump.Q_min
  -1   55338                  0       0                  1   280   # RecyclePump.Q_max
- -2 1.5311747910000000E+009  0       0                  6   256   # RecyclePump.H
+ -2 1.5311747840000000E+009  0       0                  6   256   # RecyclePump.H
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # RecyclePump.In.So
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # RecyclePump.Out.So
  -1       0                  0       0                  1   280   # ReturnPump.Q_min
  -1   18446                  0       0                  1   280   # ReturnPump.Q_max
  -2   18446                  0       0                  6   256   # ReturnPump.H
@@ -1663,18 +1776,107 @@ double initialValue(785,6)
  -1      15                  0       0                  1   280   # Temperature.k
  -2       0                  0       0                  6   388   # sensor_NH1.In.Q
  -2       0                  0       0                  6   388   # sensor_NO1.In.Q
- -1 6.7000000000000004E-001  0       0                  1   280   # sensor_TKN1.Y_h
- -1 2.3999999999999999E-001  0       0                  1   280   # sensor_TKN1.Y_a
- -1 8.0000000000000002E-002  0       0                  1   280   # sensor_TKN1.f_p
- -1 8.0000000000000002E-002  0       0                  1   280   # sensor_TKN1.i_xb
- -1 5.9999999999999998E-002  0       0                  1   280   # sensor_TKN1.i_xp
+ -1 6.7000001668930054E-001  0       0                  1   280   # sensor_TKN1.Y_h
+ -1 2.3999999463558197E-001  0       0                  1   280   # sensor_TKN1.Y_a
+ -1 7.9999998211860657E-002  0       0                  1   280   # sensor_TKN1.f_p
+ -1 7.9999998211860657E-002  0       0                  1   280   # sensor_TKN1.i_xb
+ -1 5.9999998658895493E-002  0       0                  1   280   # sensor_TKN1.i_xp
  -2       0                  0       0                  6   388   # sensor_TKN1.In.Q
- -2 4.1506369159715506E+000  0       0                  6   256   # sensor_TKN1.TKN[1]
- -2 1.4135364028434665E+001  0       0                  6   256   # sensor_TKN1.TKN[2]
+ -2 2.8644045719579152E+000  0       0                  6   256   # sensor_TKN1.TKN[1]
+ -2 1.6599417566493241E+001  0       0                  6   256   # sensor_TKN1.TKN[2]
  -2       0                  0       0                  6   388   # sensor_COD1.In.Q
- -2 4.7528694149035815E+001  0       0                  6   256   # sensor_COD1.COD
+ -2 4.7502771714592910E+001  0       0                  6   256   # sensor_COD1.COD
  -2       0                  0       0                  6   388   # sensor_TSS1.In.Q
- -2 3.2582786148111554E+003  0       0                  6   256   # sensor_TSS1.TSS
+ -2 1.9999977350234985E+000  0 1.0000000000000000E+100  6   260   # sensor_TSS1.In.So
+ -2 3.2628777847077936E+003  0       0                  6   256   # sensor_TSS1.TSS
+ -2 3.7415653279057174E+003  0       0                  2   280   # sensor_aeration_energy.AE
+ -2 -3.0311714166534531E+000  0       0                  3   256   # sensor_aeration_energy.der(AE)
+ -2 1.4000999999999999E+001  0       0                  2   280   # sensor_aeration_energy.T
+ -2       1                  0       0                  3   256   # sensor_aeration_energy.der(T)
+ -2     240                  0       0                  6   256   # sensor_aeration_energy.Kla3
+ -2     240                  0       0                  6   256   # sensor_aeration_energy.Kla4
+ -2       8                  0       0                  6   256   # sensor_aeration_energy.So_sat
+ -1 6.7000000000000004E-001  0       0                  1   280   # sensor_effluent_quality.Y_h
+ -1 2.3999999999999999E-001  0       0                  1   280   # sensor_effluent_quality.Y_a
+ -1 8.0000000000000002E-002  0       0                  1   280   # sensor_effluent_quality.f_p
+ -1 8.0000000000000002E-002  0       0                  1   280   # sensor_effluent_quality.i_xb
+ -1 5.9999999999999998E-002  0       0                  1   280   # sensor_effluent_quality.i_xp
+ -2 2.5934554285504473E+004  0       0                  2   280   # sensor_effluent_quality.EQ
+ -2 -2.2318033964598651E+001  0       0                  3   256   # sensor_effluent_quality.der(EQ)
+ -2 1.4000999999999999E+001  0       0                  2   280   # sensor_effluent_quality.T
+ -2       1                  0       0                  3   256   # sensor_effluent_quality.der(T)
+ -2       2                  0       0                  6   256   # sensor_effluent_quality.B_SS
+ -2       1                  0       0                  6   256   # sensor_effluent_quality.B_COD
+ -2      30                  0       0                  6   256   # sensor_effluent_quality.B_NKj
+ -2      10                  0       0                  6   256   # sensor_effluent_quality.B_NO
+ -2       2                  0       0                  6   256   # sensor_effluent_quality.B_BOD5
+ -2       8                  0       0                  6   256   # sensor_effluent_quality.So_sat
+ -2 2.8644045986718183E+000  0       0                  6   256   # sensor_effluent_quality.S_NKj0
+ -2 1.2484919232291993E+001  0       0                  6   256   # sensor_effluent_quality.SS_0
+ -2 6.8700736040301233E+000  0       0                  6   256   # sensor_effluent_quality.BOD_50
+ -2 4.7321845100481667E+001  0       0                  6   256   # sensor_effluent_quality.COD_0
+ -2       2                  0 1.0000000000000000E+100  6   260   # sensor_pump_energy.In_a.So
+ -2       2                  0 1.0000000000000000E+100  6   260   # sensor_pump_energy.Out_a.So
+ -2 3.8814196236504966E+002  0       0                  2   280   # sensor_pump_energy.PE
+ -2 2.0025451717985343E-003  0       0                  3   256   # sensor_pump_energy.der(PE)
+ -2 1.4000999999999999E+001  0       0                  2   280   # sensor_pump_energy.T
+ -2       1                  0       0                  3   256   # sensor_pump_energy.der(T)
+ -1 6.7000000000000004E-001  0       0                  1   280   # sensor_influent_quality1.Y_h
+ -1 2.3999999999999999E-001  0       0                  1   280   # sensor_influent_quality1.Y_a
+ -1 8.0000000000000002E-002  0       0                  1   280   # sensor_influent_quality1.f_p
+ -1 8.0000000000000002E-002  0       0                  1   280   # sensor_influent_quality1.i_xb
+ -1 5.9999999999999998E-002  0       0                  1   280   # sensor_influent_quality1.i_xp
+ -2   18446                  0       0                  6   388   # sensor_influent_quality1.In.Q
+ -2      30                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Si
+ -2 6.9500000000000000E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Ss
+ -2 5.1200000000000003E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Xi
+ -2 2.0231999999999999E+002  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Xs
+ -2 2.8170000000000002E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Xbh
+ -2       0                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Xba
+ -2       0                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Xp
+ -2       0                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.So
+ -2       0                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Sno
+ -2 3.1559999999999999E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Snh
+ -2 6.9500000000000002E+000  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Snd
+ -2 1.0590000000000000E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Xnd
+ -2       7                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.In.Salk
+ -2  -18446                  0       0                  6   388   # sensor_influent_quality1.Out.Q
+ -2      30                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Si
+ -2 6.9500000000000000E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Ss
+ -2 5.1200000000000003E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Xi
+ -2 2.0231999999999999E+002  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Xs
+ -2 2.8170000000000002E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Xbh
+ -2       0                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Xba
+ -2       0                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Xp
+ -2       0                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.So
+ -2       0                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Sno
+ -2 3.1559999999999999E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Snh
+ -2 6.9500000000000002E+000  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Snd
+ -2 1.0590000000000000E+001  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Xnd
+ -2       7                  0 1.0000000000000000E+100  6   260   # sensor_influent_quality1.Out.Salk
+ -2 1.4312815072051403E+006  0       0                  2   280   # sensor_influent_quality1.IQ
+ -2 7.3844267037897957E+000  0       0                  3   256   # sensor_influent_quality1.der(IQ)
+ -2 1.4000999999999999E+001  0       0                  2   280   # sensor_influent_quality1.T
+ -2       1                  0       0                  3   256   # sensor_influent_quality1.der(T)
+ -2       2                  0       0                  6   256   # sensor_influent_quality1.B_SS
+ -2       1                  0       0                  6   256   # sensor_influent_quality1.B_COD
+ -2      30                  0       0                  6   256   # sensor_influent_quality1.B_NKj
+ -2      10                  0       0                  6   256   # sensor_influent_quality1.B_NO
+ -2       2                  0       0                  6   256   # sensor_influent_quality1.B_BOD5
+ -2       8                  0       0                  6   256   # sensor_influent_quality1.So_sat
+ -2 5.4425599999999996E+001  0       0                  6   256   # sensor_influent_quality1.S_NKj0
+ -2 2.1126749999999998E+002  0       0                  6   256   # sensor_influent_quality1.SS_0
+ -2 1.9352866000000000E+002  0       0                  6   256   # sensor_influent_quality1.BOD_50
+ -2 1.7887000000000000E+002  0       0                  6   256   # sensor_influent_quality1.COD_0
+ -1 6.7000000000000004E-001  0       0                  1   280   # sensor_sludge_production.Y_h
+ -1 2.3999999999999999E-001  0       0                  1   280   # sensor_sludge_production.Y_a
+ -1 8.0000000000000002E-002  0       0                  1   280   # sensor_sludge_production.f_p
+ -1 8.0000000000000002E-002  0       0                  1   280   # sensor_sludge_production.i_xb
+ -1 5.9999999999999998E-002  0       0                  1   280   # sensor_sludge_production.i_xp
+ -2 2.4479982639481849E+006  0       0                  2   280   # sensor_sludge_production.SP
+ -2 6.0066810655405277E+002  0       0                  3   256   # sensor_sludge_production.der(SP)
+ -2 1.4000999999999999E+001  0       0                  2   280   # sensor_sludge_production.T
+ -2       1                  0       0                  3   256   # sensor_sludge_production.der(T)
 
 
 # Matrix with 6 columns defining the initial value calculation
@@ -1701,10 +1903,10 @@ double initialValue(785,6)
 #           = 4: output.
 #           = 5: input.
 #           = 6: auxiliary variable.
-# column 6: Data type of variable and flags according to dsBaseType
-#  <value>&3= 0: real.
-#  <value>&3= 1: boolean.
-#  <value>&3= 2: integer.
+# column 6: Data type of variable.
+#           = 0: real.
+#           = 1: boolean.
+#           = 2: integer.
 #
 # Initial values are calculated according to the following procedure:
 #
@@ -1725,7 +1927,7 @@ double initialValue(785,6)
 #   nominal value (and maybe minimum and maximum values given in 
 #   column 3 and 4). If these values are zero, scale(i)=1 is used).
 #
-char initialDescription(785,97)
+char initialDescription(886,97)
 [m3/d]
 [mg/l]
 [mg/l]
@@ -1753,6 +1955,7 @@ area of secondary clarifier [m2]
 threshold for X [mg/l]
 [mg/l]
 [m3/d]
+[mg/l]
 [m3/d]
 [mg/l]
 [mg/l]
@@ -1881,6 +2084,7 @@ der(Soluble biodegradable organic nitrogen) [mg/(l.s)]
 Alkalinity [mmol/l]
 der(Alkalinity) [m-3.s-1.mol]
 [g/(m2*d)]
+[mg/l]
 [m]
 [m2]
 total sludge concentration in m-th layer [mg/l]
@@ -1965,6 +2169,97 @@ Alkalinity [mmol/l]
 der(Alkalinity) [m-3.s-1.mol]
 [mg/l]
 [m3/d]
+[mg/l]
+[mg/l]
+[m3/d]
+[mg/l]
+Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
+Autotrophic Yield [g Xba COD formed/(g N utilised)] []
+Fraction of biomass to particulate products [-] []
+Fraction nitrogen in biomass [g N/(g COD)] []
+Fraction nitrogen in particulate products [g N/(g COD)] []
+Maximum heterotrophic growth rate at T=15 deg C [day^-1] []
+Heterotrophic decay rate at T=15 deg C [day^-1] []
+Maximum autotrophic growth rate at T=15 deg C[day^-1] []
+Autotrophic decay rate at T=15 deg C [day^-1] []
+Ammonification rate at T=15 deg C [m3/(g COD day)] []
+Maximum specific hydrolysis rate at T=15 deg C [g Xs/(g Xbh COD day)] []
+Half-saturation (hydrolysis) at T=15 deg C [g Xs/(g Xbh COD)] []
+Half-saturation (auto. growth) [g NH-N/m3] []
+Half-saturation (hetero. growth) [g COD/m3] []
+Half-saturation (hetero. oxygen) [g O/m3] []
+Half-saturation (nitrate) [g NO-N/m3] []
+Half-saturation (auto. oxygen) [g O/m3] []
+Anoxic growth rate correction factor [-] []
+Anoxic hydrolysis rate correction factor [-] []
+Soluble inert organic matter [mg/l]
+der(Soluble inert organic matter) [mg/(l.s)]
+Readily biodegradable substrate [mg/l]
+der(Readily biodegradable substrate) [mg/(l.s)]
+Particulate inert organic matter [mg/l]
+der(Particulate inert organic matter) [mg/(l.s)]
+Slowly biodegradable substrate [mg/l]
+der(Slowly biodegradable substrate) [mg/(l.s)]
+Active heterotrophic biomass [mg/l]
+der(Active heterotrophic biomass) [mg/(l.s)]
+Active autotrophic biomass [mg/l]
+der(Active autotrophic biomass) [mg/(l.s)]
+Particulate products from biomass decay [mg/l]
+der(Particulate products from biomass decay) [mg/(l.s)]
+Dissolved oxygen [mg/l]
+der(Dissolved oxygen) [mg/(l.s)]
+Nitrate and nitrite nitrogen [mg/l]
+der(Nitrate and nitrite nitrogen) [mg/(l.s)]
+Ammonium nitrogen [mg/l]
+der(Ammonium nitrogen) [mg/(l.s)]
+Soluble biodegradable organic nitrogen [mg/l]
+der(Soluble biodegradable organic nitrogen) [mg/(l.s)]
+Particulate biodegradable organic nitrogen [mg/l]
+der(Particulate biodegradable organic nitrogen) [mg/(l.s)]
+Alkalinity [mmol/l]
+der(Alkalinity) [m-3.s-1.mol]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[mg/l]
+[m3/d]
+[mg/l]
+Volume of nitrification tank [m3]
+Oxygen transfer factor
+depth of aeration [m]
+specific oxygen feed factor [gO2/(m^3*m)] []
+Dissolved oxygen saturation [mg/l]
+Oxygen transfer factor
 [m3/d]
 Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
 Autotrophic Yield [g Xba COD formed/(g N utilised)] []
@@ -2049,9 +2344,9 @@ Volume of nitrification tank [m3]
 Oxygen transfer factor
 depth of aeration [m]
 specific oxygen feed factor [gO2/(m^3*m)] []
-
 Dissolved oxygen saturation [mg/l]
 [m3/d]
+
 Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
 Autotrophic Yield [g Xba COD formed/(g N utilised)] []
 Fraction of biomass to particulate products [-] []
@@ -2135,95 +2430,9 @@ Volume of nitrification tank [m3]
 Oxygen transfer factor
 depth of aeration [m]
 specific oxygen feed factor [gO2/(m^3*m)] []
-
 Dissolved oxygen saturation [mg/l]
 [m3/d]
-Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
-Autotrophic Yield [g Xba COD formed/(g N utilised)] []
-Fraction of biomass to particulate products [-] []
-Fraction nitrogen in biomass [g N/(g COD)] []
-Fraction nitrogen in particulate products [g N/(g COD)] []
-Maximum heterotrophic growth rate at T=15 deg C [day^-1] []
-Heterotrophic decay rate at T=15 deg C [day^-1] []
-Maximum autotrophic growth rate at T=15 deg C[day^-1] []
-Autotrophic decay rate at T=15 deg C [day^-1] []
-Ammonification rate at T=15 deg C [m3/(g COD day)] []
-Maximum specific hydrolysis rate at T=15 deg C [g Xs/(g Xbh COD day)] []
-Half-saturation (hydrolysis) at T=15 deg C [g Xs/(g Xbh COD)] []
-Half-saturation (auto. growth) [g NH-N/m3] []
-Half-saturation (hetero. growth) [g COD/m3] []
-Half-saturation (hetero. oxygen) [g O/m3] []
-Half-saturation (nitrate) [g NO-N/m3] []
-Half-saturation (auto. oxygen) [g O/m3] []
-Anoxic growth rate correction factor [-] []
-Anoxic hydrolysis rate correction factor [-] []
-Soluble inert organic matter [mg/l]
-der(Soluble inert organic matter) [mg/(l.s)]
-Readily biodegradable substrate [mg/l]
-der(Readily biodegradable substrate) [mg/(l.s)]
-Particulate inert organic matter [mg/l]
-der(Particulate inert organic matter) [mg/(l.s)]
-Slowly biodegradable substrate [mg/l]
-der(Slowly biodegradable substrate) [mg/(l.s)]
-Active heterotrophic biomass [mg/l]
-der(Active heterotrophic biomass) [mg/(l.s)]
-Active autotrophic biomass [mg/l]
-der(Active autotrophic biomass) [mg/(l.s)]
-Particulate products from biomass decay [mg/l]
-der(Particulate products from biomass decay) [mg/(l.s)]
-Dissolved oxygen [mg/l]
-der(Dissolved oxygen) [mg/(l.s)]
-Nitrate and nitrite nitrogen [mg/l]
-der(Nitrate and nitrite nitrogen) [mg/(l.s)]
-Ammonium nitrogen [mg/l]
-der(Ammonium nitrogen) [mg/(l.s)]
-Soluble biodegradable organic nitrogen [mg/l]
-der(Soluble biodegradable organic nitrogen) [mg/(l.s)]
-Particulate biodegradable organic nitrogen [mg/l]
-der(Particulate biodegradable organic nitrogen) [mg/(l.s)]
-Alkalinity [mmol/l]
-der(Alkalinity) [m-3.s-1.mol]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[m3/d]
-Volume of nitrification tank [m3]
-Oxygen transfer factor
-depth of aeration [m]
-specific oxygen feed factor [gO2/(m^3*m)] []
-
-Dissolved oxygen saturation [mg/l]
-[m3/d]
 Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
 Autotrophic Yield [g Xba COD formed/(g N utilised)] []
 Fraction of biomass to particulate products [-] []
@@ -2411,6 +2620,7 @@ Volume of denitrification tank [m3]
 [mg/l]
 [mg/l]
 [mmol/l]
+[mg/l]
 Number of outputs [:#(type=Integer)]
 Connector of Real output signals
 Connector of Real output signals
@@ -2485,10 +2695,14 @@ Next time event instant [s]
 [mmol/l]
 [m3/d]
 [m3/d]
+[mg/l]
+
 Constant output value
 minimum pump capacity [m3/d]
 maximum pump capacity [m3/d]
 
+[mg/l]
+[mg/l]
 minimum pump capacity [m3/d]
 maximum pump capacity [m3/d]
 
@@ -2510,5 +2724,94 @@ Fraction nitrogen in particulate products [g N/(g COD)] []
 [m3/d]
 
 [m3/d]
+[mg/l]
+
+
+
+
+
+
+
+
+Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
+Autotrophic Yield [g Xba COD formed/(g N utilised)] []
+Fraction of biomass to particulate products [-] []
+Fraction nitrogen in biomass [g N/(g COD)] []
+Fraction nitrogen in particulate products [g N/(g COD)] []
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[mg/l]
+[mg/l]
+
+
+
+
+Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
+Autotrophic Yield [g Xba COD formed/(g N utilised)] []
+Fraction of biomass to particulate products [-] []
+Fraction nitrogen in biomass [g N/(g COD)] []
+Fraction nitrogen in particulate products [g N/(g COD)] []
+[m3/d]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mmol/l]
+[m3/d]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mg/l]
+[mmol/l]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Heterotrophic Yield [g Xbh COD formed/(g COD utilised)] []
+Autotrophic Yield [g Xba COD formed/(g N utilised)] []
+Fraction of biomass to particulate products [-] []
+Fraction nitrogen in biomass [g N/(g COD)] []
+Fraction nitrogen in particulate products [g N/(g COD)] []
+
+
+
 
 

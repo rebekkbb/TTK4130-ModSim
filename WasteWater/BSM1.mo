@@ -66,7 +66,7 @@ model nitri "ASM1 nitrification tank"
   parameter Real alpha=0.7 "Oxygen transfer factor";
   parameter Modelica.SIunits.Length de=4.5 "depth of aeration";
   parameter Real R_air=23.5 "specific oxygen feed factor [gO2/(m^3*m)]";
-  parameter Real Kla=240;
+
   WWU.MassConcentration So_sat "Dissolved oxygen saturation";
 
   Interfaces.WWFlowAsm1in In annotation (Placement(transformation(extent={{-110,
@@ -79,6 +79,7 @@ model nitri "ASM1 nitrification tank"
           extent={{-110,30},{-90,50}})));
   Interfaces.AirFlow AirIn annotation (Placement(transformation(extent={{-5,
             -103},{5,-93}})));
+  parameter Real Kla = 240;
 equation
 
   // Temperature dependent oxygen saturation by Simba
@@ -120,7 +121,8 @@ Parameters:
   alpha - oxygen transfer factor
   de    - depth of the aeration system [m]
   R_air - specific oxygen feed factor [g O2/(m3*m)]
-"));
+"), Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,100}}),
+        graphics));
 end nitri;
 
 model SecClarModTakacs "Secondary Clarifier ASM1 Model based on Takacs"
@@ -797,7 +799,9 @@ equation
     Documentation(info="This component measures the flow of an ASM1 wastewater stream and provides
 the result as output signal (to be further processed with blocks of
 the Modelica.Blocks library).
-"));
+"), Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
+              100}}),
+        graphics));
 end sensor_Q;
 
 model sensor_TKN "Ideal TKN and total nitrogen sensor"
@@ -822,7 +826,8 @@ with blocks of the Modelica.Blocks library).
 
 signal[1] - TKN
 signal[2] - N_total
-"));
+"), Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
+              100,100}}), graphics));
 end sensor_TKN;
 
 model sensor_TSS
@@ -926,71 +931,75 @@ end sensor_TSS;
       WasteWater.ASM1.sensor_TSS sensor_TSS1 annotation (Placement(transformation(
               extent={{32,14},{49,30}})));
     equation
-      connect(tank3.Out, divider.In) annotation (Line(points={{14,4},{20,4}}));
-      connect(mixer.Out, tank1.In) annotation (Line(points={{-84,32},{-77,32},{
-              -77,4},{-65,4}}));
-      connect(mixer.In1, WWSource.Out) annotation (Line(points={{-104,36},{-104,
-              74},{-68,74},{-68,81},{-68.2,81}}));
+      connect(tank3.Out, divider.In) annotation (Line(points={{14,4},{17,4},{17,
+              4.3},{20,4.3}}));
+      connect(mixer.Out, tank1.In) annotation (Line(points={{-84,31.6},{-77,
+              31.6},{-77,4},{-65,4}}));
+      connect(mixer.In1, WWSource.Out) annotation (Line(points={{-104,35.5},{
+              -104,74},{-68,74},{-68,81},{-68.2,81}}));
       connect(CombiTableTime.y, WWSource.data)
-        annotation (Line(points={{-93,88},{-88,88}}));
-      connect(blower2.AirOut, tank3.AirIn) annotation (Line(points={{4,-42},{4,
-              -5.8}}));
+        annotation (Line(points={{-93,88},{-87,88}}));
+      connect(blower2.AirOut, tank3.AirIn) annotation (Line(points={{3,-42},{3,
+              -24},{4,-24},{4,-5.8}}));
       connect(Feedback.y, PI1.u) annotation (Line(points={{81,50},{86,50}}));
       connect(PI1.y, blower2.u) annotation (Line(points={{109,50},{114,50},{114,
-              -84},{18,-84},{18,-55},{14,-55},{14,-56}}));
-      connect(divider.Out2, RecyclePump.In) annotation (Line(points={{40,2},{44,2},
-              {44,-8.7},{-74,-8.7}}));
-      connect(RecyclePump.Out, mixer.In3) annotation (Line(points={{-94.2,-14.8},
-              {-104,-14.8},{-104,28}}));
-      connect(ReturnPump.Out, mixer.In2) annotation (Line(points={{16,-28},{15.5,
-              -28},{15.5,-30},{-112,-30},{-112,32},{-104,32}}));
+              -84},{18,-84},{18,-55},{13.8,-55},{13.8,-55}}));
+      connect(divider.Out2, RecyclePump.In) annotation (Line(points={{40,2.5},{
+              44,2.5},{44,-8.7},{-74,-8.7}}));
+      connect(RecyclePump.Out, mixer.In3) annotation (Line(points={{-94,-14.8},
+              {-104,-14.8},{-104,27.5}}));
+      connect(ReturnPump.Out, mixer.In2) annotation (Line(points={{16,-28.8},{
+              15.5,-28.8},{15.5,-30},{-112,-30},{-112,31.5},{-104,31.5}}));
       connect(sensor_O2.So, Feedback.u2)
-        annotation (Line(points={{18.8,34},{72,34},{72,42}}));
+        annotation (Line(points={{19.8,34},{72,34},{72,42}}));
       connect(Temperature.y, tank1.T)
-        annotation (Line(points={{-81.5,56},{-71,56},{-71,8},{-65,8}}, color={0,0,
+        annotation (Line(points={{-81.4,56},{-71,56},{-71,8},{-65,8}}, color={0,0,
               255}));
       connect(Temperature.y, tank2.T)
-        annotation (Line(points={{-81.5,56},{-39,56},{-39,8},{-34,8}}, color={0,0,
+        annotation (Line(points={{-81.4,56},{-39,56},{-39,8},{-34,8}}, color={0,0,
               255}));
-      connect(Temperature.y, tank3.T) annotation (Line(points={{-81.5,56},{-39,56},
-              {-39,14},{-5.9,14},{-5.9,8},{-5.8,8}}, color={0,0,255}));
+      connect(Temperature.y, tank3.T) annotation (Line(points={{-81.4,56},{-39,
+              56},{-39,14},{-5.9,14},{-5.9,8},{-6,8}},
+                                                     color={0,0,255}));
       connect(OxygenSetpoint.y, Feedback.u1)
         annotation (Line(points={{58,50},{64,50}}, color={0,0,255}));
       connect(Constant1.y, blower1.u) annotation (Line(points={{-46,-77},{-7.2,
-              -77},{-7.2,-55},{-14.2,-55}}, color={0,0,255}));
-      connect(WastePump.Out, WasteSludge.In) annotation (Line(points={{79,-42},{
-              87,-42}}));
+              -77},{-7.2,-55},{-13.2,-55}}, color={0,0,255}));
+      connect(WastePump.Out, WasteSludge.In) annotation (Line(points={{79,-42.2},
+              {81,-42.2},{81,-42},{83,-42},{83,-42},{87,-42}}));
       connect(WastePump.u, Constant2.y)
-        annotation (Line(points={{60,-43},{46,-43},{46,-58},{44,-58}}, color={0,0,
+        annotation (Line(points={{60.1,-42.5},{46,-42.5},{46,-58},{43,-58}},
+                                                                       color={0,0,
               255}));
-      connect(tank2.Out, tank3.In) annotation (Line(points={{-13,4},{-6,4}}));
-      connect(tank1.Out, tank2.In) annotation (Line(points={{-44,4},{-34,4}}));
-      connect(blower1.AirOut, tank2.AirIn) annotation (Line(points={{-23,-42},{
-              -23,-24},{-24,-24},{-24,-6}}));
-      connect(Constant1.y, RecyclePump.u) annotation (Line(points={{-46,-77},{-39,
-              -77},{-39,-15},{-75.1,-15}}, color={0,0,255}));
-      connect(Settler.Effluent, Effluent.In) annotation (Line(points={{69.2,11.7},
-              {78,11.7},{78,-15},{88,-15}}));
-      connect(Settler.Return, ReturnPump.In) annotation (Line(points={{56,-4.6},{
-              56,-22.7},{36,-22.7}}));
-      connect(WastePump.In, Settler.Waste) annotation (Line(points={{59,-48},{52,
-              -48},{52,-31},{62,-31},{62,-4.6}}));
-      connect(sensor_NH1.In, Settler.Effluent) annotation (Line(points={{72,15},{
-              72,11.7},{69.2,11.7}}));
-      connect(sensor_NO1.In, Settler.Effluent) annotation (Line(points={{89,15},{
-              89,11.7},{69.2,11.7}}));
+      connect(tank2.Out, tank3.In) annotation (Line(points={{-14,4},{-6,4}}));
+      connect(tank1.Out, tank2.In) annotation (Line(points={{-45,4},{-34,4}}));
+      connect(blower1.AirOut, tank2.AirIn) annotation (Line(points={{-24,-42},{
+              -24,-24},{-24,-5.8},{-24,-5.8}}));
+      connect(Constant1.y, RecyclePump.u) annotation (Line(points={{-46,-77},{
+              -39,-77},{-39,-14.5},{-75.1,-14.5}},
+                                           color={0,0,255}));
+      connect(Settler.Effluent, Effluent.In) annotation (Line(points={{68.2,
+              11.7},{78,11.7},{78,-16},{88,-16}}));
+      connect(Settler.Return, ReturnPump.In) annotation (Line(points={{55,-3.6},
+              {55,-22.7},{36,-22.7}}));
+      connect(WastePump.In, Settler.Waste) annotation (Line(points={{59,-48.3},
+              {52,-48.3},{52,-31},{61,-31},{61,-3.6}}));
+      connect(sensor_NH1.In, Settler.Effluent) annotation (Line(points={{72,15},
+              {72,11.7},{68.2,11.7}}));
+      connect(sensor_NO1.In, Settler.Effluent) annotation (Line(points={{89,15},
+              {89,11.7},{68.2,11.7}}));
       connect(sensor_TKN1.In, Settler.Effluent) annotation (Line(points={{105,14},
-              {105,11.7},{69.2,11.7}}));
+              {105,11.7},{68.2,11.7}}));
       connect(sensor_COD1.In, Settler.Effluent) annotation (Line(points={{105,-5},
-              {105,11.7},{69.2,11.7}}));
+              {105,11.7},{68.2,11.7}}));
       connect(Constant2.y, ReturnPump.u) annotation (Line(points={{43,-58},{48,
               -58},{48,-28.5},{34.9,-28.5}}, color={0,0,255}));
-      connect(divider.Out1, Settler.Feed) annotation (Line(points={{40,7},{44.5,7},
-              {44.5,7.4},{49,7.4}}));
-      connect(tank3.MeasurePort, sensor_O2.In) annotation (Line(points={{10,9},{
-              10,25}}));
-      connect(sensor_TSS1.In, divider.Out1) annotation (Line(points={{40,14},{40,
-              6}}));
+      connect(divider.Out1, Settler.Feed) annotation (Line(points={{40,6.6},{
+              44.5,6.6},{44.5,7.4},{48,7.4}}));
+      connect(tank3.MeasurePort, sensor_O2.In) annotation (Line(points={{9.5,8.5},
+              {9.5,16},{10,16},{10,25}}));
+      connect(sensor_TSS1.In, divider.Out1) annotation (Line(points={{40.5,14},
+              {40.5,10.6},{40,10.6},{40,6}}));
 
       annotation (
         Diagram(coordinateSystem(
@@ -1037,7 +1046,7 @@ Main Author:
         annotation (Placement(transformation(extent={{48,-5},{68,15}})));
       WasteWater.BSM1.divider2 divider
         annotation (Placement(transformation(extent={{20,-6},{40,14}})));
-      WasteWater.ASM1.nitri5
+      WasteWater.BSM1.nitri5
                  tank5(V=1333) annotation (Placement(transformation(extent={{-6,
                 -6},{14,14}})));
       WasteWater.BSM1.nitri tank4(V=1333)
@@ -1092,6 +1101,16 @@ Main Author:
               extent={{97,-5},{113,11}})));
       WasteWater.ASM1.sensor_TSS sensor_TSS1 annotation (Placement(transformation(
               extent={{32,15},{48,30}})));
+      WasteWater.BSM1.sensor_aeration_energy sensor_aeration_energy
+        annotation (Placement(transformation(extent={{12,55},{32,75}})));
+      WasteWater.BSM1.sensor_effluent_quality sensor_effluent_quality
+        annotation (Placement(transformation(extent={{80,58},{100,78}})));
+      WasteWater.BSM1.sensor_pump_energy sensor_pump_energy
+        annotation (Placement(transformation(extent={{-29,-53},{-9,-33}})));
+      WasteWater.BSM1.sensor_influent_quality sensor_influent_quality1
+        annotation (Placement(transformation(extent={{-71,60},{-51,80}})));
+      WasteWater.BSM1.sensor_sludge_production sensor_sludge_production
+        annotation (Placement(transformation(extent={{69,-94},{89,-74}})));
     equation
       connect(divider.Out1, Settler.Feed) annotation (Line(points={{40,6.6},{44,
               6.6},{44,6.4},{48,6.4}}));
@@ -1104,16 +1123,10 @@ Main Author:
       connect(tank1.Out, tank2.In) annotation (Line(points={{-56,32},{-48,32}}));
       connect(mixer.Out, tank1.In) annotation (Line(points={{-84,31.6},{-80,
               31.6},{-80,32},{-76,32}}));
-      connect(mixer.In1, WWSource.Out) annotation (Line(points={{-104,35.5},{
-              -104,74},{-68,74},{-68,81},{-68.2,81}}));
       connect(sensor_NO.In, tank2.MeasurePort) annotation (Line(points={{-32,48},
               {-32,36.5},{-32.5,36.5}}));
-      connect(divider.Out2, RecyclePump.In) annotation (Line(points={{40,2.5},{
-              44,2.5},{44,-8.7},{-74,-8.7}}));
       connect(RecyclePump.Out, mixer.In3) annotation (Line(points={{-94,-14.8},
               {-104,-14.8},{-104,27.5}}));
-      connect(Settler.Return, ReturnPump.In) annotation (Line(points={{55,-4.6},{
-              55,-22.7},{36,-22.7}}));
       connect(ReturnPump.Out, mixer.In2) annotation (Line(points={{16,-28.8},{
               15.5,-28.8},{15.5,-30},{-112,-30},{-112,31.5},{-104,31.5}}));
       connect(Temperature.y, tank1.T)
@@ -1123,7 +1136,7 @@ Main Author:
         annotation (Line(points={{-81.4,56},{-52,56},{-52,36},{-48,36}}, color={0,
               0,255}));
       connect(Temperature.y, tank3.T) annotation (Line(points={{-81.4,56},{-52,
-              56},{-52,14},{-60,14},{-60,8},{-59.5,8},{-59.5,8},{-60,8}}, color={
+              56},{-52,14},{-60,14},{-60,8},{-59.5,8},{-60,8}},           color={
               0,0,255}));
       connect(Temperature.y, tank4.T) annotation (Line(points={{-81.4,56},{-52,
               56},{-52,14},{-32,14},{-32,8}},
@@ -1131,10 +1144,6 @@ Main Author:
       connect(Temperature.y, tank5.T) annotation (Line(points={{-81.4,56},{-52,
               56},{-52,14},{-5.9,14},{-5.9,8},{-6,8}},
                                                      color={0,0,255}));
-      connect(WastePump.Out, WasteSludge.In) annotation (Line(points={{79,-42.2},
-              {81,-42.2},{81,-42},{83,-42},{83,-42.2},{87,-42.2}}));
-      connect(WastePump.In, Settler.Waste) annotation (Line(points={{59,-48.3},
-              {52,-48.3},{52,-31},{61,-31},{61,-4.6}}));
       connect(WastePump.u, Constant2.y)
         annotation (Line(points={{60.1,-42.5},{46,-42.5},{46,-58},{43,-58}},
                                                                        color={0,0,
@@ -1147,8 +1156,6 @@ Main Author:
               {105,10.7},{68.2,10.7}}));
       connect(sensor_COD1.In, Settler.Effluent) annotation (Line(points={{105,-5},
               {105,10.7},{68.2,10.7}}));
-      connect(Effluent.In, Settler.Effluent) annotation (Line(points={{88,-16},
-              {78.5,-16},{78.5,10.7},{68.2,10.7}}));
       connect(Constant2.y, ReturnPump.u)
         annotation (Line(points={{43,-58},{46,-58},{46,-28.5},{34.9,-28.5}},
                                                                          color={0,
@@ -1162,11 +1169,63 @@ Main Author:
               -45,-46.5},{-75.1,-46.5},{-75.1,-14.5}}, color={0,0,127}));
       connect(CombiTableTime.y, WWSource.data) annotation (Line(points={{-98,90},
               {-93,90},{-93,88},{-87,88}}, color={0,0,127}));
+      connect(sensor_aeration_energy.Kla5, tank5.Kla) annotation (Line(
+          points={{14.4,59.8},{4.3,59.8},{4.3,8.3}},
+          color={0,0,127},
+          smooth=Smooth.None));
+      connect(sensor_effluent_quality.In, Settler.Effluent) annotation (Line(
+          points={{83,68},{68,68},{68,10.7},{68.2,10.7}},
+          color={0,0,255},
+          smooth=Smooth.None));
+      connect(Effluent.In, sensor_effluent_quality.Out) annotation (Line(
+          points={{88,-16},{81,-16},{81,58},{90,58}},
+          color={0,0,255},
+          smooth=Smooth.None));
+      connect(divider.Out2, sensor_pump_energy.In_a) annotation (Line(
+          points={{40,2.5},{-13,2.5},{-13,-37.4},{-23,-37.4}},
+          color={0,0,0},
+          smooth=Smooth.None));
+      connect(sensor_pump_energy.Out_a, RecyclePump.In) annotation (Line(
+          points={{-23.2,-48.8},{-38.6,-48.8},{-38.6,-8.7},{-74,-8.7}},
+          color={0,0,0},
+          smooth=Smooth.None));
+      connect(Settler.Return, sensor_pump_energy.In_r) annotation (Line(
+          points={{55,-4.6},{27,-4.6},{27,-37.4},{-13.8,-37.4}},
+          color={0,0,0},
+          smooth=Smooth.None));
+      connect(sensor_pump_energy.Out_r, ReturnPump.In) annotation (Line(
+          points={{-19,-53.2},{13,-53.2},{13,-22.7},{36,-22.7}},
+          color={0,0,0},
+          smooth=Smooth.None));
+      connect(Settler.Waste, sensor_pump_energy.In_w) annotation (Line(
+          points={{61,-4.6},{29,-4.6},{29,-44.6},{-12.6,-44.6}},
+          color={0,0,0},
+          smooth=Smooth.None));
+      connect(sensor_pump_energy.Out_w, WastePump.In) annotation (Line(
+          points={{-15,-48.8},{26,-48.8},{26,-48.3},{59,-48.3}},
+          color={0,0,0},
+          smooth=Smooth.None));
+      connect(WWSource.Out, sensor_influent_quality1.In) annotation (Line(
+          points={{-68.2,81},{-89,81},{-89,70},{-68,70}},
+          color={0,0,0},
+          smooth=Smooth.None));
+      connect(sensor_influent_quality1.Out, mixer.In1) annotation (Line(
+          points={{-61,60},{-103,60},{-103,35.5},{-104,35.5}},
+          color={0,0,0},
+          smooth=Smooth.None));
+      connect(sensor_sludge_production.In, WastePump.Out) annotation (Line(
+          points={{72,-84},{76,-84},{76,-42.2},{79,-42.2}},
+          color={0,0,255},
+          smooth=Smooth.None));
+      connect(sensor_sludge_production.Out, WasteSludge.In) annotation (Line(
+          points={{79,-94},{84,-94},{84,-42.2},{87,-42.2}},
+          color={0,0,0},
+          smooth=Smooth.None));
       annotation (
         Diagram(coordinateSystem(
             preserveAspectRatio=false,
             extent={{-120,-100},{120,105}},
-            grid={1,1})),
+            grid={1,1}), graphics),
         Documentation(info="This ASM1 plant consists of 2 denitrification tanks (tank1 and tank2),
 3 nitrification tanks (tank3 - tank5) and a secondary clarifier by Takacs.
 Furthermore there are 2 control loops modelled.
@@ -6185,7 +6244,6 @@ model nitri5 "ASM1 nitrification tank"
   parameter Real alpha=0.7 "Oxygen transfer factor";
   parameter Modelica.SIunits.Length de=4.5 "depth of aeration";
   parameter Real R_air=23.5 "specific oxygen feed factor [gO2/(m^3*m)]";
-  Real Kla;
   WWU.MassConcentration So_sat "Dissolved oxygen saturation";
 
   Interfaces.WWFlowAsm1in In annotation (Placement(transformation(extent={{-110,
@@ -6194,23 +6252,26 @@ model nitri5 "ASM1 nitrification tank"
             -10},{110,10}})));
   Interfaces.WWFlowAsm1out MeasurePort annotation (Placement(transformation(
           extent={{50,40},{60,50}})));
+
   Modelica.Blocks.Interfaces.RealInput T annotation (Placement(transformation(
           extent={{-110,30},{-90,50}})));
+  Modelica.Blocks.Interfaces.RealOutput Kla "Oxygen transfer factor" annotation (Placement(transformation(extent={{-2,38},
+            {8,48}})));
   Interfaces.AirFlow AirIn annotation (Placement(transformation(extent={{-5,
             -103},{5,-93}})));
 equation
 
   // Temperature dependent oxygen saturation by Simba
   // So_sat =13.89 + (-0.3825 + (0.007311 - 0.00006588*T)*T)*T;
+
   So_sat = 8;
-  So = 2;
 
   // extends the Oxygen differential equation by an aeration term
   // aeration [mgO2/l]; AirIn.Q_air needs to be in
   // Simulationtimeunit [m3*day^-1]
   // aeration = (alpha*(So_sat - So)/So_sat*AirIn.Q_air*R_air*de)/V;
   aeration = Kla * (So_sat - So);
-
+  So = 2;
   // volume dependent dilution term of each concentration
 
   inputSi = (In.Si - Si)*In.Q/V;
@@ -6240,8 +6301,258 @@ Parameters:
   alpha - oxygen transfer factor
   de    - depth of the aeration system [m]
   R_air - specific oxygen feed factor [g O2/(m3*m)]
-"));
+"), Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
+              100}}),
+        graphics));
 end nitri5;
+
+model sensor_aeration_energy
+    "Ideal sensor to measure chemical oxygen demand (COD)"
+
+  extends WasteWater.Icons.sensor_COD;
+
+  Modelica.Blocks.Interfaces.RealInput Kla5 annotation (Placement(
+        transformation(extent={{-86,-62},{-66,-42}}), iconTransformation(extent=
+           {{-86,-62},{-66,-42}})));
+  Modelica.Blocks.Interfaces.RealOutput AE(start=0) annotation (Placement(
+        transformation(extent={{80,-10},{100,10}}), iconTransformation(extent={{
+            80,-10},{100,10}})));
+  Real T(start=1e-3);
+  Real Kla3 = 240;
+  Real Kla4 = 240;
+  Real So_sat = 8;
+
+equation
+  der(T) = 1.0;
+  der(AE*T) = So_sat/1.8/1000*1333*(Kla3 + Kla4 + Kla5);
+
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
+            {100,100}}), graphics));
+end sensor_aeration_energy;
+
+model sensor_effluent_quality "Influent quality index"
+  extends WasteWater.Icons.sensor_COD;
+  extends Interfaces.stoichiometry;
+
+  Interfaces.WWFlowAsm1in In annotation (Placement(transformation(extent={{-80,-10},
+            {-60,10}})));
+  Interfaces.WWFlowAsm1out Out annotation (Placement(transformation(extent={{-10,
+            -110},{10,-90}})));
+  Modelica.Blocks.Interfaces.RealOutput EQ( start=0) annotation (Placement(
+        transformation(extent={{88,-10},{108,10}})));
+
+  Real T(start=1e-3);
+  Real B_SS=2;
+  Real B_COD=1;
+  Real B_NKj=30;
+  Real B_NO=10;
+  Real B_BOD5=2;
+  Real So_sat=8;
+  Real S_NKj0;
+  Real SS_0;
+  Real BOD_50;
+  Real COD_0;
+
+equation
+  In.Q + Out.Q = 0;
+
+  In.Si = Out.Si;
+  In.Ss = Out.Ss;
+  In.Xi = Out.Xi;
+  In.Xs = Out.Xs;
+  In.Xbh = Out.Xbh;
+  In.Xba = Out.Xba;
+  In.Xp = Out.Xp;
+  In.So = Out.So;
+  In.Sno = Out.Sno;
+  In.Snh = Out.Snh;
+  In.Snd = Out.Snd;
+  In.Xnd = Out.Xnd;
+  In.Salk = Out.Salk;
+
+  S_NKj0 = In.Snh + In.Snd + In.Xnd + i_xb * (In.Xbh + In.Xba) + i_xp * (In.Xp + In.Xi);
+  SS_0 = 0.75 * (In.Xs + In.Xi + In.Xbh + In.Xba + In.Xp);
+  BOD_50 = 0.65 * (In.Ss + In.Xs + (1-f_p) * (In.Xbh + In.Xba));
+  COD_0 = In.Ss + In.Si + In.Xi + In.Xbh + In.Xba + In.Xp;
+  der(T) = 1.0;
+  der(EQ*T) = (1/1000) * (B_SS * SS_0 * B_COD * COD_0 + B_NKj*S_NKj0 + B_NO*In.Sno + B_BOD5*BOD_50)*In.Q;
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
+            {100,100}}), graphics), Diagram(coordinateSystem(
+          preserveAspectRatio=false, extent={{-100,-100},{100,100}}), graphics));
+end sensor_effluent_quality;
+
+model sensor_pump_energy "Total pump energy"
+
+  extends WasteWater.Icons.sensor_COD;
+
+  Interfaces.WWFlowAsm1in In_a annotation (Placement(transformation(extent={{-50,46},
+            {-30,66}})));
+  Interfaces.WWFlowAsm1out Out_a annotation (Placement(transformation(extent={{-52,-68},
+            {-32,-48}})));
+  Interfaces.WWFlowAsm1in In_r annotation (Placement(transformation(extent={{42,46},
+            {62,66}})));
+  Interfaces.WWFlowAsm1out Out_r annotation (Placement(transformation(extent={{-10,
+            -112},{10,-92}})));
+  Interfaces.WWFlowAsm1in In_w annotation (Placement(transformation(extent={{54,-26},
+            {74,-6}})));
+  Interfaces.WWFlowAsm1out Out_w annotation (Placement(transformation(extent={{30,-68},
+            {50,-48}})));
+
+  Modelica.Blocks.Interfaces.RealOutput PE( start = 0);
+
+  Real T(start=1e-3);
+equation
+
+  In_a.Q + Out_a.Q = 0;
+  In_r.Q + Out_r.Q = 0;
+  In_w.Q + Out_w.Q = 0;
+
+  der(T) = 1.0;
+  der(PE*T) = 0.004*In_a.Q + 0.008*In_r.Q + 0.05*In_w.Q;
+
+  // eventually abs(In.Q) to be shure to have pos. signal
+  In_a.Si = Out_a.Si;
+  In_a.Ss = Out_a.Ss;
+  In_a.Xi = Out_a.Xi;
+  In_a.Xs = Out_a.Xs;
+  In_a.Xbh = Out_a.Xbh;
+  In_a.Xba = Out_a.Xba;
+  In_a.Xp = Out_a.Xp;
+  In_a.So = Out_a.So;
+  In_a.Sno = Out_a.Sno;
+  In_a.Snh = Out_a.Snh;
+  In_a.Snd = Out_a.Snd;
+  In_a.Xnd = Out_a.Xnd;
+  In_a.Salk = Out_a.Salk;
+
+  In_r.Si = Out_r.Si;
+  In_r.Ss = Out_r.Ss;
+  In_r.Xi = Out_r.Xi;
+  In_r.Xs = Out_r.Xs;
+  In_r.Xbh = Out_r.Xbh;
+  In_r.Xba = Out_r.Xba;
+  In_r.Xp = Out_r.Xp;
+  In_r.So = Out_r.So;
+  In_r.Sno = Out_r.Sno;
+  In_r.Snh = Out_r.Snh;
+  In_r.Snd = Out_r.Snd;
+  In_r.Xnd = Out_r.Xnd;
+  In_r.Salk = Out_r.Salk;
+
+  In_w.Si = Out_w.Si;
+  In_w.Ss = Out_w.Ss;
+  In_w.Xi = Out_w.Xi;
+  In_w.Xs = Out_w.Xs;
+  In_w.Xbh = Out_w.Xbh;
+  In_w.Xba = Out_w.Xba;
+  In_w.Xp = Out_w.Xp;
+  In_w.So = Out_w.So;
+  In_w.Sno = Out_w.Sno;
+  In_w.Snh = Out_w.Snh;
+  In_w.Snd = Out_w.Snd;
+  In_w.Xnd = Out_w.Xnd;
+  In_w.Salk = Out_w.Salk;
+
+    annotation (Placement(transformation(
+        origin={0,-98},
+        extent={{-10,-10},{10,10}},
+        rotation=270)), Diagram(coordinateSystem(preserveAspectRatio=false,
+          extent={{-100,-100},{100,100}}), graphics),
+    Documentation(info="This component measures the flow of an ASM1 wastewater stream and provides
+the result as output signal (to be further processed with blocks of
+the Modelica.Blocks library).
+"));
+end sensor_pump_energy;
+
+model sensor_influent_quality "Influent quality index"
+
+  extends WasteWater.Icons.sensor_COD;
+  extends Interfaces.stoichiometry;
+
+  Interfaces.WWFlowAsm1in In annotation (Placement(transformation(extent={{-80,-10},
+            {-60,10}})));
+  Interfaces.WWFlowAsm1out Out annotation (Placement(transformation(extent={{-10,
+            -110},{10,-90}})));
+  Modelica.Blocks.Interfaces.RealOutput IQ( start=0) annotation (Placement(
+        transformation(extent={{88,-10},{108,10}})));
+
+  Real T(start=1e-3);
+  Real B_SS=2;
+  Real B_COD=1;
+  Real B_NKj=30;
+  Real B_NO=10;
+  Real B_BOD5=2;
+  Real So_sat=8;
+  Real S_NKj0;
+  Real SS_0;
+  Real BOD_50;
+  Real COD_0;
+
+equation
+  In.Q + Out.Q = 0;
+
+  In.Si = Out.Si;
+  In.Ss = Out.Ss;
+  In.Xi = Out.Xi;
+  In.Xs = Out.Xs;
+  In.Xbh = Out.Xbh;
+  In.Xba = Out.Xba;
+  In.Xp = Out.Xp;
+  In.So = Out.So;
+  In.Sno = Out.Sno;
+  In.Snh = Out.Snh;
+  In.Snd = Out.Snd;
+  In.Xnd = Out.Xnd;
+  In.Salk = Out.Salk;
+
+  S_NKj0 = In.Snh + In.Snd + In.Xnd + i_xb * (In.Xbh + In.Xba) + i_xp * (In.Xp + In.Xi);
+  SS_0 = 0.75 * (In.Xs + In.Xi + In.Xbh + In.Xba + In.Xp);
+  BOD_50 = 0.65 * (In.Ss + In.Xs + (1-f_p) * (In.Xbh + In.Xba));
+  COD_0 = In.Ss + In.Si + In.Xi + In.Xbh + In.Xba + In.Xp;
+  der(T) = 1.0;
+  der(IQ*T) = (1/1000) * (B_SS * SS_0 * B_COD * COD_0 + B_NKj*S_NKj0 + B_NO*In.Sno + B_BOD5*BOD_50)*In.Q;
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
+            {100,100}}), graphics), Diagram(coordinateSystem(
+          preserveAspectRatio=false, extent={{-100,-100},{100,100}}), graphics));
+end sensor_influent_quality;
+
+model sensor_sludge_production "Sludge production"
+
+  extends WasteWater.Icons.sensor_COD;
+  extends Interfaces.stoichiometry;
+
+  Interfaces.WWFlowAsm1in In annotation (Placement(transformation(extent={{-80,-10},
+            {-60,10}})));
+  Interfaces.WWFlowAsm1out Out annotation (Placement(transformation(extent={{-10,
+            -110},{10,-90}})));
+  Modelica.Blocks.Interfaces.RealOutput SP( start=0) annotation (Placement(
+        transformation(extent={{88,-10},{108,10}})));
+
+  Real T(start=1e-3);
+equation
+
+  In.Q + Out.Q = 0;
+
+  In.Si = Out.Si;
+  In.Ss = Out.Ss;
+  In.Xi = Out.Xi;
+  In.Xs = Out.Xs;
+  In.Xbh = Out.Xbh;
+  In.Xba = Out.Xba;
+  In.Xp = Out.Xp;
+  In.So = Out.So;
+  In.Sno = Out.Sno;
+  In.Snh = Out.Snh;
+  In.Snd = Out.Snd;
+  In.Xnd = Out.Xnd;
+  In.Salk = Out.Salk;
+
+  der(T) = 1.0;
+  der(SP*T) = 0.75*(In.Xs + In.Xi + In.Xbh + In.Xba + In.Xp)*In.Q;
+  annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},
+            {100,100}}), graphics), Diagram(coordinateSystem(
+          preserveAspectRatio=false, extent={{-100,-100},{100,100}}), graphics));
+end sensor_sludge_production;
 annotation (
   Documentation(info="This library contains components to build models of biological municipal
 wastewater treatment plants based on the Activated Sludge Model No.1 (ASM1) by the
