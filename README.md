@@ -1,56 +1,35 @@
-# WasteWater
+# TTK4130
 
-Free library for modelling and simulation of waste water treatment plants.
+#### Om emnet
+Emnet skal gi en innføring i metoder for modellering og simulering av fysiske prosesser for bruk i reguleringstekniske anvendelser. 
+1. Modeller, modellegenskaper og modelleringsverktøy: 
+Studenten skal kunne gjenkjenne de vanligste modelltypene, kjenne til noen sentrale modellegenskaper som er nyttige for reguleringssystem, og skal kjenne til prinsipp for, og ha noe praktisk erfaring med, høynivå modelleringsverktøy (både blokk-orienterte (Simulink) og lignings/objekt-orienterte (Modelica/Dymola)). 
+2. Numerisk simulering: 
+Studenten skal kunne simulere tilstandsrom-modeller i en datamaskin. Dette innebærer å kunne implementere enkle eksplisitte ODE metoder, og skjønne prinsippene bak state-of-the-art ODE løsere (f.eks. i Matlab). 
+3. Stive legemers kinematikk og kinetikk: 
+Studenten skal kunne sette opp bevegelsesligninger for enkle system av stive legemer, som gir en basis for å kunne modellere mekaniske systemer slik som roboter, marine fartøy, biler, fly. 
+4. Balanselover/fluidsystemer: 
+Studenten skal lære seg prinsippene bak balanselovene, og kunne bruke de til å formulere enkle modeller for prosess-systemer (for eksempel ny energi, olje- og gassproduksjon, kjemisk prosessindustri).
 
-## Library description
+#### Dette hadde studentene å si om faget
 
-The package WasteWater provides a collection of 3 different
-international accepted *a*ctivated *s*ludge *m*odels (ASM) of different complexity,
-including models for preclarifiers and 5 different models for
-the secondary settling process.
+>Det eneste som er verre enn Modsim er modsimprosjekt
 
-PS: SimulationTimeUnit for all models built with the WasteWater library is days [d].
-
-The WasteWater package currently consists of the following subpackages
-
-* ASM1 - Activated Sludge Model No.1  (models 13 wastewater components and 8 biological processes)
-* ASM2d - Activated sludge Model No.2d (models 19 wastewater components and 21 biological processes)
-* ASM3 - Activated Sludge Model No.3  (models 13 wastewater components and 12 biological processes)
-* Icons - Icon definitions for wastewater treatment components
-* WasteWaterUnits - unit type definitions for use with the WasteWater library
-
-## Current release
-
-Download [WasteWater v2.1.0 (2015-01-22)](../../archive/v2.1.0.zip)
-
-#### Release notes
-
-* [Version v2.1.0 (2015-01-22)](../../archive/v2.1.0.zip)
-  * Modelica 3.2.1 conversion.
-* [Version v2.0.1 (2003-10-31)](../../archive/v2.0.1.zip)
-  * First official version of the library released at 3rd Modelica Conference.
-
-## License
-
-Copyright &copy; 2000 - 2003 Gerald Reichl
-
-This Modelica package is free software and the use is completely at your own risk;
-it can be redistributed and/or modified under the terms of the [Modelica License 1.1](http://www.modelica.org/licenses/ModelicaLicense1.1).
-For license conditions (including the disclaimer of warranty) visit [http://www.modelica.org/licenses/ModelicaLicense1.1](http://www.modelica.org/licenses/ModelicaLicense1.1).
+╶Even
 
 
-## Development and contribution
-Original Author:
+> Jeg har ikke sett en studass siden Januar
 
-    Gerald Reichl
-    Technische Universitaet Ilmenau
-    Faculty of Informatics and Automation
-    Department Dynamics and Simulation of ecological Systems
-    P.O. Box 10 05 65
-    98684 Ilmenau
-    Germany
-    email: gerald.reichl@tu-ilmenau.de
+╶Carl Martin
 
-You may report any issues with using the [Issues](../../issues) button.
+> Jeg har ADA-møte
 
-Contributions in shape of [Pull Requests](../../pulls) are always welcome.
+╶Rebekka
+
+> Hvor sitter folk?
+
+╶Jon Eivind
+
+>Hey boys, er ikke mulig å få gjort noe på lab nå, siden det ikke er noen lisenser
+
+╶Erik
