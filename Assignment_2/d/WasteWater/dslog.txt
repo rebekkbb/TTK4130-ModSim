@@ -1,0 +1,29 @@
+Log-file of program ./dymosim
+(generated: Fri Mar 02 16:58:05 2018)
+
+dymosim started
+... "dsin.txt" loading (dymosim input file)
+... starting from known values.
+... loading "Inf_dry" from "M:/Documents/Modsim/Assignment_2/d/WasteWater/Resources/ASM1/Inf_dry.txt"
+... "BenchPlant.mat" creating (simulation result file)
+
+Integration started at T = 0 using integration method LSODAR
+(Multi-step solver for stiff and non-stiff ODE's with root finder (lsodar of ODEPACK))
+Integration terminated successfully at T = 14
+   CPU-time for integration      : 25.8 seconds
+   CPU-time for one GRID interval: 2.58 milli-seconds
+   Number of result points       : 10002
+   Number of GRID   points       : 10001
+   Number of (successful) steps  : 30167
+   Number of F-evaluations       : 178963
+   Number of H-evaluations       : 40167
+   Number of Jacobian-evaluations: 7725
+   Number of (model) time events : 0
+   Number of (U) time events     : 0
+   Number of state    events     : 0
+   Number of step     events     : 0
+   Minimum integration stepsize  : 2.85e-005
+   Maximum integration stepsize  : 0.00291
+   Maximum integration order     : 5
+Calling terminal section
+... "dsfinal.txt" creating (final states)
